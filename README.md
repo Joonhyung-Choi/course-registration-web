@@ -12,7 +12,7 @@
 
 
 
-## 📜 기술 스택 Function
+## 📜 Tools
 <table><tbody>
 <tr>
 <td>
