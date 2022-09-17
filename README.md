@@ -1,23 +1,26 @@
 # course-registration-web
 수강신청 웹 페이지 프로젝트 입니다.
 
-조원
+조원 목록
 
 최준형
+
 현창민
+
 조금주
+
 이명재
+
 김지성
 
 
+
 사용 툴
+
 Front-end : react, HTML, CSS, JavaScript
+
 Back-end : SpringBoot, MySql
 
-
-
-
-어디서 코드 가지고 올지
 
 
 
