@@ -61,7 +61,7 @@
 </tr>
 <tr>
 <td align = "center">MySQL</td>
-<td align = "center">AWS RDS</td>
+<td align = "center">Springboot</td>
 </tr>
 </tbody></table>
 
