@@ -18,29 +18,31 @@ const Sidebar = styled.div`
 
 const ToggleButton = styled.button`
   position: relative;
-  left: -50px;
+  left: -55px;
   top: 93vh;
-  width: 50px;
+  width: 55px;
   height: 40px;
   z-index: 99;
+  padding-left:7px;
   transition: 0.8s ease;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  box-shadow: -1px 1px 35px -20px black;
+  box-shadow: -1px 0px 35px -9px gray;
   overflow: hidden;
   border: 0px;
+  background-color:#FFCC1D;
 `;
 
 const CloseImage = styled.img`
   text-align: left;
-  width: 90%;
-  height: 90%;
+  width: 80%;
+  height: 80%;
 `;
 
 const OpenImage = styled.img`
   text-align: left;
-  width: 90%;
-  height: 90%;
+  width: 80%;
+  height: 80%;
 `;
 
 function SidebarPage(props) {
@@ -62,7 +64,7 @@ function SidebarPage(props) {
     <Sidebar ref={sidebar} style={{ width: `${props.width}px`, height: '100%',  transform: `translatex(${-xPosition}px)`}}>
       <ToggleButton onClick={() => toggleSidebar()}>
         {isOpen ? 
-          <CloseImage src="assets/img/rightArrow.png" alt="rightArrowleftArrow"/> : <OpenImage src="assets/img/leftArrow.png" alt="leftArrow"/>}
+          <CloseImage src="assets/img/rightArrow3.png" alt="rightArrowleftArrow"/> : <OpenImage src="assets/img/leftArrow3.png" alt="leftArrow"/>}
       </ToggleButton>
       <SidebarContent />
     </Sidebar>

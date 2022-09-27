@@ -1,17 +1,32 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
-const Content = styled.p`
-    color:red;
-    padding:20px;
+const Wrapper = styled.div`
+    padding-top: 0px;
+    padding-bottom:30px;
+    maring: 0px;
+`;
+
+const Content = styled.div`
+    color:black;
+    maring:0px;
+    padding:0px;
+`;
+
+const Img = styled.img`
+    text-align:right;
+    width:90%;
+    height:100%;
+    maring:0px;
+    margin-left:19px;
 `;
 
 function SidebarContent(props){
 
     return(
-        <div>
-            <Content>내용입니당</Content>
-        </div>
+        <Wrapper>
+            <Img src="assets/img/mayoUniversityLogo4.png" alt="mayoUniversityLogo"/>
+        </Wrapper>
     );
 }
 
