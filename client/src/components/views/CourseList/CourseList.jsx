@@ -1,6 +1,7 @@
 import React,{} from 'react';
-import CourseItem from './CourseItem';
+import styled from 'styled-components';
 
+import CourseItem from './CourseItem';
 
 function CourseList(props){
 
