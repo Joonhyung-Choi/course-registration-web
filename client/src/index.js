@@ -11,19 +11,11 @@ import CourseList from './components/views/CourseList/CourseList';
 import MenuButton from './components/views/Menubar/MenuButton';
 import SidebarPage from './components/views/SideBarPage/SidebarPage';
 
-const Wrapper = styled.div`
-  background-color: #fff7d88e;
-  width:100vw;
-  height:100vh;
-`;
-
 ReactDOM.render(
   <React.StrictMode>
-    <Wrapper>
-      <MenuButton />
-      <CourseList />
-      <SidebarPage width={280}/>
-    </Wrapper>
+    <CourseList />
+    <MenuButton />
+    <SidebarPage width={280}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
