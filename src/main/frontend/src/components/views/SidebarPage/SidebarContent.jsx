@@ -25,7 +25,7 @@ function SidebarContent(props){
 
     return(
         <Wrapper>
-            <Img src="assets/img/mayoUniversityLogo4.png" alt="mayoUniversityLogo"/>
+            <Img src="assets/img/mayoUniversityLogo4.png" alt="mayoUniversityLogo2"/>
         </Wrapper>
     );
 }

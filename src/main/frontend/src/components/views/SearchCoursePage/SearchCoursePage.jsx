@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{  } from 'react';
 import styled from 'styled-components';
 
 import SearchCourseList from '../CourseList/SearchCourseList';
@@ -6,13 +6,12 @@ import SearchCourseList from '../CourseList/SearchCourseList';
 const Wrapper = styled.div`
     display:flex;
     justify-content:center;
+    align-items: center;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
     margin: 0px;
-    padding:2vw;
-    padding-top:5vh;
-    padding-bottom:5vh;
+    padding:0px;
 `;
 
 const SizingBox = styled.div`

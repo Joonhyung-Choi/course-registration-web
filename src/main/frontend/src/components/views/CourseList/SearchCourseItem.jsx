@@ -2,16 +2,15 @@ import React,{} from 'react';
 import styled from 'styled-components';
 
 const Tr = styled.tr`
-    background-color: #FFFFFFFF;
-    border-bottom: 1px solid #cbcbcbee;
-    height:6vh;
 `;
 
 const Td = styled.td`
-    box-size: border-box;
+    border:0px;
     padding: 7px;
-    padding-bottom: 3px;
+    margin:0px;
     font-size: 0.8rem;
+    background-color: #FFFFFF;
+    border-bottom:1px solid gray;
 `;
 
 function SearchCourseItem(props){

@@ -29,32 +29,32 @@ const Wrapper = styled.div`
     &::-webkit-scrollbar-thumb:hover{
         background:rgba(0,0,0,0.3);
         background-clip:padding-box;
-        border: 1px solid transparent;
+        border: 1.5px solid transparent;
         border-radius: 100px;
     }
 `;
 
 const Table = styled.table`
     width:100%;
-    box-size: border-box;
     background-color: white;
     margin:0px;
     padding:0px;
-    border:0;
+    border-spacing:0px;
+    border-style:none;
 `;
 
 const Tr = styled.tr`
-    width:100vw;
-    height:7vh;
+    width:100%;
 `;
 
 const Th = styled.th`
-    box-size: border-box;
     padding: 7px;
-    padding-bottom: 3px;
-    font-size: 0.8rem;
+    padding-bottom:5px;
+    margin:0px;
+    font-size: 0.85rem;
     background-color: #FFCC1D;
     color: #ffffff;
+    border:0px;
     position: sticky;
 	top: 0;
 `;
@@ -84,6 +84,47 @@ function SearchCourseList(props){
                     <Th name="courseArea">영역</Th>
                     <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th>
                 </Tr>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
+                <SearchCourseItem/>
                 <SearchCourseItem/>
                 <SearchCourseItem/>
                 <SearchCourseItem/>
