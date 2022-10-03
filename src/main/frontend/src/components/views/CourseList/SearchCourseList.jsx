@@ -68,77 +68,22 @@ function SearchCourseList(props){
                     <Th name="indexNumber" style={{borderTopLeftRadius:'15px'}}>No.</Th>
                     <Th name="courseDepartment">개설학과</Th>
                     <Th name="courseGrade">학년</Th>
-                    <Th name="courseName">교과목명</Th>
-                    <Th name="courseNumber">과목번호</Th>
-                    <Th name="courseDistribution">분반</Th>
+                    <Th name="courseName">과목이름</Th>
+                    <Th name="courseNumber">과목코드</Th>
+                    {/* <Th name="courseDistribution">분반</Th> */}
                     <Th name="courseClassification">이수구분</Th>
                     <Th name="courseCredit">학점</Th>
-                    <Th name="courseMaxNumber">정원</Th>
+                    {/* <Th name="courseMaxNumber">정원</Th>
                     <Th name="coursePreRequest">예비신청(비율)</Th>
                     <Th name="courseRequest">수강신청</Th>
-                    <Th name="courseTime">수업시간</Th>
-                    <Th name="courseProfessor">담당교수</Th>
-                    <Th name="courseSortation">수업구분</Th>
+                    <Th name="courseTime">수업시간</Th> */}
+                    <Th name="courseProfessor" style={{borderTopRightRadius:'15px'}}>담당교수</Th>
+                    {/* <Th name="courseSortation">수업구분</Th>
                     <Th name="courseTheory">이론</Th>
                     <Th name="coursePractice">실습</Th>
                     <Th name="courseArea">영역</Th>
-                    <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th>
+                    <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
                 </Tr>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
-                <SearchCourseItem/>
                 <SearchCourseItem/>
             </Table>
         </Wrapper>

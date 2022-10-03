@@ -23,6 +23,6 @@ public class ArticleController {
         model.addAttribute("articleList", articleRepository.findAll());
 
         //뷰 페이지를 설정
-        return "";
+        return "src/components/view/CourseList/SearchCourseItem";
     }
 }
