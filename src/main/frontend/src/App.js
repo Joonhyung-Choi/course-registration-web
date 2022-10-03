@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import './App.css';
 
 import SearchCourseList from './components/views/CourseList/SearchCourseList';
@@ -28,14 +29,14 @@ const Main = styled.div`
 function App() {
   return (
     <Wrapper>
-      <LoginPage/>
-      {/* <MenuButton />
+      {/* <LoginPage/> */}
+      <MenuButton />
       <Main>
         <SearchCoursePage>
           <SearchCourseList/>
         </SearchCoursePage>
       </Main>
-      <SidebarPage width={280}/> */}
+      <SidebarPage width={280}/>
     </Wrapper>
   );
 }
