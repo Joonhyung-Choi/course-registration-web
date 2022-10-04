@@ -8,7 +8,6 @@ const Wrapper = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-
   backroud: #eee !important;
 `;
 
@@ -19,6 +18,10 @@ const LogoImg = styled.img`
 
 const ButtonImg = styled.img`
   width: 65%;
+  height : 55%;
+  min-height:15px;
+  margin-top : auto;
+  margin-bottom : auto;
   opacity: 0.4;
 `;
 
@@ -32,10 +35,14 @@ const Form = styled.form`
 const IDPWDiv = styled.div`
   display: flex;
   flex-direction: column;
-  width: 30vw;
-  height: 6vh;
+  // width: 30vw;
+  width : 15.5vw;
+  height: 9vh;
   justify-content: center;
   align-items:center;
+  margin-left : auto;
+  margin-right : auto;
+
   margin-top: 5.5vh;
   margin-bottom: 4.4vh;
 `;
@@ -43,17 +50,23 @@ const IDPWDiv = styled.div`
 const PWButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
-
-  width: 13vw;
-  height: auto;
+  
+  // width: 13vw;
+  // height: auto;
+  width: 100%;
+  height: 50%;
+  justify-content : center;
 `;
 
 // chrome의 아이디 비밀번호 저장 기능 이용시 css 변화 문제 해결해야 됨
 const InputID = styled.input`  
   position: relative;
   font-size: 0.9rem;
-  height: 5vh;
-  width: 13vw;
+  // 금주's code
+  // height: 5vh;
+  // width: 13vw;
+  height: 50%;
+  width: 100%;
   min-width:144px;
   padding: 12px;
   padding-left: 16px;
@@ -73,8 +86,11 @@ const InputID = styled.input`
 const InputPW = styled.input`
   position: relative;
   font-size: 0.9rem;
-  height: 5vh;
-  width: 12vw;
+  // 금주's code
+  // height: 5vh;
+  // width: 12vw;
+  height: 100%;
+  width: 87%;
   min-width:109px;
   padding: 12px;
   padding-left: 16px;
@@ -93,10 +109,14 @@ const InputPW = styled.input`
 const Button = styled.button`
   position: relative;
   font-size: 16px;
-  height: 5vh;
   min-height:26px;
-  width: 2.8vw;
+  // 금주's code
+  // height: 5vh;
+  // width: 2.8vw;
+  height: 100%;
+  width: 13%;
   min-width:35px;
+
   padding-top: 6px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom-right-radius: 6px;
