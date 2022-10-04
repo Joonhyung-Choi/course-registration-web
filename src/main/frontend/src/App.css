@@ -1,3 +1,17 @@
+/* 글꼴 */
+@font-face {
+  font-family: "GmarketSansTTFBold";
+  src: url(./fonts/GmarketSansTTFBold.ttf);
+}
+@font-face {
+  font-family: "GmarketSansTTFLight";
+  src: url(./fonts/GmarketSansTTFLight.ttf);
+}
+@font-face {
+  font-family: "GmarketSansTTFMedium";
+  src: url(./fonts/GmarketSansTTFMedium.ttf);
+}
+
 .App {
   text-align: center;
 }
@@ -38,7 +52,8 @@
 }
 
 *{
+  font-family: "GmarketSansTTFMedium";
   box-sizing: border-box;
-  color: rgba(0,0,0,0.9);
+  color: rgb(78, 78, 78);
   font-weight:300;
 }

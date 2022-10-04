@@ -48,10 +48,10 @@ const Tr = styled.tr`
 `;
 
 const Th = styled.th`
-    padding: 7px;
-    padding-bottom:5px;
+    padding: 0.45vw;
+    padding-bottom:0.23vw;
     margin:0px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     background-color: #FFCC1D;
     color: #ffffff;
     border:0px;

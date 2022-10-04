@@ -5,7 +5,7 @@ import styled from "styled-components";
 import SearchCoursePage from '../SearchCoursePage/SearchCoursePage';
 
 const Wrapper = styled.div`
-  height: 94vh;
+  height: 96.5vh;
   border: 0px;
   box-sizing: border-box;
   margin: 0px;

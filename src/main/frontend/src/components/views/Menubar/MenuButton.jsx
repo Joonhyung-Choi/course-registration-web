@@ -5,8 +5,8 @@ import StyledMenuButton from './StyledMenuButton';
 
 const Wrapper = styled.div`
     width:100vw;
-    height:3.6vh;
-    background-color:#ebebeb;
+    height:3.5vh;
+    background-color:#f6f6f6;
 `;
 
 const Menubar = styled.div`
@@ -15,7 +15,7 @@ const Menubar = styled.div`
     flex-direction: row;
     justify-content:left;
     align-items:flex-end;
-    background-color:#ebebeb;
+    background-color:#f6f6f6;
     height:3.6vh;
     padding: 0;
     margin: 0;

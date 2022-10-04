@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import "./App.css";
 
 import MenuButton from "./components/views/Menubar/MenuButton";
 import SidebarPage from "./components/views/SidebarPage/SidebarPage";
 import LoginPage from "./components/views/LoginPage/LoginPage";
-import MainPage from './components/views/MainPage/MainPage';
+import MainPage from "./components/views/MainPage/MainPage";
 
 const Wrapper = styled.div`
   background-color: #ffffff;
@@ -15,11 +15,17 @@ const Wrapper = styled.div`
 `;
 
 function App() {
+  // loginPage
+  const [isLogin,setIsLogin] = useState(false);
+  const getIsLogin = (isLogin) => {
+    setIsLogin(isLogin);
+  };
+
+  // sidebar 크기 조절
   const [xPosition, setXPosition] = useState(-20);
   const getXPosition = (xPosition) => {
     setXPosition(xPosition);
-    console.log('app'+xPosition);
-  }
+  };
 
   // const [hello, setHello] = useState('')
 
@@ -37,10 +43,16 @@ function App() {
 
   return (
     <Wrapper>
-      {/* <LoginPage/> */}
-      <MenuButton xPosition={xPosition}/>
-      <MainPage xPosition={xPosition}/>
-      <SidebarPage width={20} getXPosition={getXPosition}/>
+      {isLogin ? (
+        <>
+          <MenuButton xPosition={xPosition} />
+          <MainPage xPosition={xPosition} />
+          {/* SidebarPage width 줄이면 MainPage랑 MenuButton의 xNum도 꼭 맞춰서 수정해주기! */}
+          <SidebarPage width={20} getXPosition={getXPosition} />
+        </>
+      ) : (
+        <LoginPage getIsLogin={getIsLogin} />
+      )}
     </Wrapper>
   );
 }

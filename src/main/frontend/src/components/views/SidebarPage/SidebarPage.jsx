@@ -17,9 +17,9 @@ const Sidebar = styled.div`
 `;
 
 const ToggleButton = styled.button`
-  position: relative;
+  position: fixed;
   left: -55px;
-  top: 93vh;
+  bottom: 15px;
   width: 55px;
   height: 40px;
   z-index: 99;
@@ -31,18 +31,21 @@ const ToggleButton = styled.button`
   overflow: hidden;
   border: 0px;
   background-color:#FFCC1D;
+  transition: 0.2s ease;
 `;
 
 const CloseImage = styled.img`
   text-align: left;
-  width: 80%;
-  height: 80%;
+  padding:0px;
+  padding-top:4px;
+  width: 77%;
 `;
 
 const OpenImage = styled.img`
   text-align: left;
-  width: 80%;
-  height: 80%;
+  padding:0px;
+  padding-top:4px;
+  width: 77%;
 `;
 
 function SidebarPage(props) {

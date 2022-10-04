@@ -4,8 +4,8 @@ import styled from "styled-components";
 const Wrapper = styled.div`
     display:flex;
     justify-content:center;
-    padding-top: 0px;
-    padding-bottom:30px;
+    padding-top: 3.5vh;
+    padding-bottom:3vh;
     maring: 0px;
 `;
 
@@ -16,7 +16,7 @@ const Content = styled.div`
 `;
 
 const Img = styled.img`
-    width:75%;
+    width:70%;
     padding-bottom:2vh;
 `;
 
