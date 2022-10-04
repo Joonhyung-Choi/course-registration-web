@@ -2,8 +2,10 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-    padding-top: 0px;
-    padding-bottom:30px;
+    display:flex;
+    justify-content:center;
+    padding-top: 3.5vh;
+    padding-bottom:3vh;
     maring: 0px;
 `;
 
@@ -14,11 +16,8 @@ const Content = styled.div`
 `;
 
 const Img = styled.img`
-    text-align:right;
-    width:90%;
-    height:100%;
-    maring:0px;
-    margin-left:19px;
+    width:70%;
+    padding-bottom:2vh;
 `;
 
 function SidebarContent(props){
