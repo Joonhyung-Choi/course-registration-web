@@ -17,12 +17,13 @@ public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
 
-    @GetMapping("/api/courses")
+    @GetMapping("/data")
     public String mayodb(Model model){
         //가져온 article 묶음을 뷰로 전달
         model.addAttribute("articleList", articleRepository.findAll());
 
         //뷰 페이지를 설정
-        return "src/components/view/CourseList/SearchCourseItem";
+        return "mayomain";
     }
 }
+
