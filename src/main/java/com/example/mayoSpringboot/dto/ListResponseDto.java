@@ -2,10 +2,12 @@ package com.example.mayoSpringboot.dto;
 
 import com.example.mayoSpringboot.entity.Article;
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter @Setter
+import javax.persistence.Enumerated;
+
+@Getter
 public class ListResponseDto {
+    //@Enumerated(Enum)
     private String department;
     private int grade;
     private String subject_name;
@@ -14,7 +16,7 @@ public class ListResponseDto {
     private int grades;
     private String professor;
 
-    public ListResponseDto(Article article) {
+    public ListResponseDto(Article article) { //킬때마다 create아닌 update를 하기위해서 1차캐쉬가 알아서 해준다
         this.department = article.getDepartment();
         this.grade = article.getGrade();
         this.subject_name = article.getSubject_name();
@@ -22,5 +24,9 @@ public class ListResponseDto {
         this.divison = article.getDivison();
         this.grades = article.getGrades();
         this.professor = article.getProfessor();
+    }
+
+    public Article toEntity(){
+        return new Article();
     }
 }
