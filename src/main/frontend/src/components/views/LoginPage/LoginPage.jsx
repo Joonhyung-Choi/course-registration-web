@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const Wrapper = styled.div`
   display: flex;
@@ -147,6 +148,8 @@ function LoginPage(props) {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
+  const [courseList, setCourseList] = useState([]);
+
   const handleInputId = (e) => {
     setInputId(e.target.value);
   };
@@ -165,6 +168,11 @@ function LoginPage(props) {
     } else { // 로그인 시 생길 수 있는 예외들 처리 (아이디 미입력, 비번 미입력, 틀린 아이디 혹은)
       alert("문제");
     }
+
+    axios.get("/api/test").then((res) => {
+      setCourseList(res.data.content);
+      props.getCourseList(courseList);
+    });
 
     // axios.post('/user_inform/onLogin', null, {
     //     params: {

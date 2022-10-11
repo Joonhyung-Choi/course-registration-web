@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 
-import SearchCoursePage from '../SearchCoursePage/SearchCoursePage';
+import SearchCoursePage from "../SearchCoursePage/SearchCoursePage";
 
 const Wrapper = styled.div`
   height: 96.5vh;
@@ -16,13 +16,21 @@ const Wrapper = styled.div`
 `;
 
 function MainPage(props) {
-    let xNum = 20;
+  let xNum = 20;
 
-    return (
-        <Wrapper style={{ width: `${100+props.xPosition}vw`, tranform: `scaleX(${1+(xNum+props.xPosition)*0.01}`}}>
-            <SearchCoursePage/>
-        </Wrapper>
-    );
-  }
-  
-  export default MainPage;
+  const [courseList, setCourseList] = useState([]);
+  setCourseList(props.courseList);
+
+  return (
+    <Wrapper
+      style={{
+        width: `${100 + props.xPosition}vw`,
+        tranform: `scaleX(${1 + (xNum + props.xPosition) * 0.01}`,
+      }}
+    >
+      <SearchCoursePage courseList={courseList} />
+    </Wrapper>
+  );
+}
+
+export default MainPage;
