@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
 import SearchCourseItem from "./SearchCourseItem";
+import CourseLists from './CourseLists';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -61,10 +62,12 @@ const Th = styled.th`
 `;
 
 function SearchCourseList(props) {
-  const courseListsRes = axios.get("/api/test");
-  const courseLists = courseListsRes.then((res)=>{
-    return res.data.content;
-  });
+  const [courseLists, setCourseLists] = useState([]);
+  useEffect(() => {
+    axios.get("/api/test").then((res) => {
+      setCourseLists(res.data.content);
+    });
+  }, []);
 
   return (
     <Wrapper>
@@ -93,10 +96,12 @@ function SearchCourseList(props) {
                     <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
           {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
-        {Object.entries(courseLists).map((entrie) => (
+        {/* {Object.entries(courseLists).map((entrie) => (
           <SearchCourseItem key={entrie.subject_id} courseList={entrie} />
-        ))}
+        ))} */}
+        <div></div>
       </Table>
+      <CourseLists courseLists={courseLists}/>
     </Wrapper>
   );
 }
