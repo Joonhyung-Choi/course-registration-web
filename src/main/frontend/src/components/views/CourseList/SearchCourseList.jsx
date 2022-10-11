@@ -62,7 +62,7 @@ const Th = styled.th`
 
 function SearchCourseList(props) {
   const [courseList, setCourseList] = useState([]);
-  setCourseList(props.props.courseList);
+  setCourseList(props.courseList);
 
   return (
     <Wrapper>
