@@ -1,13 +1,9 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-=======
 import React, { useState, useEffect } from "react";
->>>>>>> 5148698c95128106bfda79c1bab38b76136d479d
 import styled from "styled-components";
 import axios from "axios";
 
 import SearchCourseItem from "./SearchCourseItem";
-import CourseLists from './CourseLists';
+import CourseLists from "./CourseLists";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -66,17 +62,15 @@ const Th = styled.th`
 `;
 
 function SearchCourseList(props) {
-<<<<<<< HEAD
   const [courseList, setCourseList] = useState([]);
   setCourseList(props.courseList);
-=======
+
   const [courseLists, setCourseLists] = useState([]);
   useEffect(() => {
     axios.get("/api/test").then((res) => {
       setCourseLists(res.data.content);
     });
   }, []);
->>>>>>> 5148698c95128106bfda79c1bab38b76136d479d
 
   return (
     <Wrapper>
@@ -105,20 +99,15 @@ function SearchCourseList(props) {
                     <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
           {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
-<<<<<<< HEAD
         {/* {courseLists.map((entrie) => (
           <SearchCourseItem key={entrie.subject_id} courseList={entrie} />
         ))} */}
-      </Table>
-      <div>{courseList}</div>
-=======
         {/* {Object.entries(courseLists).map((entrie) => (
           <SearchCourseItem key={entrie.subject_id} courseList={entrie} />
         ))} */}
         <div></div>
       </Table>
-      <CourseLists courseLists={courseLists}/>
->>>>>>> 5148698c95128106bfda79c1bab38b76136d479d
+      <CourseLists courseLists={courseLists} />
     </Wrapper>
   );
 }
