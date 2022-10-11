@@ -25,25 +25,25 @@ function SearchCourseItem(props) {
 
   return (
     <Tr>
-      <Td name={props.id}></Td>
-      <Td name={props.department}></Td>
-      <Td name={props.grade}></Td>
-      <Td name={props.divison}></Td>
-      <Td name={props.subject_id}></Td>
-      <Td name={props.subject_type}></Td>
-      <Td name={props.grades}></Td>
-      <Td name={props.max_count}></Td>
-      <Td name={props.register_count}></Td>
-      <Td name={props.subject_time}></Td>
-      <Td name={props.professor}></Td>
-      {/* <Td name={props.courseSortation}></Td>
-            <Td name={props.courseClassification}></Td>
-            <Td name={props.courseDistribution}></Td>
-            <Td name={props.coursePreRequest}></Td>
-            <Td name={props.courseTheory}></Td>
-            <Td name={props.coursePractice}></Td>
-            <Td name={props.courseArea}></Td>
-            <Td name={props.courseNote}></Td> */}
+      <Td name={props.courseList.courseList.id}>{props.courseList.id}</Td>
+      <Td name={props.courseList.department}>{props.courseList.department}</Td>
+      <Td name={props.courseList.grade}>{props.courseList.grade}</Td>
+      <Td name={props.courseList.divison}>{props.courseList.divison}</Td>
+      <Td name={props.courseList.subject_id}>{props.courseList.subject_id}</Td>
+      <Td name={props.courseList.subject_type}>{props.courseList.subject_type}</Td>
+      <Td name={props.courseList.grades}>{props.courseList.grades}</Td>
+      <Td name={props.courseList.max_count}>{props.courseList.max_count}</Td>
+      <Td name={props.courseList.register_count}>{props.courseList.register_count}</Td>
+      <Td name={props.courseList.subject_time}>{props.courseList.subject_time}</Td>
+      <Td name={props.courseList.professor}>{props.courseList.professor}</Td>
+      {/* <Td name={props.courseList.courseSortation}></Td>
+            <Td name={props.courseList.courseClassification}></Td>
+            <Td name={props.courseList.courseDistribution}></Td>
+            <Td name={props.courseList.coursePreRequest}></Td>
+            <Td name={props.courseList.courseTheory}></Td>
+            <Td name={props.courseList.coursePractice}></Td>
+            <Td name={props.courseList.courseArea}></Td>
+            <Td name={props.courseList.courseNote}></Td> */}
     </Tr>
   );
 }

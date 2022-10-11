@@ -61,7 +61,10 @@ const Th = styled.th`
 `;
 
 function SearchCourseList(props) {
-  const courseListsNum = axios.get("/api/test");
+  const courseListsRes = axios.get("/api/test");
+  const courseLists = courseListsRes.then((res)=>{
+    return res.data.content;
+  });
 
   return (
     <Wrapper>
@@ -90,8 +93,8 @@ function SearchCourseList(props) {
                     <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
           {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
-        {courseListsNum.data.content.map((index) => (
-          <SearchCourseItem courseList={index} />
+        {Object.entries(courseLists).map((entrie) => (
+          <SearchCourseItem key={entrie.subject_id} courseList={entrie} />
         ))}
       </Table>
     </Wrapper>
