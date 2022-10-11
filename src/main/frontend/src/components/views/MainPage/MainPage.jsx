@@ -20,7 +20,7 @@ function MainPage(props) {
 
     return (
         <Wrapper style={{ width: `${100+props.xPosition}vw`, tranform: `scaleX(${1+(xNum+props.xPosition)*0.01}`}}>
-            <SearchCoursePage/>
+            <SearchCoursePage courseList={props.courseList}/>
         </Wrapper>
     );
   }

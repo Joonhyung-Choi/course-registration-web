@@ -27,6 +27,12 @@ function App() {
     setXPosition(xPosition);
   };
 
+  // loginPage에서 courseList 값 받아오기
+  const [courseList, setCourseList] = useState([]);
+  const getCourseList = (courseList) => {
+    setCourseList(courseList);
+  };
+
   // const [hello, setHello] = useState('')
 
   //   useEffect(() => {
@@ -46,12 +52,12 @@ function App() {
       {isLogin ? (
         <>
           <MenuButton xPosition={xPosition} />
-          <MainPage xPosition={xPosition} />
+          <MainPage xPosition={xPosition} courseList={courseList}/>
           {/* SidebarPage width 줄이면 MainPage랑 MenuButton의 xNum도 꼭 맞춰서 수정해주기! */}
           <SidebarPage width={20} getXPosition={getXPosition} />
         </>
       ) : (
-        <LoginPage getIsLogin={getIsLogin} />
+        <LoginPage getIsLogin={getIsLogin} getCourseList={getCourseList}/>
       )}
     </Wrapper>
   );

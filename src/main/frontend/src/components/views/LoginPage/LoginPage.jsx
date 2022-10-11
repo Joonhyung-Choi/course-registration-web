@@ -148,6 +148,8 @@ function LoginPage(props) {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
+  const [courseList, setCourseList] = useState([]);
+
   const handleInputId = (e) => {
     setInputId(e.target.value);
   };
@@ -167,11 +169,10 @@ function LoginPage(props) {
       alert("문제");
     }
 
-    const res = axios.get('/api/test');
-    res.then((result)=>{
-      console.log(result.data.content);
-    })
-
+    axios.get("/api/test").then((res) => {
+      setCourseList(res.data.content);
+      props.getCourseList(courseList);
+    });
 
     // axios.post('/user_inform/onLogin', null, {
     //     params: {
