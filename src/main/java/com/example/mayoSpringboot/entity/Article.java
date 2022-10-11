@@ -24,13 +24,19 @@ public class Article {
     @Column
     private int grade;
     @Column
-    private String subject_name;
-    @Column
     private int subject_id;
     @Column
     private String divison;
     @Column
     private int grades;
+    @Column
+    private int max_count;
+    @Column
+    private int register_count;
+    @Column
+    private String subject_type;
+    @Column
+    private String subject_time;
     @Column
     private String professor;
 

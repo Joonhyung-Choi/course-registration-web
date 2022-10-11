@@ -8,7 +8,7 @@ public class MayoSpringbootApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MayoSpringbootApplication.class, args);
-		System.out.println("hello");
+		System.out.print("응애 ");
 	}
 
 }
