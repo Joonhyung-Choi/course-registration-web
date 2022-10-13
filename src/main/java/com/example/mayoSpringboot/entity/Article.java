@@ -20,22 +20,24 @@ public class Article {
     private Long id;
 
     @Column
-    private String department;
+    private String major; // 개설학과
     @Column
-    private int grade;
+    private int grade; // 학년
     @Column
-    private int subject_id;
+    private String subject_name; // 교과목명
     @Column
-    private String divison;
+    private int subject_id; // 과목번호
     @Column
-    private int grades;
+    private String subject_type; // 이수구분
     @Column
-    private int max_count;
+    private int score; // 학점
     @Column
-    private int register_count;
+    private int max_count; // 정원
     @Column
-    private String time;
+    private int register_count; // 신청인원
     @Column
-    private String professor;
+    private String subject_time; // 수업 시간
+    @Column
+    private String professor; // 담당교수
 
 }
