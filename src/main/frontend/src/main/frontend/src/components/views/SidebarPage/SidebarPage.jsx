@@ -55,10 +55,14 @@ function SidebarPage(props) {
 
   const toggleSidebar = () => {
     if (xPosition < 0) {
+      console.log(isOpen);
+      console.log(xPosition);
       props.getXPosition(xPosition);
       setXPosition(0);
       setIsOpen(true);
     } else {
+      console.log(isOpen);
+      console.log(xPosition);
       props.getXPosition(xPosition);
       setXPosition(-props.width);
       setIsOpen(false);
@@ -66,10 +70,10 @@ function SidebarPage(props) {
   };
 
   return (
-    <Sidebar ref={sidebar} isOpen={isOpen} style={{ width: `${props.width}vw`, height: '100%',  transform: `translateX(${-xPosition}vw)`}}>
+    <Sidebar ref={sidebar} isOpen={isOpen} style={{ width: `${props.width}vw`, height: '100%',  transform: `translatex(${-xPosition}vw)`}}>
       <ToggleButton onClick={() => toggleSidebar()}>
         {isOpen ? 
-          <CloseImage src="assets/img/rightArrow3.png" alt="rightArrowLeftArrow"/> : <OpenImage src="assets/img/leftArrow3.png" alt="leftArrow"/>}
+          <CloseImage src="assets/img/rightArrow3.png" alt="rightArrowleftArrow"/> : <OpenImage src="assets/img/leftArrow3.png" alt="leftArrow"/>}
       </ToggleButton>
       <SidebarContent />
     </Sidebar>
