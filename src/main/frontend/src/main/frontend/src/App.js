@@ -29,15 +29,9 @@ function App() {
 
   // loginPage에서 courseList 값 받아오기
   const [courseList, setCourseList] = useState([]);
-  const setPageCourseList = (courseList) => {
+  const getCourseList = (courseList) => {
     setCourseList(courseList);
   };
-  
-  // MenuButton 누르면 Main화면 변경
-  const [menuClick, setMenuClick] = useState("SearchCourse");
-  const getMenuClick = (menuClick) => {
-    setMenuClick(menuClick);
-  }
 
   // const [hello, setHello] = useState('')
 
@@ -57,15 +51,13 @@ function App() {
     <Wrapper>
       {isLogin ? (
         <>
-          <MenuButton xPosition={xPosition} getMenuClick={getMenuClick}/>
-          <MainPage xPosition={xPosition} courseList={courseList} menuClick={menuClick}/>
+          <MenuButton xPosition={xPosition} />
+          <MainPage xPosition={xPosition} courseList={courseList}/>
           {/* SidebarPage width 줄이면 MainPage랑 MenuButton의 xNum도 꼭 맞춰서 수정해주기! */}
           <SidebarPage width={20} getXPosition={getXPosition} />
         </>
       ) : (
-          <>
-            <LoginPage getIsLogin={getIsLogin} setPageCourseList={setPageCourseList}/>
-          </>
+        <LoginPage getIsLogin={getIsLogin} getCourseList={getCourseList}/>
       )}
     </Wrapper>
   );

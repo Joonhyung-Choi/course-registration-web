@@ -17,17 +17,17 @@ const Wrapper = styled.div`
 const SizingBox = styled.div`
   width: 90%;
   height: 90%;
-  box-sizing: border-box;
+  boxsizing: border-box;
   margin: 0px;
   padding: 0px;
 `;
 
 function SearchCoursePage(props) {
-    const courseList = props.courseList;
+    
   return (
       <Wrapper>
           <SizingBox>
-              <SearchCourseList courseList={courseList}/>
+              <SearchCourseList />
           </SizingBox>
       </Wrapper>
   );
