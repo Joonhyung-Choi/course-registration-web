@@ -26,7 +26,7 @@ const ButtonImg = styled.img`
   opacity: 0.4;
 `;
 
-const Form = styled.div`
+const Form = styled.form`
   max-width: 20vm;
   min-width: 393px;
   margin: 0 auto;
@@ -144,10 +144,11 @@ const Span = styled.span`
 `;
 
 function LoginPage(props) {
+  const [isLogin, setIsLogin] = useState(false);
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
-  let courseList = null;
+  const [courseList, setCourseList] = useState([]);
 
   const handleInputId = (e) => {
     setInputId(e.target.value);
@@ -162,20 +163,15 @@ function LoginPage(props) {
     console.log("PW : ", inputPw);
     // 금주's code
     if(inputId==='mayo' && inputPw==='mayo'){
-      props.getIsLogin(true);
+      setIsLogin(true);
+      props.getIsLogin(isLogin);
     } else { // 로그인 시 생길 수 있는 예외들 처리 (아이디 미입력, 비번 미입력, 틀린 아이디 혹은)
       alert("문제");
     }
 
     axios.get("/api/test").then((res) => {
-      courseList = res.data.content;
-      console.log(res.data.content);
-      console.log(courseList);
-      console.log(courseList[0]);
-      console.log(courseList[0].id);
-      console.log(typeof(courseList));
-      // const array= [{id:1, name:'wh'},{id:2,name:'rma'}];
-      props.setPageCourseList(courseList);
+      setCourseList(res.data.content);
+      props.getCourseList(courseList);
     });
 
     // axios.post('/user_inform/onLogin', null, {
@@ -247,7 +243,6 @@ function LoginPage(props) {
         게스트로 로그인 하시려면 아이디와 비밀번호를 <Span>mayo</Span> 로
         입력하세요.
       </P>
-
     </Wrapper>
   );
 }

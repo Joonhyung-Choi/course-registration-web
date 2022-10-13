@@ -22,15 +22,15 @@ const SizingBox = styled.div`
   padding: 0px;
 `;
 
-function SearchCoursePage(props) {
-    const courseList = props.courseList;
+function PrevRegisterPage(props) {
+  const courseList = props.courseList;
   return (
-      <Wrapper>
-          <SizingBox>
-              <SearchCourseList courseList={courseList}/>
-          </SizingBox>
-      </Wrapper>
+    <Wrapper>
+      <SizingBox>
+        <div>나는 예비수강신청 페이지야~</div>
+      </SizingBox>
+    </Wrapper>
   );
 }
 
-export default SearchCoursePage;
+export default PrevRegisterPage;

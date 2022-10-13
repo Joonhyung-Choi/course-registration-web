@@ -3,6 +3,9 @@ import axios from "axios";
 import styled from "styled-components";
 
 import SearchCoursePage from "../SearchCoursePage/SearchCoursePage";
+import RegisterPage from "../RegisterPage/RegisterPage";
+import PrevRegisterPage from '../PrevRegisterPage/PrevRegisterPage';
+import MyRegisterPage from '../MyRegisterPage/MyRegisterPage';
 
 const Wrapper = styled.div`
   height: 96.5vh;
@@ -16,19 +19,15 @@ const Wrapper = styled.div`
 `;
 
 function MainPage(props) {
-  let xNum = 20;
 
-  const [courseList, setCourseList] = useState([]);
-  setCourseList(props.courseList);
+  const courseList = props.courseList;
 
   return (
-    <Wrapper
-      style={{
-        width: `${100 + props.xPosition}vw`,
-        tranform: `scaleX(${1 + (xNum + props.xPosition) * 0.01}`,
-      }}
-    >
-      <SearchCoursePage courseList={courseList} />
+    <Wrapper style={{ width: `${100 + props.xPosition}vw` }}>
+      {props.menuClick==="SearchCourse" && <SearchCoursePage courseList={courseList} />}
+      {props.menuClick==="PrevRegister" && <PrevRegisterPage/>}
+      {props.menuClick==="Register" && <RegisterPage/>}
+      {props.menuClick==="MyRegister" && <MyRegisterPage/>}
     </Wrapper>
   );
 }
