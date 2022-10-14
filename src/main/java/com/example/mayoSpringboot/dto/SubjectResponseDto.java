@@ -1,12 +1,10 @@
-package com.example.mayoSpringboot.dto;
+package com.example.mayoSpringboot.DTO;
 
-import com.example.mayoSpringboot.entity.Article;
+import com.example.mayoSpringboot.Entity.Article;
 import lombok.Getter;
 
-import javax.persistence.Enumerated;
-
 @Getter
-public class ListResponseDto {
+public class SubjectResponseDto {
     //@Enumerated(Enum)
     private String major;
     private String subject_name;
@@ -20,7 +18,7 @@ public class ListResponseDto {
     private String professor;
 
 
-    public ListResponseDto(Article article) { //킬때마다 create아닌 update를 하기위해서 1차캐쉬가 알아서 해준다
+    public SubjectResponseDto(Article article) { //킬때마다 create아닌 update를 하기위해서 1차캐쉬가 알아서 해준다
         this.major = article.getMajor();
         this.subject_name = article.getSubject_name();
         this.grade = article.getGrade();
