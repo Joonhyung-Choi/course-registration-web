@@ -144,67 +144,64 @@ const Span = styled.span`
 `;
 
 function LoginPage(props) {
-  const [inputId, setInputId] = useState("");
-  const [inputPw, setInputPw] = useState("");
+  const [userId, setUserId] = useState("");
+  const [userPw, setUserPw] = useState("");
 
   let courseList = null;
+  let isLogin = null;
 
   const handleInputId = (e) => {
-    setInputId(e.target.value);
+    setUserId(e.target.value);
   };
   const handleInputPw = (e) => {
-    setInputPw(e.target.value);
+    setUserPw(e.target.value);
   };
 
-  const onClickLogin = () => {
-    console.log("click login");
-    console.log("ID : ", inputId);
-    console.log("PW : ", inputPw);
+  const onClickLogin = async () => {
     // 금주's code
-    if(inputId==='mayo' && inputPw==='mayo'){
-      props.getIsLogin(true);
-    } else { // 로그인 시 생길 수 있는 예외들 처리 (아이디 미입력, 비번 미입력, 틀린 아이디 혹은)
-      alert("문제");
-    }
+    // if(userId==='mayo' && userPw==='mayo'){
+    //   props.getIsLogin(true);
+    // } else { // 로그인 시 생길 수 있는 예외들 처리 (아이디 미입력, 비번 미입력, 틀린 아이디 혹은)
+    //   alert("문제");
+    // }
 
-    axios.get("/api/test").then((res) => {
+    await axios.get("/main").then((res) => {
       courseList = res.data.content;
       console.log(res.data.content);
-      console.log(courseList);
-      console.log(courseList[0]);
-      console.log(courseList[0].id);
-      console.log(typeof(courseList));
       // const array= [{id:1, name:'wh'},{id:2,name:'rma'}];
-      props.setPageCourseList(courseList);
+      // props.setPageCourseList(courseList);
     });
 
-    // axios.post('/user_inform/onLogin', null, {
-    //     params: {
-    //     'user_id': inputId,
-    //     'user_pw': inputPw
-    //     }
+    console.log(userId);
+    console.log(userPw);
+    await axios.post("/login",null,{params: {
+        userId,
+        userPw
+      }
+  }).then(
+        (res)=>{
+          console.log(res.data);
+          isLogin = res.data;
+        }
+    )
+    // await axios.get("/login").then((res) => {
+    //   console.log("userData");
+    //   console.log(res);
     // })
-    // .then(res => {
-    //     console.log(res)
-    //     console.log('res.data.userId :: ', res.data.userId)
-    //     console.log('res.data.msg :: ', res.data.msg)
-    //     if(res.data.userId === undefined){
-    //         // id 일치하지 않는 경우 userId = undefined, msg = '입력하신 id 가 일치하지 않습니다.'
-    //         console.log('======================',res.data.msg)
-    //         alert('입력하신 id 가 일치하지 않습니다.')
-    //     } else if(res.data.userId === null){
-    //         // id는 있지만, pw 는 다른 경우 userId = null , msg = undefined
-    //         console.log('======================','입력하신 비밀번호 가 일치하지 않습니다.')
-    //         alert('입력하신 비밀번호 가 일치하지 않습니다.')
-    //     } else if(res.data.userId === inputId) {
-    //         // id, pw 모두 일치 userId = userId1, msg = undefined
-    //         console.log('======================','로그인 성공')
-    //         sessionStorage.setItem('user_id', inputId)
-    //     }
-    //     // 작업 완료 되면 페이지 이동(새로고침)
-    //     document.location.href = '/'
-    // })
-    // .catch()
+    .catch(function(error){
+      console.log(error);
+      // 오류발생시 실행
+    }).then(function(){
+      // 항상 실행
+    });
+
+    if(isLogin!==null){
+        console.log("로그인되렴");
+    }else if(isLogin===null){
+        console.log("로그인 안돼!");
+    }else{
+        console.log("뭐가 잘못이여?")
+    }
   };
 
   //  useEffect(() => {
@@ -225,7 +222,7 @@ function LoginPage(props) {
           <InputID
             type="text"
             name="input_id"
-            value={inputId}
+            value={userId}
             onChange={handleInputId}
             placeholder="ID"
           />
@@ -233,7 +230,7 @@ function LoginPage(props) {
             <InputPW
               type="password"
               name="input_pw"
-              value={inputPw}
+              value={userPw}
               onChange={handleInputPw}
               placeholder="Password"
             />

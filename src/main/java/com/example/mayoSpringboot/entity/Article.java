@@ -1,4 +1,4 @@
-package com.example.mayoSpringboot.entity;
+package com.example.mayoSpringboot.Entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

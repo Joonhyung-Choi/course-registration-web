@@ -28,15 +28,19 @@ function MenuButton(props) {
   let xNum = 20;
 
   const onClickSearchCourse = () => {
+    console.log("SearchCourse");
     props.getMenuClick("SearchCourse");
   };
   const onClickPrevRegister = () => {
+    console.log("PrevRegiste");
     props.getMenuClick("PrevRegiste");
   };
   const onClickRegister = () => {
+    console.log("Register");
     props.getMenuClick("Register");
   };
   const onClickMyRegister = () => {
+    console.log("MyRegister");
     props.getMenuClick("MyRegister");
   };
 

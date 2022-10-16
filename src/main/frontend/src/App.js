@@ -55,18 +55,11 @@ function App() {
 
   return (
     <Wrapper>
-      {isLogin ? (
-        <>
-          <MenuButton xPosition={xPosition} getMenuClick={getMenuClick}/>
-          <MainPage xPosition={xPosition} courseList={courseList} menuClick={menuClick}/>
-          {/* SidebarPage width 줄이면 MainPage랑 MenuButton의 xNum도 꼭 맞춰서 수정해주기! */}
-          <SidebarPage width={20} getXPosition={getXPosition} />
-        </>
-      ) : (
-          <>
-            <LoginPage getIsLogin={getIsLogin} setPageCourseList={setPageCourseList}/>
-          </>
-      )}
+      <LoginPage/>
+          {/*<MenuButton xPosition={xPosition} getMenuClick={getMenuClick}/>*/}
+          {/*<MainPage xPosition={xPosition} courseList={courseList} menuClick={menuClick}/>*/}
+          {/*/!* SidebarPage width 줄이면 MainPage랑 MenuButton의 xNum도 꼭 맞춰서 수정해주기! *!/*/}
+          {/*<SidebarPage width={20} getXPosition={getXPosition} />*/}
     </Wrapper>
   );
 }
