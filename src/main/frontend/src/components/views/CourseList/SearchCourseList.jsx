@@ -62,6 +62,7 @@ const Th = styled.th`
 
 function SearchCourseList(props) {
   const courseList = props.courseList;
+  console.log(courseList);
 
   return (
     <Wrapper>

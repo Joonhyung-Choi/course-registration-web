@@ -1,6 +1,110 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import {useNavigate} from 'react-router-dom';
+
+function LoginPage(props) {
+    const navigate = useNavigate();
+  const [userId, setUserId] = useState("");
+  const [userPw, setUserPw] = useState("");
+
+  let courseList = null;
+  let userData = null;
+
+  const handleInputId = (e) => {
+    setUserId(e.target.value);
+  };
+  const handleInputPw = (e) => {
+    setUserPw(e.target.value);
+  };
+
+  const onClickLogin = async () => {
+    // 금주's code
+    // if(userId==='mayo' && userPw==='mayo'){
+    //   props.getIsLogin(true);
+    // } else { // 로그인 시 생길 수 있는 예외들 처리 (아이디 미입력, 비번 미입력, 틀린 아이디 혹은)
+    //   alert("문제");
+    // }
+
+    await axios.get("/main").then((res) => {
+      courseList = res.data.content;
+      console.log(res.data.content)
+    });
+
+    console.log(userId);
+    console.log(userPw);
+    await axios.post("/login",null,{params: {
+        userId,
+        userPw
+      }
+  }).then(
+        (res)=>{
+          console.log(res.data);
+          userData = res.data;
+        }
+    ).catch(function(error){
+      console.log(error);
+      // 오류발생시 실행
+    }).then(function(){
+      // 항상 실행
+    });
+
+    if(userData!==null){
+        console.log("로그인되렴");
+        navigate('/main', {state:{userData, courseList}});
+    }else if(userData===null){
+        console.log("로그인 안돼!");
+    }else{
+        console.log("뭐가 잘못이여?")
+    }
+  };
+
+  //  useEffect(() => {
+  //      axios.get('/user_inform/login')
+  //      .then(res => console.log(res))
+  //      .catch()
+  //  },[])
+
+  return (
+    <Wrapper>
+      <LogoImg
+        src="assets/img/mayoUniversityLogo.png"
+        alt="mayoUniversityLogo1"
+      />
+      <Form>
+        <IDPWDiv>
+          {/* 가로폭 길이 심하게 줄이면 서로 어긋나면서 뒤틀리는 문제 해결하기 */}
+          <InputID
+            type="text"
+            name="input_id"
+            value={userId}
+            onChange={handleInputId}
+            placeholder="ID"
+          />
+          <PWButtonDiv>
+            <InputPW
+              type="password"
+              name="input_pw"
+              value={userPw}
+              onChange={handleInputPw}
+              placeholder="Password"
+            />
+          <Button type="button" onClick={onClickLogin}>
+              <ButtonImg src="assets/img/sign-in.png" alt="signIn" />
+          </Button>
+          </PWButtonDiv>
+        </IDPWDiv>
+      </Form>
+      <P>
+        게스트로 로그인 하시려면 아이디와 비밀번호를 <Span>mayo</Span> 로
+        입력하세요.
+      </P>
+
+    </Wrapper>
+  );
+}
+
+export default LoginPage;
 
 const Wrapper = styled.div`
   display: flex;
@@ -143,110 +247,3 @@ const Span = styled.span`
   font-weight: 600;
 `;
 
-function LoginPage(props) {
-  const [userId, setUserId] = useState("");
-  const [userPw, setUserPw] = useState("");
-
-  let courseList = null;
-  let isLogin = null;
-
-  const handleInputId = (e) => {
-    setUserId(e.target.value);
-  };
-  const handleInputPw = (e) => {
-    setUserPw(e.target.value);
-  };
-
-  const onClickLogin = async () => {
-    // 금주's code
-    // if(userId==='mayo' && userPw==='mayo'){
-    //   props.getIsLogin(true);
-    // } else { // 로그인 시 생길 수 있는 예외들 처리 (아이디 미입력, 비번 미입력, 틀린 아이디 혹은)
-    //   alert("문제");
-    // }
-
-    await axios.get("/main").then((res) => {
-      courseList = res.data.content;
-      console.log(res.data.content);
-      // const array= [{id:1, name:'wh'},{id:2,name:'rma'}];
-      // props.setPageCourseList(courseList);
-    });
-
-    console.log(userId);
-    console.log(userPw);
-    await axios.post("/login",null,{params: {
-        userId,
-        userPw
-      }
-  }).then(
-        (res)=>{
-          console.log(res.data);
-          isLogin = res.data;
-        }
-    )
-    // await axios.get("/login").then((res) => {
-    //   console.log("userData");
-    //   console.log(res);
-    // })
-    .catch(function(error){
-      console.log(error);
-      // 오류발생시 실행
-    }).then(function(){
-      // 항상 실행
-    });
-
-    if(isLogin!==null){
-        console.log("로그인되렴");
-    }else if(isLogin===null){
-        console.log("로그인 안돼!");
-    }else{
-        console.log("뭐가 잘못이여?")
-    }
-  };
-
-  //  useEffect(() => {
-  //      axios.get('/user_inform/login')
-  //      .then(res => console.log(res))
-  //      .catch()
-  //  },[])
-
-  return (
-    <Wrapper>
-      <LogoImg
-        src="assets/img/mayoUniversityLogo.png"
-        alt="mayoUniversityLogo1"
-      />
-      <Form>
-        <IDPWDiv>
-          {/* 가로폭 길이 심하게 줄이면 서로 어긋나면서 뒤틀리는 문제 해결하기 */}
-          <InputID
-            type="text"
-            name="input_id"
-            value={userId}
-            onChange={handleInputId}
-            placeholder="ID"
-          />
-          <PWButtonDiv>
-            <InputPW
-              type="password"
-              name="input_pw"
-              value={userPw}
-              onChange={handleInputPw}
-              placeholder="Password"
-            />
-            <Button type="button" onClick={onClickLogin}>
-              <ButtonImg src="assets/img/sign-in.png" alt="signIn" />
-            </Button>
-          </PWButtonDiv>
-        </IDPWDiv>
-      </Form>
-      <P>
-        게스트로 로그인 하시려면 아이디와 비밀번호를 <Span>mayo</Span> 로
-        입력하세요.
-      </P>
-
-    </Wrapper>
-  );
-}
-
-export default LoginPage;
