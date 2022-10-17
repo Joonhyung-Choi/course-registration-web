@@ -53,6 +53,9 @@ function SidebarPage(props) {
   const [xPosition, setXPosition] = useState(0);
   const sidebar = useRef();
 
+  const courseList = props.courseList;
+  const userData = props.userData;
+
   const toggleSidebar = () => {
     if (xPosition < 0) {
       props.getXPosition(xPosition);
@@ -71,7 +74,7 @@ function SidebarPage(props) {
         {isOpen ? 
           <CloseImage src="assets/img/rightArrow3.png" alt="rightArrowLeftArrow"/> : <OpenImage src="assets/img/leftArrow3.png" alt="leftArrow"/>}
       </ToggleButton>
-      <SidebarContent />
+      <SidebarContent courseList={courseList} userData={userData}/>
     </Sidebar>
   );
 }

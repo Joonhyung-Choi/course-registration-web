@@ -3,7 +3,6 @@ import styled from "styled-components";
 import axios from "axios";
 
 import SearchCourseItem from "./SearchCourseItem";
-import CourseLists from "./CourseLists";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -62,15 +61,8 @@ const Th = styled.th`
 `;
 
 function SearchCourseList(props) {
-  const [courseList, setCourseList] = useState([]);
-  setCourseList(props.courseList);
-
-  const [courseLists, setCourseLists] = useState([]);
-  useEffect(() => {
-    axios.get("/api/test").then((res) => {
-      setCourseLists(res.data.content);
-    });
-  }, []);
+  const courseList = props.courseList;
+  console.log(courseList);
 
   return (
     <Wrapper>
@@ -79,12 +71,12 @@ function SearchCourseList(props) {
           <Th name="id" style={{ borderTopLeftRadius: "15px" }}>
             No.
           </Th>
-          <Th name="department">개설학과</Th>
+          <Th name="major">개설학과</Th>
           <Th name="grade">학년</Th>
-          <Th name="divison">과목이름</Th>
+          <Th name="subject_name">과목이름</Th>
           <Th name="subject_id">과목코드</Th>
           <Th name="subject_type">이수구분</Th>
-          <Th name="grades">학점</Th>
+          <Th name="score">학점</Th>
           <Th name="max_count">정원</Th>
           <Th name="register_count">신청인원</Th>
           <Th name="subject_time">수업시간</Th>
@@ -99,15 +91,10 @@ function SearchCourseList(props) {
                     <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
           {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
-        {/* {courseLists.map((entrie) => (
-          <SearchCourseItem key={entrie.subject_id} courseList={entrie} />
-        ))} */}
-        {/* {Object.entries(courseLists).map((entrie) => (
-          <SearchCourseItem key={entrie.subject_id} courseList={entrie} />
-        ))} */}
-        <div></div>
+        {courseList.map((item)=>{
+          return <SearchCourseItem item={item}/>
+        })}
       </Table>
-      <CourseLists courseLists={courseLists} />
     </Wrapper>
   );
 }
