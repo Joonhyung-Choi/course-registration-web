@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function LoginPage(props) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
 
@@ -28,34 +28,37 @@ function LoginPage(props) {
 
     await axios.get("/main").then((res) => {
       courseList = res.data.content;
-      console.log(res.data.content)
+      console.log(res.data.content);
     });
 
     console.log(userId);
     console.log(userPw);
-    await axios.post("/login",null,{params: {
-        userId,
-        userPw
-      }
-  }).then(
-        (res)=>{
-          console.log(res.data);
-          userData = res.data;
-        }
-    ).catch(function(error){
-      console.log(error);
-      // 오류발생시 실행
-    }).then(function(){
-      // 항상 실행
-    });
+    await axios
+      .post("/login", null, {
+        params: {
+          userId,
+          userPw,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        userData = res.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+        // 오류발생시 실행
+      })
+      .then(function () {
+        // 항상 실행
+      });
 
-    if(userData!==null){
-        console.log("로그인되렴");
-        navigate('/main', {state:{userData, courseList}});
-    }else if(userData===null){
-        console.log("로그인 안돼!");
-    }else{
-        console.log("뭐가 잘못이여?")
+    if (userData !== null) {
+      console.log("로그인되렴");
+      navigate("/main", { state: { userData, courseList } });
+    } else if (userData === null) {
+      console.log("로그인 안돼!");
+    } else {
+      console.log("뭐가 잘못이여?");
     }
   };
 
@@ -89,9 +92,9 @@ function LoginPage(props) {
               onChange={handleInputPw}
               placeholder="Password"
             />
-          <Button type="button" onClick={onClickLogin}>
+            <Button type="button" onClick={onClickLogin}>
               <ButtonImg src="assets/img/sign-in.png" alt="signIn" />
-          </Button>
+            </Button>
           </PWButtonDiv>
         </IDPWDiv>
       </Form>
@@ -99,7 +102,6 @@ function LoginPage(props) {
         게스트로 로그인 하시려면 아이디와 비밀번호를 <Span>mayo</Span> 로
         입력하세요.
       </P>
-
     </Wrapper>
   );
 }
@@ -123,10 +125,10 @@ const LogoImg = styled.img`
 
 const ButtonImg = styled.img`
   width: 65%;
-  height : 55%;
-  min-height:15px;
-  margin-top : auto;
-  margin-bottom : auto;
+  height: 55%;
+  min-height: 15px;
+  margin-top: auto;
+  margin-bottom: auto;
   opacity: 0.4;
 `;
 
@@ -141,12 +143,12 @@ const IDPWDiv = styled.div`
   display: flex;
   flex-direction: column;
   // width: 30vw;
-  width : 15.5vw;
+  width: 15.5vw;
   height: 9vh;
   justify-content: center;
-  align-items:center;
-  margin-left : auto;
-  margin-right : auto;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
 
   margin-top: 5.5vh;
   margin-bottom: 4.4vh;
@@ -155,16 +157,16 @@ const IDPWDiv = styled.div`
 const PWButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
-  
+
   // width: 13vw;
   // height: auto;
   width: 100%;
   height: 50%;
-  justify-content : center;
+  justify-content: center;
 `;
 
 // chrome의 아이디 비밀번호 저장 기능 이용시 css 변화 문제 해결해야 됨
-const InputID = styled.input`  
+const InputID = styled.input`
   position: relative;
   font-size: 0.9rem;
   // 금주's code
@@ -172,7 +174,7 @@ const InputID = styled.input`
   // width: 13vw;
   height: 50%;
   width: 100%;
-  min-width:144px;
+  min-width: 144px;
   padding: 12px;
   padding-left: 16px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -196,7 +198,7 @@ const InputPW = styled.input`
   // width: 12vw;
   height: 100%;
   width: 87%;
-  min-width:109px;
+  min-width: 109px;
   padding: 12px;
   padding-left: 16px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -214,13 +216,13 @@ const InputPW = styled.input`
 const Button = styled.button`
   position: relative;
   font-size: 16px;
-  min-height:26px;
+  min-height: 26px;
   // 금주's code
   // height: 5vh;
   // width: 2.8vw;
   height: 100%;
   width: 13%;
-  min-width:35px;
+  min-width: 35px;
 
   padding-top: 6px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -246,4 +248,3 @@ const Span = styled.span`
   color: #d32f2fcb;
   font-weight: 600;
 `;
-
