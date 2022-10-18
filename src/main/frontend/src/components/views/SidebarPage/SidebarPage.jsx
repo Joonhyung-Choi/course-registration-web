@@ -32,6 +32,7 @@ const ToggleButton = styled.button`
   border: 0px;
   background-color:#FFCC1D;
   transition: 0.2s ease;
+  cursor:pointer;
 `;
 
 const CloseImage = styled.img`
@@ -53,6 +54,8 @@ function SidebarPage(props) {
   const [xPosition, setXPosition] = useState(0);
   const sidebar = useRef();
 
+  const userData = props.userData;
+
   const toggleSidebar = () => {
     if (xPosition < 0) {
       props.getXPosition(xPosition);
@@ -71,7 +74,7 @@ function SidebarPage(props) {
         {isOpen ? 
           <CloseImage src="assets/img/rightArrow3.png" alt="rightArrowLeftArrow"/> : <OpenImage src="assets/img/leftArrow3.png" alt="leftArrow"/>}
       </ToggleButton>
-      <SidebarContent />
+      <SidebarContent userData={userData}/>
     </Sidebar>
   );
 }

@@ -1,7 +1,9 @@
 import React,{useState} from "react";
+import {useNavigate} from 'react-router-dom';
 import styled from "styled-components";
 
 import StyledMenuButton from "./StyledMenuButton";
+import StyledHomeButton from "./StyledHomeButton";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -24,48 +26,51 @@ const Menubar = styled.div`
 `;
 
 function MenuButton(props) {
+  const navigate = useNavigate();
+
+  const courseList = props.courseList;
+  const userData = props.userData;
+
   // xPosition 차이 값 (open&close)
   let xNum = 20;
-
-  const onClickSearchCourse = () => {
-    console.log("SearchCourse");
-    props.getMenuClick("SearchCourse");
-  };
-  const onClickPrevRegister = () => {
-    console.log("PrevRegiste");
-    props.getMenuClick("PrevRegiste");
-  };
-  const onClickRegister = () => {
-    console.log("Register");
-    props.getMenuClick("Register");
-  };
-  const onClickMyRegister = () => {
-    console.log("MyRegister");
-    props.getMenuClick("MyRegister");
-  };
 
   return (
     <Wrapper>
       <Menubar style={{ width: `${100 + props.xPosition}vw` }}>
+        <StyledHomeButton
+            buttonName="홈"
+            zIndex="50"
+            clickTo=""
+            courseList = {courseList}
+            userData = {userData}
+        />
         <StyledMenuButton
           buttonName="교과목신청"
           zIndex="40"
-          onclick={onClickSearchCourse}
+          clickTo="search-course"
+          courseList = {courseList}
+          userData = {userData}
         />
         <StyledMenuButton
           buttonName="예비수강신청"
           zIndex="30"
-          onclick={onClickPrevRegister}
+          clickTo="prev-register"
+          courseList = {courseList}
+          userData = {userData}
         />
         <StyledMenuButton
           buttonName="수강신청"
           zIndex="20"
-          onclick={onClickRegister}
+          clickTo="register"
+          courseList = {courseList}
+          userData = {userData}
         />
         <StyledMenuButton
           buttonName="수강내역조회"
           zIndex="10"
-          onclick={onClickMyRegister}
+          clickTo="my-register"
+          courseList = {courseList}
+          userData = {userData}
         />
       </Menubar>
     </Wrapper>

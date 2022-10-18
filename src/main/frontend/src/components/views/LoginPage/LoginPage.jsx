@@ -19,51 +19,39 @@ function LoginPage(props) {
   };
 
   const onClickLogin = async () => {
-    // 금주's code
-    // if(userId==='mayo' && userPw==='mayo'){
-    //   props.getIsLogin(true);
-    // } else { // 로그인 시 생길 수 있는 예외들 처리 (아이디 미입력, 비번 미입력, 틀린 아이디 혹은)
-    //   alert("문제");
-    // }
-
-    await axios.get("/main").then((res) => {
-      courseList = res.data.content;
-      console.log(res.data.content)
-    });
-
-    console.log(userId);
-    console.log(userPw);
-    await axios.post("/login",null,{params: {
-        userId,
-        userPw
-      }
-  }).then(
-        (res)=>{
-          console.log(res.data);
-          userData = res.data;
-        }
-    ).catch(function(error){
-      console.log(error);
-      // 오류발생시 실행
-    }).then(function(){
-      // 항상 실행
-    });
-
-    if(userData!==null){
-        console.log("로그인되렴");
-        navigate('/main', {state:{userData, courseList}});
-    }else if(userData===null){
-        console.log("로그인 안돼!");
+    if(userId===""){
+        alert("아이디를 입력하세요.");
+    }else if(userPw===""){
+        alert("비밀번호를 입력하세요.");
     }else{
-        console.log("뭐가 잘못이여?")
-    }
-  };
+        await axios.post("/login",null,{params: {
+                userId,
+                userPw
+            }
+        }).then(
+            (res)=>{
+                userData = res.data;
+            }
+        ).catch(function(error){
+            console.log(error);
+            // 오류발생시 실행
+        });
 
-  //  useEffect(() => {
-  //      axios.get('/user_inform/login')
-  //      .then(res => console.log(res))
-  //      .catch()
-  //  },[])
+        await axios.get("/main").then((res) => {
+            courseList = res.data.content;
+        });
+
+        if(userData!==null){
+            console.log("login");
+            navigate('/mayo-main', {state:{userData, courseList}});
+        }else if(userData===null){
+            console.log("login-error");
+            alert("잘못된 아이디 또는 비밀번호입니다.");
+        }else{
+            console.log("unexpected-error")
+        }
+        };
+    }
 
   return (
     <Wrapper>
@@ -99,7 +87,7 @@ function LoginPage(props) {
         게스트로 로그인 하시려면 아이디와 비밀번호를 <Span>mayo</Span> 로
         입력하세요.
       </P>
-
+        {/*<p>{location.search}</p>*/}
     </Wrapper>
   );
 }

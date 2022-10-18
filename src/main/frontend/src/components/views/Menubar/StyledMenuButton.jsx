@@ -1,4 +1,5 @@
 import React from "react";
+import {useNavigate} from 'react-router-dom';
 import styled from "styled-components";
 
 const Button = styled.button`
@@ -26,8 +27,18 @@ const Button = styled.button`
 `;
 
 function StyledMenuButton(props) {
+  const navigate = useNavigate();
+
+  const courseList = props.courseList;
+  const userData = props.userData;
+
+  const onClick = () => {
+    console.log(props.clickTo);
+    navigate(`/mayo-main/${props.clickTo}`, {state:{userData,courseList}});
+  };
+
   return(
-    <Button zIndex={props.zIndex}>{props.buttonName}</Button>
+    <Button onClick={onClick}>{props.buttonName}</Button>
   );
 }
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {useNavigate, useLocation} from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -61,8 +62,9 @@ const Th = styled.th`
 `;
 
 function SearchCourseList(props) {
-  const courseList = props.courseList;
-  console.log(courseList);
+  const location = useLocation();
+  const courseList = location.state.courseList;
+  const userData = location.state.userData;
 
   return (
     <Wrapper>
