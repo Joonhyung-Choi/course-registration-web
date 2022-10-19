@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -8,12 +8,6 @@ const Wrapper = styled.div`
   height: 100%;
   padding: 40px;
   margin: 0px;
-`;
-
-const Content = styled.div`
-  color: #313131;
-  margin: 0px;
-  padding: 0px;
 `;
 
 const Img = styled.img`

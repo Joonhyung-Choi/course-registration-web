@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { HiChevronRight, HiChevronLeft } from "react-icons/hi";
+import React, { useState } from "react";
+import {useLocation} from "react-router-dom";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import "./Swiper.css";
 
 import styled from "styled-components";
+import { HiChevronRight, HiChevronLeft } from "react-icons/hi";
 
 const Wrapper = styled.div`
   display: flex;
@@ -49,10 +50,10 @@ const BtnSwiperPrev = styled.a`
   width: auto;
   height: auto;
   bottom: 50%;
-  right: 0px;
+  left: 0px;
   transform: translate(0, 0);
 `;
-const ImgSwiperPrev = styled(HiChevronRight)`
+const ImgSwiperPrev = styled(HiChevronLeft)`
   width: 50px;
   height: 50px;
   color: #313131;
@@ -63,10 +64,10 @@ const BtnSwiperNext = styled.a`
   width: auto;
   height: auto;
   bottom: 50%;
-  left: 0px;
+  right: 0px;
   transform: translate(0, 0);
 `;
-const ImgSwiperNext = styled(HiChevronLeft)`
+const ImgSwiperNext = styled(HiChevronRight)`
   width: 50px;
   height: 50px;
   color: #313131;
@@ -82,7 +83,7 @@ const DivPagination = styled.div`
 `;
 
 function NoticePage(props) {
-  const courseList = props.courseList;
+  const location = useLocation();
 
   const [Notices, setNotices] = useState([
     {
@@ -142,7 +143,7 @@ function NoticePage(props) {
           <BtnSwiperPrev className="swiper_button_prev_notice">
             <ImgSwiperPrev />
           </BtnSwiperPrev>
-          <BtnSwiperNext className="swiper_button_next_noticet">
+          <BtnSwiperNext className="swiper_button_next_notice">
             <ImgSwiperNext />
           </BtnSwiperNext>
           <DivPagination>

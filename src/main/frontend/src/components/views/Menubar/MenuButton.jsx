@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -27,8 +26,6 @@ const Menubar = styled.div`
 `;
 
 function MenuButton(props) {
-  const navigate = useNavigate();
-
   const courseList = props.courseList;
   const userData = props.userData;
 

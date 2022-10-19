@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import React from "react";
+import {useLocation} from "react-router-dom";
 
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,7 +23,9 @@ const SizingBox = styled.div`
 `;
 
 function MyRegisterPage(props) {
-  const courseList = props.courseList;
+    const location = useLocation();
+    const courseList = location.state.courseList;
+
   return (
     <Wrapper>
       <SizingBox>

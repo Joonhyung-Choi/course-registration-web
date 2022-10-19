@@ -61,12 +61,10 @@ function SidebarPage(props) {
       props.getXPosition(xPosition);
       setXPosition(0);
       setIsOpen(true);
-      console.log(xPosition);
     } else {
       props.getXPosition(xPosition);
       setXPosition(-props.width);
       setIsOpen(false);
-      console.log(xPosition);
     }
   };
 
@@ -82,12 +80,12 @@ function SidebarPage(props) {
     >
       <ToggleButton onClick={() => toggleSidebar()}>
         {isOpen ? (
-          <CloseImage
-            src="assets/img/rightArrow3.png"
-            alt="rightArrowLeftArrow"
-          />
+            <CloseImage
+                src="assets/img/rightArrow3.png"
+                alt="rightArrowLeftArrow"
+            />
         ) : (
-          <OpenImage src="assets/img/leftArrow3.png" alt="leftArrow" />
+            <OpenImage src="assets/img/leftArrow3.png" alt="leftArrow" />
         )}
       </ToggleButton>
       <SidebarContent userData={userData} />

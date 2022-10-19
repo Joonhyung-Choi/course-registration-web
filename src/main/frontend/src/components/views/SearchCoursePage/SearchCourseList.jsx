@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {useNavigate, useLocation} from "react-router-dom";
+import React from "react";
 import styled from "styled-components";
-import axios from "axios";
 
 import SearchCourseItem from "./SearchCourseItem";
 
@@ -43,10 +41,14 @@ const Table = styled.table`
   padding: 0px;
   border-spacing: 0px;
   border-style: none;
+  align-items:center;
+    text-align:center;
 `;
 
 const Tr = styled.tr`
   width: 100%;
+  align-items:center;
+    text-align:center;
 `;
 
 const Th = styled.th`
@@ -59,12 +61,11 @@ const Th = styled.th`
   border: 0px;
   position: sticky;
   top: 0;
+  align-items:center;
 `;
 
 function SearchCourseList(props) {
-  const location = useLocation();
-  const courseList = location.state.courseList;
-  const userData = location.state.userData;
+  const courseList = props.courseList;
 
   return (
     <Wrapper>
