@@ -27,7 +27,6 @@ function NoticePage(props) {
             <SizingBox>
                 <div>나는 공지사항 페이지야~</div>
                 <div>위의 버튼들을 눌러봐~</div>
-                <div>쇼발~</div>
             </SizingBox>
         </Wrapper>
     );

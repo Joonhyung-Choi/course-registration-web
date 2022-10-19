@@ -1,4 +1,6 @@
 import React, { useRef, useState } from "react";
+
+import {FaAngleDoubleRight,FaAngleDoubleLeft} from 'react-icons/fa';
 import styled from "styled-components";
 
 import SidebarContent from "./SidebarContent";
@@ -35,18 +37,16 @@ const ToggleButton = styled.button`
   cursor:pointer;
 `;
 
-const CloseImage = styled.img`
-  text-align: left;
-  padding:0px;
-  padding-top:4px;
-  width: 77%;
+const CloseImage = styled(FaAngleDoubleRight)`
+  width: 100%;
+  height:100%;
+  color:#fff;
 `;
 
-const OpenImage = styled.img`
-  text-align: left;
-  padding:0px;
-  padding-top:4px;
-  width: 77%;
+const OpenImage = styled(FaAngleDoubleLeft)`
+  width: 100%;
+  height:100%;
+  color:#fff;
 `;
 
 function SidebarPage(props) {

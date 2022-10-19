@@ -45,7 +45,7 @@ function MenuButton(props) {
             userData = {userData}
         />
         <StyledMenuButton
-          buttonName="교과목신청"
+          buttonName="교과목조회"
           zIndex="40"
           clickTo="search-course"
           courseList = {courseList}
