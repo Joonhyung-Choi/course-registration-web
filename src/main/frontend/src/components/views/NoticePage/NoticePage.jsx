@@ -1,4 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { HiChevronRight, HiChevronLeft } from "react-icons/hi";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation, Pagination } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "./Swiper.css";
+
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -20,16 +29,129 @@ const SizingBox = styled.div`
   padding: 0px;
 `;
 
+const InnerWrap = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`;
+
+const ImgNotice = styled.img`
+  display: flex;
+  width: auto;
+  height: 90%;
+  margin: auto;
+`;
+const BtnSwiperPrev = styled.a`
+  position: absolute;
+  z-index: 50;
+  width: auto;
+  height: auto;
+  bottom: 50%;
+  right: 0px;
+  transform: translate(0, 0);
+`;
+const ImgSwiperPrev = styled(HiChevronRight)`
+  width: 50px;
+  height: 50px;
+  color: #313131;
+`;
+const BtnSwiperNext = styled.a`
+  position: absolute;
+  z-index: 50;
+  width: auto;
+  height: auto;
+  bottom: 50%;
+  left: 0px;
+  transform: translate(0, 0);
+`;
+const ImgSwiperNext = styled(HiChevronLeft)`
+  width: 50px;
+  height: 50px;
+  color: #313131;
+`;
+const DivPagination = styled.div`
+  position: absolute;
+  z-index: 50;
+  width: auto;
+  height: auto;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+`;
+
 function NoticePage(props) {
-    const courseList = props.courseList;
-    return (
-        <Wrapper>
-            <SizingBox>
-                <div>나는 공지사항 페이지야~</div>
-                <div>위의 버튼들을 눌러봐~</div>
-            </SizingBox>
-        </Wrapper>
-    );
+  const courseList = props.courseList;
+
+  const [Notices, setNotices] = useState([
+    {
+      index: 0,
+      src: "/assets/img/notice1.jpg",
+    },
+    {
+      index: 1,
+      src: "/assets/img/notice2.jpg",
+    },
+    {
+      index: 2,
+      src: "/assets/img/notice1.jpg",
+    },
+
+    {
+      index: 3,
+      src: "/assets/img/notice2.jpg",
+    },
+
+    {
+      index: 4,
+      src: "/assets/img/notice1.jpg",
+    },
+    {
+      index: 5,
+      src: "/assets/img/notice2.jpg",
+    },
+  ]);
+
+  SwiperCore.use([Navigation, Pagination]);
+
+  return (
+    <Wrapper>
+      <SizingBox>
+        <InnerWrap>
+          <Swiper
+            modules={[Navigation, Pagination]}
+            className="swiper_container_notice"
+            slidesPerView={1}
+            spaceBetween={0}
+            loop={true}
+            loopedSlides={3}
+            pagination={{ el: ".swiper_pagination_notice", clickable: false }}
+            navigation={{
+              nextEl: ".swiper_button_next_notice",
+              prevEl: ".swiper_button_prev_notice",
+            }}
+            scrollbar={{ draggable: true, el: null }}
+          >
+            {Notices.map((idx) => (
+              <SwiperSlide className="swiper_slide_notice" key={idx.index}>
+                <ImgNotice src={idx.src} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <BtnSwiperPrev className="swiper_button_prev_notice">
+            <ImgSwiperPrev />
+          </BtnSwiperPrev>
+          <BtnSwiperNext className="swiper_button_next_noticet">
+            <ImgSwiperNext />
+          </BtnSwiperNext>
+          <DivPagination>
+            <div className="swiper_pagination_notice"></div>
+          </DivPagination>
+        </InnerWrap>
+      </SizingBox>
+    </Wrapper>
+  );
 }
 
 export default NoticePage;

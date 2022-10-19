@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import "./App.css";
 
-import LoadingPage from "./components/views/LoadingPage/LoadingPage";
 import LoginPage from "./components/views/LoginPage/LoginPage";
 import MainPage from "./components/views/MainPage/MainPage";
 

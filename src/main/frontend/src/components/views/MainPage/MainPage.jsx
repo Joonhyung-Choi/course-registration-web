@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {Route, Routes} from "react-router-dom";
-import {useNavigate, useLocation} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import MenuButton from "../Menubar/MenuButton";
@@ -30,32 +30,40 @@ const Main = styled.div`
 `;
 
 function MainPage() {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const courseList = location.state.courseList;
-    const userData = location.state.userData;
-    // sidebar 크기 조절
-    const [xPosition, setXPosition] = useState(-20);
-    const getXPosition = (xPosition) => {
-        setXPosition(xPosition);
-    }
+  const navigate = useNavigate();
+  const location = useLocation();
+  const courseList = location.state.courseList;
+  const userData = location.state.userData;
+  // sidebar 크기 조절
+  const [xPosition, setXPosition] = useState(-350);
+  const getXPosition = (xPosition) => {
+    setXPosition(xPosition);
+  };
 
-    return (
-        <Wrapper>
-            <MenuButton xPosition={xPosition} courseList={courseList} userData={userData}/>
-            <Main style={{ width: `${100 + xPosition}vw` }}>
-                <Routes>
-                    <Route path="" element={<NoticePage/>}/>
-                    <Route path="search-course" element={<SearchCoursePage/>}/>
-                    <Route path="prev-register" element={<PrevRegisterPage/>}/>
-                    <Route path="register" element={<RegisterPage/>}/>
-                    <Route path="my-register" element={<MyRegisterPage/>}/>
-                </Routes>
-            </Main>
-            {/* SidebarPage width 줄이면 UIPage랑 MenuButton의 xNum도 꼭 맞춰서 수정해주기! */}
-            <SidebarPage width={20} getXPosition={getXPosition} userData={userData}/>
-        </Wrapper>
-    );
+  return (
+    <Wrapper>
+      <MenuButton
+        courseList={courseList}
+        userData={userData}
+        xPosition={xPosition}
+      />
+      <Main style={{ width: `calc(100vw + ${xPosition}px)`, }}>
+        <Routes>
+          <Route path="" element={<NoticePage />} />
+          <Route path="search-course" element={<SearchCoursePage />} />
+          <Route path="prev-register" element={<PrevRegisterPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="my-register" element={<MyRegisterPage />} />
+        </Routes>
+      </Main>
+      {/* SidebarPage width 줄이면 MainPage랑 MenuButton의 xNum도 꼭 맞춰서 수정해주기! */}
+      <SidebarPage
+        width={350}
+        getXPosition={getXPosition}
+        userData={userData}
+      />
+    </Wrapper>
+  );
 }
 
 export default MainPage;

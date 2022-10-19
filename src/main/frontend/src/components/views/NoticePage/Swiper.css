@@ -1,0 +1,27 @@
+.swiper_container_notice {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.swiper_slide_notice {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.swiper_pagination_notice .swiper-pagination-bullet {
+  margin: 0 4px;
+  padding: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #222222;
+  opacity: 0.2;
+}
+.swiper_pagination_notice .swiper-pagination-bullet-active {
+  background-color: #ffcc1d;
+  opacity: 1;
+}
