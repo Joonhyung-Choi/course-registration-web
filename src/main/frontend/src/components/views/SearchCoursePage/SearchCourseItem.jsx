@@ -8,7 +8,7 @@ const Td = styled.td`
   border: 0px;
   padding: 0.3vw;
   margin: 0px;
-  font-size: 0.8rem;
+  font-size: 13px;
   background-color: #ffffff;
   border-bottom: 1px solid gray;
 `;

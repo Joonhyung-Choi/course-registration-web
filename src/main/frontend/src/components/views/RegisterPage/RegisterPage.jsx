@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import SearchCourseList from "../CourseList/SearchCourseList";
-
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;

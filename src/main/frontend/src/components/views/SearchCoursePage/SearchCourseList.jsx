@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {useNavigate, useLocation} from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -16,7 +17,7 @@ const Wrapper = styled.div`
   &::-webkit-scrollbar {
     width: 10px;
     height: 5px;
-    boder-radius: 10px;
+    border-radius: 10px;
   }
   &::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0, 0);
@@ -52,7 +53,7 @@ const Th = styled.th`
   padding: 0.45vw;
   padding-bottom: 0.23vw;
   margin: 0px;
-  font-size: 0.9rem;
+  font-size: 13.5px;
   background-color: #ffcc1d;
   color: #ffffff;
   border: 0px;
@@ -61,8 +62,9 @@ const Th = styled.th`
 `;
 
 function SearchCourseList(props) {
-  const courseList = props.courseList;
-  console.log(courseList);
+  const location = useLocation();
+  const courseList = location.state.courseList;
+  const userData = location.state.userData;
 
   return (
     <Wrapper>

@@ -1,7 +1,10 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 
 import StyledMenuButton from "./StyledMenuButton";
+import StyledHomeButton from "./StyledHomeButton";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -24,48 +27,68 @@ const Menubar = styled.div`
 `;
 
 function MenuButton(props) {
-  // xPosition 차이 값 (open&close)
-  let xNum = 20;
+  const navigate = useNavigate();
 
-  const onClickSearchCourse = () => {
-    console.log("SearchCourse");
-    props.getMenuClick("SearchCourse");
-  };
-  const onClickPrevRegister = () => {
-    console.log("PrevRegiste");
-    props.getMenuClick("PrevRegiste");
-  };
-  const onClickRegister = () => {
-    console.log("Register");
-    props.getMenuClick("Register");
-  };
-  const onClickMyRegister = () => {
-    console.log("MyRegister");
-    props.getMenuClick("MyRegister");
+  const courseList = props.courseList;
+  const userData = props.userData;
+
+  const [currentBtn, setCurrentBtn] = useState("home");
+  const getCurrentBtn = (currentBtn) => {
+    setCurrentBtn(currentBtn);
   };
 
   return (
     <Wrapper>
-      <Menubar style={{ width: `${100 + props.xPosition}vw` }}>
-        <StyledMenuButton
-          buttonName="교과목신청"
-          zIndex="40"
-          onclick={onClickSearchCourse}
+      <Menubar style={{ width: `calc(100vw + ${props.xPosition}px)` }}>
+        <StyledHomeButton
+          id="home"
+          buttonName="홈"
+          zIndex="50"
+          clickTo=""
+          courseList={courseList}
+          userData={userData}
+          getCurrentBtn={getCurrentBtn}
+          currentBtn={currentBtn}
         />
         <StyledMenuButton
+          id="searchCourse"
+          buttonName="교과목조회"
+          zIndex="40"
+          clickTo="search-course"
+          courseList={courseList}
+          userData={userData}
+          getCurrentBtn={getCurrentBtn}
+          currentBtn={currentBtn}
+        />
+        <StyledMenuButton
+          id="prevRegister"
           buttonName="예비수강신청"
           zIndex="30"
-          onclick={onClickPrevRegister}
+          clickTo="prev-register"
+          courseList={courseList}
+          userData={userData}
+          getCurrentBtn={getCurrentBtn}
+          currentBtn={currentBtn}
         />
         <StyledMenuButton
+          id="register"
           buttonName="수강신청"
           zIndex="20"
-          onclick={onClickRegister}
+          clickTo="register"
+          courseList={courseList}
+          userData={userData}
+          getCurrentBtn={getCurrentBtn}
+          currentBtn={currentBtn}
         />
         <StyledMenuButton
+          id="myRegister"
           buttonName="수강내역조회"
           zIndex="10"
-          onclick={onClickMyRegister}
+          clickTo="my-register"
+          courseList={courseList}
+          userData={userData}
+          getCurrentBtn={getCurrentBtn}
+          currentBtn={currentBtn}
         />
       </Menubar>
     </Wrapper>

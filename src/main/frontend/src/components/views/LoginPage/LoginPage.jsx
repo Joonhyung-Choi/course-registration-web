@@ -19,54 +19,41 @@ function LoginPage(props) {
   };
 
   const onClickLogin = async () => {
-    // 금주's code
-    // if(userId==='mayo' && userPw==='mayo'){
-    //   props.getIsLogin(true);
-    // } else { // 로그인 시 생길 수 있는 예외들 처리 (아이디 미입력, 비번 미입력, 틀린 아이디 혹은)
-    //   alert("문제");
-    // }
-
-    await axios.get("/main").then((res) => {
-      courseList = res.data.content;
-      console.log(res.data.content);
-    });
-
-    console.log(userId);
-    console.log(userPw);
-    await axios
-      .post("/login", null, {
-        params: {
-          userId,
-          userPw,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        userData = res.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-        // 오류발생시 실행
-      })
-      .then(function () {
-        // 항상 실행
-      });
-
-    if (userData !== null) {
-      console.log("로그인되렴");
-      navigate("/main", { state: { userData, courseList } });
-    } else if (userData === null) {
-      console.log("로그인 안돼!");
+    if (userId === "") {
+      alert("아이디를 입력하세요.");
+    } else if (userPw === "") {
+      alert("비밀번호를 입력하세요.");
     } else {
-      console.log("뭐가 잘못이여?");
+      // await axios.post("/login",null,{params: {
+      //         userId,
+      //         userPw
+      //     }
+      // }).then(
+      //     (res)=>{
+      //         userData = res.data;
+      //     }
+      // ).catch(function(error){
+      //     console.log(error);
+      //     // 오류발생시 실행
+      // });
+      courseList = [];
+      userData = "mayo";
+
+      // await axios.get("/main").then((res) => {
+      //     courseList = res.data.content;
+      // });
+
+      if (userData !== null) {
+        console.log("login");
+        navigate("/mayo-main", { state: { userData, courseList } });
+      } else if (userData === null) {
+        console.log("login-error");
+        alert("잘못된 아이디 또는 비밀번호입니다.");
+      } else {
+        console.log("unexpected-error");
+      }
     }
   };
-
-  //  useEffect(() => {
-  //      axios.get('/user_inform/login')
-  //      .then(res => console.log(res))
-  //      .catch()
-  //  },[])
 
   return (
     <Wrapper>
@@ -102,6 +89,7 @@ function LoginPage(props) {
         게스트로 로그인 하시려면 아이디와 비밀번호를 <Span>mayo</Span> 로
         입력하세요.
       </P>
+      {/*<p>{location.search}</p>*/}
     </Wrapper>
   );
 }
@@ -115,12 +103,13 @@ const Wrapper = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-  backroud: #eee !important;
 `;
 
 const LogoImg = styled.img`
-  width: 6.1%;
+  width: 6.5%;
+  min-width: 80px;
   height: auto;
+  margin: 0 auto;
 `;
 
 const ButtonImg = styled.img`
@@ -133,8 +122,10 @@ const ButtonImg = styled.img`
 `;
 
 const Form = styled.div`
-  max-width: 20vm;
-  min-width: 393px;
+  display: flex;
+  flex-direction: column;
+  width: 11%;
+  min-width: 152px;
   margin: 0 auto;
   background-color: #fff;
 `;
@@ -142,8 +133,8 @@ const Form = styled.div`
 const IDPWDiv = styled.div`
   display: flex;
   flex-direction: column;
-  // width: 30vw;
-  width: 15.5vw;
+  // width: 30%;
+  width: 100%;
   height: 9vh;
   justify-content: center;
   align-items: center;
@@ -158,23 +149,22 @@ const PWButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
 
-  // width: 13vw;
+  // width: 13%;
   // height: auto;
   width: 100%;
   height: 50%;
   justify-content: center;
 `;
 
-// chrome의 아이디 비밀번호 저장 기능 이용시 css 변화 문제 해결해야 됨
 const InputID = styled.input`
   position: relative;
-  font-size: 0.9rem;
+  font-size: 15px;
+  color: #313131;
   // 금주's code
   // height: 5vh;
-  // width: 13vw;
+  // width: 13%;
   height: 50%;
   width: 100%;
-  min-width: 144px;
   padding: 12px;
   padding-left: 16px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -185,20 +175,20 @@ const InputID = styled.input`
     z-index: 2;
   }
   &::-webkit-input-placeholder {
-    font-size: 0.9rem;
+    font-size: 15px;
     color: rgba(0, 0, 0, 0.3);
   }
 `;
 
 const InputPW = styled.input`
   position: relative;
-  font-size: 0.9rem;
+  font-size: 15px;
+  color: #313131;
   // 금주's code
   // height: 5vh;
-  // width: 12vw;
+  // width: 12%;
   height: 100%;
-  width: 87%;
-  min-width: 109px;
+  width: 100%;
   padding: 12px;
   padding-left: 16px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -208,21 +198,21 @@ const InputPW = styled.input`
     z-index: 2;
   }
   &::-webkit-input-placeholder {
-    font-size: 0.9rem;
+    font-size: 15px;
     color: rgba(0, 0, 0, 0.3);
   }
 `;
 
 const Button = styled.button`
+  min-width: 40px;
   position: relative;
   font-size: 16px;
   min-height: 26px;
   // 금주's code
   // height: 5vh;
-  // width: 2.8vw;
+  // width: 2.8%;
   height: 100%;
-  width: 13%;
-  min-width: 35px;
+  width: 20%;
 
   padding-top: 6px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -239,9 +229,11 @@ const Button = styled.button`
 
 const P = styled.p`
   padding: 0;
+  color: #313131;
   margin: 0;
   margin-bottom: 10px;
-  font-size: 0.8rem;
+  font-size: 12px;
+  margin: 0 auto;
 `;
 
 const Span = styled.span`

@@ -1,4 +1,6 @@
 import React, { useRef, useState } from "react";
+
+import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
 import styled from "styled-components";
 
 import SidebarContent from "./SidebarContent";
@@ -23,29 +25,28 @@ const ToggleButton = styled.button`
   width: 55px;
   height: 40px;
   z-index: 99;
-  padding-left:7px;
+  padding-left: 7px;
   transition: 0.8s ease;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   box-shadow: -1px 0px 35px -10px gray;
   overflow: hidden;
   border: 0px;
-  background-color:#FFCC1D;
+  background-color: #ffcc1d;
   transition: 0.2s ease;
+  cursor: pointer;
 `;
 
-const CloseImage = styled.img`
-  text-align: left;
-  padding:0px;
-  padding-top:4px;
-  width: 77%;
+const CloseImage = styled(FaAngleDoubleRight)`
+  width: 100%;
+  height: 100%;
+  color: #fff;
 `;
 
-const OpenImage = styled.img`
-  text-align: left;
-  padding:0px;
-  padding-top:4px;
-  width: 77%;
+const OpenImage = styled(FaAngleDoubleLeft)`
+  width: 100%;
+  height: 100%;
+  color: #fff;
 `;
 
 function SidebarPage(props) {
@@ -53,7 +54,6 @@ function SidebarPage(props) {
   const [xPosition, setXPosition] = useState(0);
   const sidebar = useRef();
 
-  const courseList = props.courseList;
   const userData = props.userData;
 
   const toggleSidebar = () => {
@@ -61,20 +61,36 @@ function SidebarPage(props) {
       props.getXPosition(xPosition);
       setXPosition(0);
       setIsOpen(true);
+      console.log(xPosition);
     } else {
       props.getXPosition(xPosition);
       setXPosition(-props.width);
       setIsOpen(false);
+      console.log(xPosition);
     }
   };
 
   return (
-    <Sidebar ref={sidebar} isOpen={isOpen} style={{ width: `${props.width}vw`, height: '100%',  transform: `translateX(${-xPosition}vw)`}}>
+    <Sidebar
+      ref={sidebar}
+      isOpen={isOpen}
+      style={{
+        width: `${props.width}px`,
+        height: "100%",
+        transform: `translateX(${-xPosition}px)`,
+      }}
+    >
       <ToggleButton onClick={() => toggleSidebar()}>
-        {isOpen ? 
-          <CloseImage src="assets/img/rightArrow3.png" alt="rightArrowLeftArrow"/> : <OpenImage src="assets/img/leftArrow3.png" alt="leftArrow"/>}
+        {isOpen ? (
+          <CloseImage
+            src="assets/img/rightArrow3.png"
+            alt="rightArrowLeftArrow"
+          />
+        ) : (
+          <OpenImage src="assets/img/leftArrow3.png" alt="leftArrow" />
+        )}
       </ToggleButton>
-      <SidebarContent courseList={courseList} userData={userData}/>
+      <SidebarContent userData={userData} />
     </Sidebar>
   );
 }

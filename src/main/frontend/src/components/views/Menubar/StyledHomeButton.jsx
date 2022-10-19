@@ -1,27 +1,35 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { HiHome } from "react-icons/hi";
 import styled from "styled-components";
 
 const Button = styled.button`
   height: 91%;
-  width: 14%;
-  min-width: 140px;
-  font-size: 14px;
-  color: #313131;
-  background-color: #fff7d8;
+  width: auto;
+  min-width: 35px;
+  font-size: 0.86rem;
+  background-color: #fff0b3;
   border: 0px;
   border-radius: 10px 10px 0px 0px;
   margin: 0px;
-  padding: 0px;
-  padding-top: 0.4vh;
-  box-shadow: 3px -3px 15px -9px gray;
+  padding: 6px 8px;
+  box-shadow: 3px -3px 15px -10px gray;
   cursor: pointer;
   &:hover {
-    background-color: #e9e2c4;
+    background-color: #e9dba3;
+  }
+  &:active {
+    background-color: #fff;
   }
 `;
+const ImgHome = styled(HiHome)`
+  width: 100%;
+  height: 100%;
+  color: #313131;
+`;
 
-function StyledMenuButton(props) {
+function StyledHomeButton(props) {
   const navigate = useNavigate();
 
   const courseList = props.courseList;
@@ -42,12 +50,12 @@ function StyledMenuButton(props) {
       style={
         props.id === props.currentBtn
           ? { zIndex: `${props.zIndex}`, background: "#fff" }
-          : { zIndex: `${props.zIndex}`, background: "#fff7d8" }
+          : { zIndex: `${props.zIndex}`, background: "#fff0b3" }
       }
     >
-      {props.buttonName}
+      <ImgHome />
     </Button>
   );
 }
 
-export default StyledMenuButton;
+export default StyledHomeButton;
