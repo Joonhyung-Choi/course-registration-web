@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import SearchCourseList from "../CourseList/SearchCourseList";
+import {useLocation} from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,7 +24,9 @@ const SizingBox = styled.div`
 `;
 
 function SearchCoursePage(props) {
-    const courseList = props.courseList;
+    //const courseList = props.courseList;
+    const locate = useLocation();
+    const courseList = locate.state.courseList;
   return (
       <Wrapper>
           <SizingBox>
