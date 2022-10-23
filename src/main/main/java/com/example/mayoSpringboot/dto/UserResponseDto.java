@@ -1,6 +1,6 @@
-package com.example.mayoSpringboot.DTO;
+package com.example.mayoSpringboot.dto;
 
-import com.example.mayoSpringboot.Entity.UserEntity;
+import com.example.mayoSpringboot.entity.UserEntity;
 import lombok.Getter;
 
 @Getter

@@ -1,6 +1,6 @@
-package com.example.mayoSpringboot.Repository;
+package com.example.mayoSpringboot.repository;
 
-import com.example.mayoSpringboot.Entity.Article;
+import com.example.mayoSpringboot.entity.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

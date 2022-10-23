@@ -1,4 +1,4 @@
-package com.example.mayoSpringboot.Entity;
+package com.example.mayoSpringboot.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
