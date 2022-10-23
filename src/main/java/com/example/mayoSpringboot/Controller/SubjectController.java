@@ -1,6 +1,6 @@
-package com.example.mayoSpringboot.Controller;
+package com.example.mayoSpringboot.controller;
 
-import com.example.mayoSpringboot.Entity.Article;
+import com.example.mayoSpringboot.entity.Article;
 import com.example.mayoSpringboot.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class SubjectController {
     private final ArticleRepository articleRepository;
 
-    @GetMapping("/main")
-    public Page<Article> responsedata(@CookieValue(value = "userName",defaultValue = "Atta")
+    @GetMapping("/api/test")
+    public Page<Article> responsedata(@CookieValue(value="userName",defaultValue = "Atta")
                                           String userName, Pageable pageable){
         System.out.println(articleRepository.findAll());
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);

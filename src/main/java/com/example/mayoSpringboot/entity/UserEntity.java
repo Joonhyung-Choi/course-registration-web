@@ -1,5 +1,6 @@
-package com.example.mayoSpringboot.Entity;
+package com.example.mayoSpringboot.entity;
 
+import com.example.mayoSpringboot.enumcustom.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,4 +30,7 @@ public class UserEntity extends BaseTimeEntity {
     @Column(nullable = false, length = 10)
     private String userName;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole userRole;
 }
