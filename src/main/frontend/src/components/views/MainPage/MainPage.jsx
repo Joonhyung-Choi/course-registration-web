@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import MenuButton from "../Menubar/MenuButton";
@@ -30,7 +29,6 @@ const Main = styled.div`
 `;
 
 function MainPage() {
-  const navigate = useNavigate();
   const location = useLocation();
   const courseList = location.state.courseList;
   const userData = location.state.userData;

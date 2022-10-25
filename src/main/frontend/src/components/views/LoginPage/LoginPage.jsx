@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -24,24 +24,22 @@ function LoginPage(props) {
     } else if (userPw === "") {
       alert("비밀번호를 입력하세요.");
     } else {
-      // await axios.post("/login",null,{params: {
-      //         userId,
-      //         userPw
-      //     }
-      // }).then(
-      //     (res)=>{
-      //         userData = res.data;
-      //     }
-      // ).catch(function(error){
-      //     console.log(error);
-      //     // 오류발생시 실행
-      // });
-      courseList = [];
-      userData = "mayo";
+      await axios.post("/login",null,{params: {
+              userId,
+              userPw
+          }
+      }).then(
+          (res)=>{
+              userData = res.data;
+          }
+      ).catch(function(error){
+          console.log(error);
+          // 오류발생시 실행
+      });
 
-      // await axios.get("/main").then((res) => {
-      //     courseList = res.data.content;
-      // });
+      await axios.get("/main").then((res) => {
+          courseList = res.data.content;
+      });
 
       if (userData !== null) {
         console.log("login");

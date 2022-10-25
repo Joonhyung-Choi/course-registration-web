@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { HiHome } from "react-icons/hi";
@@ -13,7 +13,7 @@ const Button = styled.button`
   border: 0px;
   border-radius: 10px 10px 0px 0px;
   margin: 0px;
-  padding: 6px 8px;
+  padding: 3px 5px;
   box-shadow: 3px -3px 15px -10px gray;
   cursor: pointer;
   &:hover {
