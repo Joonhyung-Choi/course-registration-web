@@ -11,77 +11,6 @@ import "./Swiper.css";
 import styled from "styled-components";
 import { HiChevronRight, HiChevronLeft } from "react-icons/hi";
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
-`;
-
-const SizingBox = styled.div`
-  width: 90%;
-  height: 90%;
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
-`;
-
-const InnerWrap = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-`;
-
-const ImgNotice = styled.img`
-  display: flex;
-  width: auto;
-  height: 90%;
-  margin: auto;
-`;
-const BtnSwiperPrev = styled.a`
-  position: absolute;
-  z-index: 50;
-  width: auto;
-  height: auto;
-  bottom: 50%;
-  left: 0px;
-  transform: translate(0, 0);
-`;
-const ImgSwiperPrev = styled(HiChevronLeft)`
-  width: 50px;
-  height: 50px;
-  color: #313131;
-`;
-const BtnSwiperNext = styled.a`
-  position: absolute;
-  z-index: 50;
-  width: auto;
-  height: auto;
-  bottom: 50%;
-  right: 0px;
-  transform: translate(0, 0);
-`;
-const ImgSwiperNext = styled(HiChevronRight)`
-  width: 50px;
-  height: 50px;
-  color: #313131;
-`;
-const DivPagination = styled.div`
-  position: absolute;
-  z-index: 50;
-  width: auto;
-  height: auto;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
-`;
-
 function NoticePage(props) {
   const location = useLocation();
 
@@ -156,3 +85,74 @@ function NoticePage(props) {
 }
 
 export default NoticePage;
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+`;
+
+const SizingBox = styled.div`
+  width: 90%;
+  height: 90%;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+`;
+
+const InnerWrap = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`;
+
+const ImgNotice = styled.img`
+  display: flex;
+  width: 90%;
+  height: auto;
+  margin:auto;
+`;
+const BtnSwiperPrev = styled.a`
+  position: absolute;
+  z-index: 50;
+  width: auto;
+  height: auto;
+  bottom: 50%;
+  left: 0px;
+  transform: translate(0, 0);
+`;
+const ImgSwiperPrev = styled(HiChevronLeft)`
+  width: 50px;
+  height: 50px;
+  color: #313131;
+`;
+const BtnSwiperNext = styled.a`
+  position: absolute;
+  z-index: 50;
+  width: auto;
+  height: auto;
+  bottom: 50%;
+  right: 0px;
+  transform: translate(0, 0);
+`;
+const ImgSwiperNext = styled(HiChevronRight)`
+  width: 50px;
+  height: 50px;
+  color: #313131;
+`;
+const DivPagination = styled.div`
+  position: absolute;
+  z-index: 50;
+  width: auto;
+  height: auto;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+`;

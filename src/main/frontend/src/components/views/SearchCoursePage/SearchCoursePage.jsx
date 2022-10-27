@@ -1,9 +1,10 @@
 import React from "react";
-import {useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import styled from "styled-components";
 
 import SearchCourseList from "./SearchCourseList";
+import SearchCourseFilter from "./SearchCourseFilter";
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,8 +18,8 @@ const Wrapper = styled.div`
 `;
 
 const SizingBox = styled.div`
-  width: 90%;
-  height: 90%;
+  width: 95%;
+  height: 95%;
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
@@ -31,6 +32,7 @@ function SearchCoursePage(props) {
   return (
     <Wrapper>
       <SizingBox>
+        <SearchCourseFilter />
         <SearchCourseList courseList={courseList} />
       </SizingBox>
     </Wrapper>

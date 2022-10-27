@@ -12,7 +12,6 @@ public class UserRequestDto {
     private String userId;
     private String userPw;
     private String userName;
-
     private UserRole userRole;
 
     public UserEntity toEntity(){

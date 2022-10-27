@@ -1,5 +1,6 @@
 package com.example.mayoSpringboot.service;
 
+import com.example.mayoSpringboot.dto.SignUpDto;
 import com.example.mayoSpringboot.dto.UserRequestDto;
 import com.example.mayoSpringboot.entity.UserEntity;
 import com.example.mayoSpringboot.enumcustom.UserRole;

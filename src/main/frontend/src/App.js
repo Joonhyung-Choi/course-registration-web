@@ -7,19 +7,19 @@ import LoginPage from "./components/views/LoginPage/LoginPage";
 import MainPage from "./components/views/MainPage/MainPage";
 
 const Wrapper = styled.div`
-  display:flex;
-  width:100vw;
-  height:100vh;
+  display: flex;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
 `;
 
 function App() {
-
   return (
     <Wrapper>
-        <Routes>
-            <Route path="/" element={<LoginPage />}/>
-            <Route path="/mayo-main/*" element={<MainPage />}/>
-        </Routes>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/mayo-main/*" element={<MainPage />} />
+      </Routes>
     </Wrapper>
   );
 }

@@ -45,7 +45,7 @@ function MainPage() {
         userData={userData}
         xPosition={xPosition}
       />
-      <Main style={{ width: `calc(100vw + ${xPosition}px)`, }}>
+      <Main style={{ width: `calc(100vw + ${xPosition}px)` }}>
         <Routes>
           <Route path="" element={<NoticePage />} />
           <Route path="search-course" element={<SearchCoursePage />} />

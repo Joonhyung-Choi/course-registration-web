@@ -3,43 +3,83 @@ import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function LoginPage(props) {
+import SignUpPage from "./SignUpPage";
+import FindIdPwPage from "./FindIdPwPage";
+
+function LoginPage() {
   const navigate = useNavigate();
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
 
+  const [toggleSignUp, setToggleSignUp] = useState(false);
+  const getToggleSignUp = (toggleSignUp) => {
+    setToggleSignUp(toggleSignUp);
+  };
+  const [toggleFind, setToggleFind] = useState(false);
+  const getToggleFind = (toggleFind) => {
+    setToggleFind(toggleFind);
+  };
+
   let courseList = null;
   let userData = null;
-
+  // input 변경값 감지
   const handleInputId = (e) => {
     setUserId(e.target.value);
   };
   const handleInputPw = (e) => {
     setUserPw(e.target.value);
   };
-
+  // Open Toggle Event
+  const onClickOpenSignUp = () => {
+    setToggleSignUp(true);
+  };
+  const onClickOpenFind = () => {
+    setToggleFind(true);
+  };
+  // Input Enter Event
+  const onEnterPress = async (e) => {
+    if (e.key == "Enter") {
+      await onClickLogin();
+    }
+  };
+  // LoginBtn Click Event
   const onClickLogin = async () => {
+    console.log(userId);
+    console.log(userPw);
     if (userId === "") {
       alert("아이디를 입력하세요.");
+      document.getElementById("login_id").focus();
     } else if (userPw === "") {
       alert("비밀번호를 입력하세요.");
+      document.getElementById("login_pw").focus();
     } else {
-      await axios.post("/login",null,{params: {
-              userId,
-              userPw
-          }
-      }).then(
-          (res)=>{
-              userData = res.data;
-          }
-      ).catch(function(error){
+      await axios
+        .post("/login", null, {
+          params: {
+            userId,
+            userPw,
+          },
+        })
+        .then((res) => {
+          console.log("UserData");
+          console.log(res.data);
+          userData = res.data;
+        })
+        .catch(function (error) {
+          console.log("Login(Id, Pw) Error");
           console.log(error);
           // 오류발생시 실행
-      });
+        });
 
-      await axios.get("/main").then((res) => {
+      await axios
+        .get("/api/test")
+        .then((res) => {
           courseList = res.data.content;
-      });
+        })
+        .catch(function (error) {
+          console.log("MainDB Get Error");
+          console.log(error);
+        });
 
       if (userData !== null) {
         console.log("login");
@@ -60,34 +100,51 @@ function LoginPage(props) {
         alt="mayoUniversityLogo1"
       />
       <Form>
-        <IDPWDiv>
+        <IdPwDiv>
           {/* 가로폭 길이 심하게 줄이면 서로 어긋나면서 뒤틀리는 문제 해결하기 */}
           <InputID
+            id="login_id"
             type="text"
             name="input_id"
             value={userId}
             onChange={handleInputId}
+            onKeyPress={onEnterPress}
             placeholder="ID"
           />
           <PWButtonDiv>
             <InputPW
+              id="login_pw"
               type="password"
               name="input_pw"
               value={userPw}
               onChange={handleInputPw}
+              onKeyPress={onEnterPress}
               placeholder="Password"
             />
             <Button type="button" onClick={onClickLogin}>
               <ButtonImg src="assets/img/sign-in.png" alt="signIn" />
             </Button>
           </PWButtonDiv>
-        </IDPWDiv>
+        </IdPwDiv>
       </Form>
       <P>
         게스트로 로그인 하시려면 아이디와 비밀번호를 <Span>mayo</Span> 로
         입력하세요.
       </P>
-      {/*<p>{location.search}</p>*/}
+      <SignUpPage
+        toggleSignUp={toggleSignUp}
+        getToggleSignUp={getToggleSignUp}
+      />
+      <FindIdPwPage toggleFind={toggleFind} getToggleFind={getToggleFind} />
+      <Toggle>
+        <A onClick={onClickOpenSignUp} style={{ paddingTop: "1px" }}>
+          회원가입
+        </A>
+        <PBefore />
+        <A onClick={onClickOpenFind} style={{ paddingBottom: "2px" }}>
+          아이디•비밀번호찾기
+        </A>
+      </Toggle>
     </Wrapper>
   );
 }
@@ -128,7 +185,7 @@ const Form = styled.div`
   background-color: #fff;
 `;
 
-const IDPWDiv = styled.div`
+const IdPwDiv = styled.div`
   display: flex;
   flex-direction: column;
   // width: 30%;
@@ -158,9 +215,6 @@ const InputID = styled.input`
   position: relative;
   font-size: 15px;
   color: #313131;
-  // 금주's code
-  // height: 5vh;
-  // width: 13%;
   height: 50%;
   width: 100%;
   padding: 12px;
@@ -182,9 +236,6 @@ const InputPW = styled.input`
   position: relative;
   font-size: 15px;
   color: #313131;
-  // 금주's code
-  // height: 5vh;
-  // width: 12%;
   height: 100%;
   width: 100%;
   padding: 12px;
@@ -206,9 +257,6 @@ const Button = styled.button`
   position: relative;
   font-size: 16px;
   min-height: 26px;
-  // 금주's code
-  // height: 5vh;
-  // width: 2.8%;
   height: 100%;
   width: 20%;
 
@@ -237,4 +285,25 @@ const P = styled.p`
 const Span = styled.span`
   color: #d32f2fcb;
   font-weight: 600;
+`;
+const Toggle = styled.div`
+  display: flex;
+  flex-direction: row;
+  color: #313131;
+  font-size: 11px;
+  margin: 0 auto;
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+`;
+const PBefore = styled.div`
+  border-left: 1px solid #313131;
+  height: 60%;
+  margin: 0 5px;
+`;
+const A = styled.a`
+  width: 100px;
+  text-align: right;
+  justify-content: flex-start;
+  cursor: pointer;
 `;

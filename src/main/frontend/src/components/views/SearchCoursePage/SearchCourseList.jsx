@@ -5,7 +5,7 @@ import SearchCourseItem from "./SearchCourseItem";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 30px);
   overflow: auto;
   box-sizing: border-box;
   margin: 0px;
