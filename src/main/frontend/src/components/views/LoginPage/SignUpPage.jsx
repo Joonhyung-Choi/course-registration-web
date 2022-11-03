@@ -7,10 +7,10 @@ import { MdAssignmentTurnedIn } from "react-icons/md";
 
 function SignUpPage(props) {
   const axiosConfig = {
-    headers:{
-      "Content-Type": "application/json"
-    }
-  }
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
   // Close Toggle Event
   const onClickClose = () => {
     props.getToggleSignUp(false);
@@ -41,14 +41,18 @@ function SignUpPage(props) {
       alert("비밀번호를 입력하세요.");
       document.getElementById("signup_pw").focus();
     } else {
+      //0->실패 1->성공 2->ID중복
       await axios
-        .post("/signup",{
+        .post(
+          "/signup",
+          {
             userName,
             userId,
-            userPw
-          }, axiosConfig)
+            userPw,
+          },
+          axiosConfig
+        )
         .then((res) => {
-          console.log(userName, userId, userPw);
           console.log("signup");
           alert("회원가입이 정상적으로 완료되었습니다.");
           setUserName("");

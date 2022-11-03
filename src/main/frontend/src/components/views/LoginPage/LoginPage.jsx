@@ -44,8 +44,6 @@ function LoginPage() {
   };
   // LoginBtn Click Event
   const onClickLogin = async () => {
-    console.log(userId);
-    console.log(userPw);
     if (userId === "") {
       alert("아이디를 입력하세요.");
       document.getElementById("login_id").focus();
@@ -54,15 +52,11 @@ function LoginPage() {
       document.getElementById("login_pw").focus();
     } else {
       await axios
-        .post("/login", null, {
-          params: {
-            userId,
-            userPw,
-          },
+        .post("/login", {
+          userId,
+          userPw,
         })
         .then((res) => {
-          console.log("UserData");
-          console.log(res.data);
           userData = res.data;
         })
         .catch(function (error) {

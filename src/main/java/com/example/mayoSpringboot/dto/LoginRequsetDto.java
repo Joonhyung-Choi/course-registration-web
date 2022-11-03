@@ -1,4 +1,4 @@
-package com.example.mayoSpringboot.controller;
+package com.example.mayoSpringboot.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

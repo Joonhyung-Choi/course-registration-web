@@ -37,8 +37,6 @@ function StyledHomeButton(props) {
 
   const onClick = () => {
     props.getCurrentBtn(props.id);
-    console.log(props.id);
-    console.log(props.currentBtn);
     navigate(`/mayo-main/${props.clickTo}`, {
       state: { userData, courseList },
     });

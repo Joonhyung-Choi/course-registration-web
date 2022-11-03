@@ -41,14 +41,14 @@ const Table = styled.table`
   padding: 0px;
   border-spacing: 0px;
   border-style: none;
-  align-items:center;
-    text-align:center;
+  align-items: center;
+  text-align: center;
 `;
 
 const Tr = styled.tr`
   width: 100%;
-  align-items:center;
-    text-align:center;
+  align-items: center;
+  text-align: center;
 `;
 
 const Th = styled.th`
@@ -56,12 +56,13 @@ const Th = styled.th`
   padding-bottom: 0.23vw;
   margin: 0px;
   font-size: 13.5px;
+  font-weight:normal;
   background-color: #ffcc1d;
   color: #ffffff;
   border: 0px;
   position: sticky;
   top: 0;
-  align-items:center;
+  align-items: center;
 `;
 
 function SearchCourseList(props) {
@@ -94,8 +95,8 @@ function SearchCourseList(props) {
                     <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
           {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
-        {courseList.map((item)=>{
-          return <SearchCourseItem item={item}/>
+        {courseList.map((item) => {
+          return <SearchCourseItem item={item} />;
         })}
       </Table>
     </Wrapper>

@@ -32,7 +32,7 @@ function SearchCoursePage(props) {
   return (
     <Wrapper>
       <SizingBox>
-        <SearchCourseFilter />
+        <SearchCourseFilter courseList={courseList}/>
         <SearchCourseList courseList={courseList} />
       </SizingBox>
     </Wrapper>
