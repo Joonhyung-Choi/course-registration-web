@@ -44,7 +44,7 @@ function SignUpPage(props) {
       //0->실패 1->성공 2->ID중복
       await axios
         .post(
-          "/signup",
+          "/api/signup",
           {
             userName,
             userId,
@@ -67,7 +67,7 @@ function SignUpPage(props) {
           setUserName("");
           setUserId("");
           setUserPw("");
-          props.getToggleSignUp(false);
+          props.getToggleSignUp(true);
         });
     }
   };

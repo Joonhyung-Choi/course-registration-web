@@ -1,9 +1,10 @@
 package com.example.mayoSpringboot.service;
 
-import com.example.mayoSpringboot.dto.SignUpDto;
-import com.example.mayoSpringboot.dto.UserRequestDto;
+import com.example.mayoSpringboot.dto.user.UserRequestDto;
 import com.example.mayoSpringboot.entity.UserEntity;
 import com.example.mayoSpringboot.enumcustom.UserRole;
+import com.example.mayoSpringboot.error.ErrorCode;
+import com.example.mayoSpringboot.error.exception.UnAuthorizedException;
 import com.example.mayoSpringboot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,35 +22,31 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LoginService {
     private final UserRepository userRepository;
-    private final Map<String, Object> sessionBox = new HashMap<>();
+    public static final Map<String, Object> sessionBox = new HashMap<>();
 
     private final PasswordEncoder passwordEncoder;
 
     public String login(String userName, HttpServletResponse response) {
         String session = UUID.randomUUID().toString();
         sessionBox.put(session, userName);
-
+        log.info("로그인서비스" +sessionBox.get(userName));
         Cookie cookie = new Cookie("userName", session);
-        cookie.setMaxAge(5 * 60);
+        cookie.setMaxAge(30 * 60);
         response.addCookie(cookie);
-        log.info(cookie.getValue());
 
         return cookie.getValue();
     }
 
-    public String signUp(UserRequestDto userRequestDto) { //회원가입
+    public void signUp(UserRequestDto userRequestDto) { //회원가입
         if (userRepository.existsByUserId(userRequestDto.getUserId())) {
-            throw new RuntimeException("해당 ID는 이미 사용되고 있어요!");
+            throw new UnAuthorizedException(ErrorCode.ACCESS_DENIED_EXCEPTION,"해당 계정이 이미 존재합니다.");
         }
         String encodedPassEncoder = passwordEncoder.encode(userRequestDto.getUserPw());
         userRequestDto.setUserPw(encodedPassEncoder);
-
-        log.info(userRequestDto.getUserId());
 
         userRequestDto.setUserRole(UserRole.USER);
 
         UserEntity userEntity = userRequestDto.toEntity();
         userRepository.save(userEntity);
-        return "회원가입 완료";
     }
 }

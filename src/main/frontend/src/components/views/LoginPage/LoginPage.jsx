@@ -52,7 +52,7 @@ function LoginPage() {
       document.getElementById("login_pw").focus();
     } else {
       await axios
-        .post("/login", {
+        .post("/api/login", {
           userId,
           userPw,
         })
@@ -66,9 +66,10 @@ function LoginPage() {
         });
 
       await axios
-        .get("/api/test")
+        .get("/api/main")
         .then((res) => {
           courseList = res.data.content;
+          console.log(courseList);
         })
         .catch(function (error) {
           console.log("MainDB Get Error");
@@ -102,7 +103,7 @@ function LoginPage() {
             name="input_id"
             value={userId}
             onChange={handleInputId}
-            onKeyPress={onEnterPress}
+            onKeyDown={onEnterPress}
             placeholder="ID"
           />
           <PWButtonDiv>
@@ -112,7 +113,7 @@ function LoginPage() {
               name="input_pw"
               value={userPw}
               onChange={handleInputPw}
-              onKeyPress={onEnterPress}
+              onKeyDown={onEnterPress}
               placeholder="Password"
             />
             <Button type="button" onClick={onClickLogin}>

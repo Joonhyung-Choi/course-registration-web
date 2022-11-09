@@ -1,5 +1,6 @@
 import React from "react";
 import {useLocation} from "react-router-dom";
+import axios from "axios";
 
 import styled from "styled-components";
 
@@ -25,14 +26,14 @@ const SizingBox = styled.div`
 function RegisterPage(props) {
     const location = useLocation();
     const courseList = location.state.courseList;
+    let dataBung = [];
 
-  return (
-    <Wrapper>
-      <SizingBox>
-        <div>나는 수강신청 페이지야~</div>
-      </SizingBox>
-    </Wrapper>
-  );
+    return (
+        <Wrapper>
+            <SizingBox>
+            </SizingBox>
+        </Wrapper>
+    );
 }
 
 export default RegisterPage;

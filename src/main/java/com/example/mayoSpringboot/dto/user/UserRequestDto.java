@@ -1,10 +1,9 @@
-package com.example.mayoSpringboot.dto.User;
+package com.example.mayoSpringboot.dto.user;
 
 import com.example.mayoSpringboot.entity.UserEntity;
 import com.example.mayoSpringboot.enumcustom.UserRole;
 import lombok.*;
 
-@Builder
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor

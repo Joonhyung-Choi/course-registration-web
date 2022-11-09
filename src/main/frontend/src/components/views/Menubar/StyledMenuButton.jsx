@@ -1,5 +1,6 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 
 const Button = styled.button`
@@ -26,21 +27,25 @@ function StyledMenuButton(props) {
 
   const courseList = props.courseList;
   const userData = props.userData;
+  let prevRegister = [];
 
   const onClick = () => {
+    axios.get("/testget").then((res) => {
+      prevRegister = res.data
+    });
     props.getCurrentBtn(props.id);
     navigate(`/mayo-main/${props.clickTo}`, {
-      state: { userData, courseList },
+      state: {userData, courseList, prevRegister,},
     });
   };
 
-  return (
-    <Button
-      onClick={onClick}
-      style={
+              return (
+        <Button
+        onClick={onClick}
+        style={
         props.id === props.currentBtn
-          ? { zIndex: `${props.zIndex}`, background: "#fff" }
-          : { zIndex: `${props.zIndex}`, background: "#fff7d8" }
+        ? { zIndex: `${props.zIndex}`, background: "#fff" }
+        : { zIndex: `${props.zIndex}`, background: "#fff7d8" }
       }
     >
       {props.buttonName}

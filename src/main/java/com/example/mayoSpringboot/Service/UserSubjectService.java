@@ -1,30 +1,39 @@
 package com.example.mayoSpringboot.service;
 
-import com.example.mayoSpringboot.dto.UserSubjcet.UserSubjectRequestDto;
-import com.example.mayoSpringboot.entity.UserSubjectEntity;
+import com.example.mayoSpringboot.dto.usersubjcet.UserSubjectRequestDto;
+import com.example.mayoSpringboot.entity.UserEntity;
+import com.example.mayoSpringboot.entity.UserPreSubjectEntity;
 import com.example.mayoSpringboot.repository.UserRepository;
-import com.example.mayoSpringboot.repository.UserSubjectRepository;
+import com.example.mayoSpringboot.repository.UserPreSubjectRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserSubjectService {
     private final UserRepository userRepository;
-    private final UserSubjectRepository userSubjectRepository;
-    public String update(String userName, UserSubjectRequestDto userSubjectRequestDto){
+    private final UserPreSubjectRepository userPreSubjectRepository;
+
+    public String add(String userName, UserSubjectRequestDto userSubjectRequestDto){
 
         userSubjectRequestDto.setUserEntity(userRepository.findByUserName(userName));
-        UserSubjectEntity userSubjectEntity = new UserSubjectEntity();
-        userSubjectEntity.update(userSubjectRequestDto);
-        userSubjectRepository.save(userSubjectEntity);
+        UserPreSubjectEntity userPreSubjectEntity = new UserPreSubjectEntity();
+        userPreSubjectEntity.update(userSubjectRequestDto);
+        userPreSubjectRepository.save(userPreSubjectEntity);
         return "성공?";
     }
-    public Page<UserSubjectEntity> read(Pageable pagealbe){
-        return userSubjectRepository.findAll(pagealbe);
+
+    public List<UserPreSubjectEntity> read(String user) {
+        UserEntity userEntity = userRepository.findByUserName(user);
+        return userPreSubjectRepository.findByUserEntity(userEntity);
+    }
+    public String delete(String user){
+        UserEntity userEntity = userRepository.findByUserName(user);
+        /*userPreSubjectRepository.delete();*/
+        return "삭제완료";
     }
 }

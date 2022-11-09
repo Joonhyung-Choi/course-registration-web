@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {useLocation} from "react-router-dom";
 
 import styled from "styled-components";
@@ -26,15 +26,24 @@ const SizingBox = styled.div`
 
 const PrevRegisterBox = styled.div`
   width : 100%;
-  height : 50%;
+  height :45%;
   overflow : auto;
   
 `
 
 const MyPrevRegisterBox = styled.div`
   width : 100%;
-  height : 50%;
+  height : 45%;
   overflow : auto;
+`
+const NamingBox = styled.div`
+  width : 100%;
+  height : 5%;
+`
+
+const NamingH2 = styled.h2`
+    margin : 5px 0;
+    text-align : center;
 `
 
 function PrevRegisterPage() {
@@ -56,19 +65,34 @@ function PrevRegisterPage() {
     // 4. axios 통신을 통해 유저의 신청 과목 리스트를 리턴받아옴
     // 5. 해당 정보를 어떻게든 PrevRegisterpage 혹은 그 하위의 List 컴포넌트들에 전달(방법 2 끝)
 
+    // 수강신청 버튼이나 수강 쉬소 버튼을 누르면 axios
+    // 페이지를 다시 렌더링
+    // useEffect가 작동하면서 업데이트뒨 수강신청 리스트를 가져옴
 
     const location = useLocation();
     const courseList = location.state.courseList;
+    const prevRegister = location.state.prevRegister;
+    //const getIsClicked = location.state.getIsClicked;
+
+    useEffect(()=>{
+
+    },[]);
 
   return (
     <Wrapper>
       <SizingBox>
+          <NamingBox>
+            <NamingH2>예비수강신청</NamingH2>
+          </NamingBox>
           <PrevRegisterBox>
-              <PrevRegisterList courseList={courseList}/>
+              <PrevRegisterList courseList={courseList} prevRegister={prevRegister} />
           </PrevRegisterBox>
           <hr/>
+          <NamingBox>
+              <NamingH2>예비수강신청 현황</NamingH2>
+          </NamingBox>
           <MyPrevRegisterBox>
-              <MyPrevRegisterList courseList={courseList}/>
+              <MyPrevRegisterList courseList={courseList} prevRegister={prevRegister}/>
           </MyPrevRegisterBox>
       </SizingBox>
     </Wrapper>

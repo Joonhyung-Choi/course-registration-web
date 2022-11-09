@@ -4,9 +4,9 @@ import styled from "styled-components";
 import axios from "axios";
 
 function SearchCourseFilter(props) {
-  const courseList = props.courseList; // Initial Data List
-  const [filterList1, setFilterList1] = useState();
-  const [filterList2, setFilterList2] = useState();
+  const [courseList, setCourseList] = useState(props.courseList); // Initial Data List
+  const [filterList1, setFilterList1] = useState([""]);
+  const [filterList2, setFilterList2] = useState([""]);
 
   const [isSelMajor, setIsSelMajor] = useState(true);
   const [majorValue, setMajorValue] = useState("");
@@ -18,40 +18,22 @@ function SearchCourseFilter(props) {
   // categorySel Event
   const onChangeCategory = (e) => {
     setIsSelMajor(Boolean(e.target.value));
-    setMajorValue(null);
-    setSubjectTypeValue(null);
-    setSubjectNameValue(null);
+    setMajorValue("");
+    setSubjectTypeValue("");
+    setSubjectNameValue("");
     setSubjectIdInput("");
     setSubjectNameOutput("");
   };
   // majorSel Event
   const onChangeMajor = (e) => {
     setMajorValue(e.target.value);
-    setSubjectTypeValue(null);
-    setSubjectNameValue(null);
-    setFilterList1(
-      courseList.filter((item) => {
-        if (majorValue === "") {
-          return item;
-        } else if (item.major === majorValue) {
-          return item;
-        }
-      })
-    );
+    setSubjectTypeValue("");
+    setSubjectNameValue("");
   };
   // subjectTypeSel Event
   const onChangeSubjectType = (e) => {
     setSubjectTypeValue(e.target.value);
-    setSubjectNameValue(null);
-    setFilterList2(
-      filterList1.filter((item) => {
-        if (subjectTypeValue === "") {
-          return item;
-        } else if (subjectTypeValue.includes(item.subject_type)) {
-          return item;
-        }
-      })
-    );
+    setSubjectNameValue("");
   };
   // subjectNameSel Event
   const onChangeSubjectNameSel = (e) => {
@@ -73,13 +55,12 @@ function SearchCourseFilter(props) {
       //filter기능!!!!
     }
   };
-
   return (
     <Wrapper>
       <InnerWrap>
         <DivCategory>
           <PCategory>카테고리: </PCategory>
-          <SelCategory title="전공/학과 조회" onChange={onChangeCategory}>
+          <SelCategory onClick={onChangeCategory}>
             <Option value={"true"}>전공/학과 조회</Option>
             <Option value={""}>과목코드 검색</Option>
           </SelCategory>
@@ -88,7 +69,11 @@ function SearchCourseFilter(props) {
           <>
             <DivMajor>
               <PMajor>학과: </PMajor>
-              <SelMajor title="전체학과" onChange={onChangeMajor}>
+              <SelMajor
+                onClick={onChangeMajor}
+                onChange={onChangeMajor}
+                value={majorValue}
+              >
                 <Option value={""}>전체학과</Option>
                 <Option value={"컴퓨터공학과"}>컴퓨터공학과</Option>
                 <Option value={"교양학부"}>교양학부</Option>
@@ -96,10 +81,14 @@ function SearchCourseFilter(props) {
             </DivMajor>
             <DivSubjectType>
               <PSubjectType>이수구분: </PSubjectType>
-              <SelSubjectType title="전체이수" onChange={onChangeSubjectType}>
+              <SelSubjectType
+                onClick={onChangeSubjectType}
+                onChange={onChangeSubjectType}
+                value={subjectTypeValue}
+              >
                 <Option value={""}>전체이수</Option>
                 <Option value={["교양필수", "전공필수"]}>교양/전공필수</Option>
-                <Option value={["교양선택", "전공필수"]}>교양/전공선택</Option>
+                <Option value={["교양선택", "전공선택"]}>교양/전공선택</Option>
               </SelSubjectType>
             </DivSubjectType>
             <DivSubjectName>
@@ -109,39 +98,68 @@ function SearchCourseFilter(props) {
                 onChange={onChangeSubjectNameSel}
               >
                 <Option value={""}>전체과목</Option>
-                {/* {filterList2.map((item) => {
-                  return (
-                    <Option value={item.subject_name}>
-                      {item.subject_name}
-                    </Option>
-                  );
-                })} */}
+                {courseList.map((item) => {
+                  if (
+                    item.major === majorValue &&
+                    subjectTypeValue.includes(item.subject_type)
+                  ) {
+                    return (
+                      <Option value={item.subject_id}>
+                        {item.subject_name}
+                      </Option>
+                    );
+                  } else if (majorValue === "") {
+                    if (subjectTypeValue === "") {
+                      return (
+                        <Option value={item.subject_id}>
+                          {item.subject_name}
+                        </Option>
+                      );
+                    } else {
+                      if (subjectTypeValue.includes(item.subject_type)) {
+                        return (
+                          <Option value={item.subject_id}>
+                            {item.subject_name}
+                          </Option>
+                        );
+                      }
+                    }
+                  } else if (subjectTypeValue === "") {
+                    if (item.major === majorValue) {
+                      return (
+                        <Option value={item.subject_id}>
+                          {item.subject_name}
+                        </Option>
+                      );
+                    }
+                  }
+                })}
               </SelSubjectName>
             </DivSubjectName>
           </>
         ) : (
           <>
-            {/*<DivSubjectId>*/}
-            {/*  <PSubjectId>과목코드: </PSubjectId>*/}
-            {/*  <InputSubjectId*/}
-            {/*      name="subjectId_input"*/}
-            {/*      placeholder="과목코드를 입력하세요."*/}
-            {/*      value={subjectIdInput}*/}
-            {/*      onChange={onChangeSubjectId}*/}
-            {/*      onKeyPress={onEnter}*/}
-            {/*  ></InputSubjectId>*/}
-            {/*</DivSubjectId>*/}
-            {/*<DivSubjectName>*/}
-            {/*  <PSubjectName>과목: </PSubjectName>*/}
-            {/*  <InputSubjectName*/}
-            {/*      name="subjectId_input"*/}
-            {/*      placeholder="과목코드를 입력하세요."*/}
-            {/*      value={subjectNameOutput}*/}
-            {/*      onChange={onChangeSubjectId}*/}
-            {/*  >*/}
-            {/*    {subjectNameOutput}*/}
-            {/*  </InputSubjectName>*/}
-            {/*</DivSubjectName>*/}
+            <DivSubjectId>
+              <PSubjectId>과목코드: </PSubjectId>
+              <InputSubjectId
+                name="subjectId_input"
+                placeholder="과목코드를 입력하세요."
+                value={subjectIdInput}
+                onChange={onChangeSubjectId}
+                onKeyDown={onEnter}
+              ></InputSubjectId>
+            </DivSubjectId>
+            <DivSubjectName>
+              <PSubjectName>과목: </PSubjectName>
+              <InputSubjectName
+                name="subjectId_input"
+                placeholder="과목코드를 입력하세요."
+                value={subjectNameOutput}
+                onChange={onChangeSubjectId}
+              >
+                {subjectNameOutput}
+              </InputSubjectName>
+            </DivSubjectName>
           </>
         )}
         <BtnSearch>조회</BtnSearch>
@@ -271,6 +289,7 @@ const PSubjectName = styled.p`
 const SelSubjectName = styled.select`
   padding: 0px;
   margin: 0px;
+  width: 225px;
   align-items: center;
   font-size: 11px;
   color: #313131;

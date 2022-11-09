@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface UserSubjectRepository extends JpaRepository<UserPreSubjectEntity, Long> {
+public interface UserPreSubjectRepository extends JpaRepository<UserPreSubjectEntity, Long> {
     List<UserPreSubjectEntity> findByUserEntity(UserEntity userEntity);
 }
