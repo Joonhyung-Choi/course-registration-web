@@ -69,7 +69,6 @@ function LoginPage() {
         .get("/api/main")
         .then((res) => {
           courseList = res.data.content;
-          console.log(courseList);
         })
         .catch(function (error) {
           console.log("MainDB Get Error");

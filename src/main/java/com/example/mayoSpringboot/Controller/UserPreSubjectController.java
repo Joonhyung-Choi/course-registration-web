@@ -17,20 +17,20 @@ public class UserPreSubjectController {
     private final UserSubjectService userSubjectService;
 
 
-    @PostMapping("/test")
+    @PostMapping("/api/prev")
     public String userSubjectAdd(@CookieValue(value = "userName",required = true)String userName,
                                     @RequestBody UserSubjectRequestDto userSubjectRequestDto){
         if(userName == null){return "로그인하세요";}
         String user = (String)LoginService.sessionBox.get(userName);
-        log.info("여기다 "+user);
+
         return userSubjectService.add(user,userSubjectRequestDto);
     }
 
-    @GetMapping("/testget")
+    @GetMapping("/api/prevget")
     public List<UserPreSubjectEntity> userSubjectRead(@CookieValue(value = "userName",required = false)String userName){
         log.info("찍히나?"+userName);
         String user = (String)LoginService.sessionBox.get(userName);
-        log.info("여기다 "+user);
+        log.info("여기다 "+LoginService.sessionBox.get(userName));
         return userSubjectService.read(user);
     }
 
@@ -38,5 +38,11 @@ public class UserPreSubjectController {
     public String userSubjectDelete(@CookieValue(value = "userName",required = true)String userName){
         String user =(String)LoginService.sessionBox.get(userName);
         return userSubjectService.delete(user);
+    }
+
+    @GetMapping("/myregister")//Myregisterpage 시간표
+    public List<UserPreSubjectEntity> myRegister(@CookieValue(value = "userName",required = true)String userName){
+        String user = (String)LoginService.sessionBox.get(userName);
+        return userSubjectService.read(user);
     }
 }

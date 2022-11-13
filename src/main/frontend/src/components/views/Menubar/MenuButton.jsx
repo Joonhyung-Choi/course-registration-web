@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import axios from "axios";
 
 import styled from "styled-components";
 
@@ -25,14 +27,34 @@ const Menubar = styled.div`
   transition: 0.4s ease;
 `;
 
+const ServerTime = styled.div`
+  display: flex;
+  position: absolute;
+  font-size: 14px;
+  color: #666666;
+  top: 50%;
+  right: 10px;
+  transform: translate(0, -50%);
+`;
+
 function MenuButton(props) {
   const courseList = props.courseList;
   const userData = props.userData;
 
-  const [currentBtn, setCurrentBtn] = useState("home");
-  const getCurrentBtn = (currentBtn) => {
-    setCurrentBtn(currentBtn);
-  };
+  const [serverTime, setServerTime] = useState("");
+
+  // useEffect(() => {
+  //   axios.get("api/time").then((res) => {
+  //     setServerTime(res.data);
+  //   });
+  // }, []);
+  //
+  // setInterval (() => {
+  //   axios.get("api/time").then((res) => {
+  //     setServerTime(res.data);
+  //     console.log(serverTime);
+  //   });
+  // }, 1000);
 
   return (
     <Wrapper>
@@ -44,8 +66,6 @@ function MenuButton(props) {
           clickTo=""
           courseList={courseList}
           userData={userData}
-          getCurrentBtn={getCurrentBtn}
-          currentBtn={currentBtn}
         />
         <StyledMenuButton
           id="searchCourse"
@@ -54,8 +74,6 @@ function MenuButton(props) {
           clickTo="search-course"
           courseList={courseList}
           userData={userData}
-          getCurrentBtn={getCurrentBtn}
-          currentBtn={currentBtn}
         />
         <StyledMenuButton
           id="prevRegister"
@@ -64,8 +82,6 @@ function MenuButton(props) {
           clickTo="prev-register"
           courseList={courseList}
           userData={userData}
-          getCurrentBtn={getCurrentBtn}
-          currentBtn={currentBtn}
         />
         <StyledMenuButton
           id="register"
@@ -74,8 +90,6 @@ function MenuButton(props) {
           clickTo="register"
           courseList={courseList}
           userData={userData}
-          getCurrentBtn={getCurrentBtn}
-          currentBtn={currentBtn}
         />
         <StyledMenuButton
           id="myRegister"
@@ -84,9 +98,8 @@ function MenuButton(props) {
           clickTo="my-register"
           courseList={courseList}
           userData={userData}
-          getCurrentBtn={getCurrentBtn}
-          currentBtn={currentBtn}
         />
+        <ServerTime>{serverTime}</ServerTime>
       </Menubar>
     </Wrapper>
   );

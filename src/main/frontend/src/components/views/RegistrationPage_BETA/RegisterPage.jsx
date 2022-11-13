@@ -16,7 +16,7 @@ transition: 0.4s ease;
 `;
 
 // ===== 수강신청 페이지(프로토타입) 메인 컴포넌트 =====
-function RegistPage(props) {
+function RegisterPage(props) {
 
     // 유저가 현재 수강신청한 교과목 목록 배열
     const [currentClass, setCurrentClass] = useState([]);
@@ -41,4 +41,4 @@ function RegistPage(props) {
 
 }
 
-export default RegistPage;
+export default RegisterPage;

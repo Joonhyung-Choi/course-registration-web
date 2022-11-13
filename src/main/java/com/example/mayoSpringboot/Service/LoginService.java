@@ -22,15 +22,17 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LoginService {
     private final UserRepository userRepository;
-    public static final Map<String, Object> sessionBox = new HashMap<>();
+    public static final Map<String, String> sessionBox = new HashMap<>();
 
     private final PasswordEncoder passwordEncoder;
 
     public String login(String userName, HttpServletResponse response) {
         String session = UUID.randomUUID().toString();
         sessionBox.put(session, userName);
+        log.info("로그인서비스" +sessionBox.get(session));
         log.info("로그인서비스" +sessionBox.get(userName));
         Cookie cookie = new Cookie("userName", session);
+        log.info(String.valueOf(cookie));
         cookie.setMaxAge(30 * 60);
         response.addCookie(cookie);
 
@@ -39,7 +41,7 @@ public class LoginService {
 
     public void signUp(UserRequestDto userRequestDto) { //회원가입
         if (userRepository.existsByUserId(userRequestDto.getUserId())) {
-            throw new UnAuthorizedException(ErrorCode.ACCESS_DENIED_EXCEPTION,"해당 계정이 이미 존재합니다.");
+            throw new UnAuthorizedException(ErrorCode.DUPLICATE_USER,"해당 계정이 이미 존재합니다.");
         }
         String encodedPassEncoder = passwordEncoder.encode(userRequestDto.getUserPw());
         userRequestDto.setUserPw(encodedPassEncoder);

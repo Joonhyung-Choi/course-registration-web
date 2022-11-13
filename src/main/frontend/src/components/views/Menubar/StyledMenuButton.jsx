@@ -1,7 +1,9 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { currentPageState } from "../../recoil/currentPageStates";
 
 const Button = styled.button`
   height: 91%;
@@ -23,29 +25,30 @@ const Button = styled.button`
 `;
 
 function StyledMenuButton(props) {
+  const currentPageG = useRecoilValue(currentPageState);
+
   const navigate = useNavigate();
 
   const courseList = props.courseList;
   const userData = props.userData;
-  let prevRegister = [];
+  const [prevRegister, setPrevRegister] = useState([]);
 
   const onClick = () => {
-    axios.get("/testget").then((res) => {
-      prevRegister = res.data
+    axios.get("/api/prevget").then((res) => {
+      setPrevRegister(res.data);
     });
-    props.getCurrentBtn(props.id);
     navigate(`/mayo-main/${props.clickTo}`, {
-      state: {userData, courseList, prevRegister,},
+      state: { userData, courseList, prevRegister },
     });
   };
 
-              return (
-        <Button
-        onClick={onClick}
-        style={
-        props.id === props.currentBtn
-        ? { zIndex: `${props.zIndex}`, background: "#fff" }
-        : { zIndex: `${props.zIndex}`, background: "#fff7d8" }
+  return (
+    <Button
+      onClick={onClick}
+      style={
+        props.clickTo === currentPageG
+          ? { background: "#fff" }
+          : { background: "#fff7d8" }
       }
     >
       {props.buttonName}

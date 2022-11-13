@@ -66,7 +66,7 @@ const Th = styled.th`
 `;
 
 function SearchCourseList(props) {
-  const courseList = props.courseList;
+  const courseList = props.filteringList;
 
   return (
     <Wrapper>

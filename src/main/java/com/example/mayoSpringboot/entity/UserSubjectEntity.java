@@ -1,10 +1,9 @@
 package com.example.mayoSpringboot.entity;
 
-import com.example.mayoSpringboot.dto.UserSubjcet.UserSubjectRequestDto;
+import com.example.mayoSpringboot.dto.usersubjcet.UserSubjectRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 
 import javax.persistence.*;
 

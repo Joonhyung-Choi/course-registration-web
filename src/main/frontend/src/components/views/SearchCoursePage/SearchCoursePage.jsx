@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+
+import {useRecoilState} from "recoil";
+import {currentPageState} from "../../recoil/currentPageStates";
 
 import styled from "styled-components";
 
@@ -26,14 +29,31 @@ const SizingBox = styled.div`
 `;
 
 function SearchCoursePage(props) {
-  const locate = useLocation();
-  const courseList = locate.state.courseList;
+  const location = useLocation();
+  const courseList = location.state.courseList;
+
+  // current page
+  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
+  useEffect(()=>{
+    if(location.pathname==="/mayo-main/search-course"){
+      setCurrentPageG('search-course');
+    }
+  },[]);
+
+  // filtering
+  const [filteringList, setFilteringList] = useState(courseList);
+  const getFilteringList = (filteringList) => {
+    setFilteringList(filteringList);
+  };
 
   return (
     <Wrapper>
       <SizingBox>
-        <SearchCourseFilter courseList={courseList}/>
-        <SearchCourseList courseList={courseList} />
+        <SearchCourseFilter
+          courseList={courseList}
+          getFilteringList={getFilteringList}
+        />
+        <SearchCourseList filteringList={filteringList} />
       </SizingBox>
     </Wrapper>
   );

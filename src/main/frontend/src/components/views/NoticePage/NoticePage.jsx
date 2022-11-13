@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
+
+import {useRecoilState} from "recoil";
+import {currentPageState} from "../../recoil/currentPageStates";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
@@ -13,6 +16,14 @@ import { HiChevronRight, HiChevronLeft } from "react-icons/hi";
 
 function NoticePage(props) {
   const location = useLocation();
+
+  // current page
+  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
+  useEffect(()=>{
+    if(location.pathname==="/mayo-main/"){
+      setCurrentPageG('');
+    }
+  },[]);
 
   const [Notices, setNotices] = useState([
     {
