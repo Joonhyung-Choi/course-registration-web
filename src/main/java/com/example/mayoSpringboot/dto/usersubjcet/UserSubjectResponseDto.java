@@ -16,7 +16,7 @@ public class UserSubjectResponseDto {
 
     private String major;
 
-    private int grade;
+    private String grade;
 
     private String subject_name;
 

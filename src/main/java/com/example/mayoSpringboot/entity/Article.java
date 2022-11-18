@@ -1,5 +1,6 @@
 package com.example.mayoSpringboot.entity;
 
+import com.example.mayoSpringboot.dto.ArticleDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class Article {
     @Column
     private String major; // 개설학과
     @Column
-    private int grade; // 학년
+    private String grade; // 학년
     @Column
     private String subject_name; // 교과목명
     @Column
@@ -34,10 +35,25 @@ public class Article {
     @Column
     private int max_count; // 정원
     @Column
+    private int prev_register_count;// 예비 수강신청 인원
+    @Column
     private int register_count; // 신청인원
     @Column
     private String subject_time; // 수업 시간
     @Column
     private String professor; // 담당교수
 
+    public void update(ArticleDto articleDto){
+        this.major = articleDto.getMajor();
+        this.grade = articleDto.getGrade();
+        this.subject_name = articleDto.getSubject_name();
+        this.subject_id = articleDto.getSubject_id();
+        this.subject_type = articleDto.getSubject_type();
+        this.score = articleDto.getScore();
+        this.max_count = articleDto.getMax_count();
+        this.prev_register_count = articleDto.getPrev_register_count();
+        this.register_count = articleDto.getRegister_count();
+        this.subject_time = articleDto.getSubject_time();
+        this.professor = articleDto.getProfessor();
+    }
 }

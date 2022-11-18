@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { currentPageState } from "../../recoil/currentPageStates";
+import { currentPageState } from "../../recoil/currentStates";
 
 import { HiHome } from "react-icons/hi";
 import styled from "styled-components";
@@ -11,13 +11,8 @@ function StyledHomeButton(props) {
 
   const navigate = useNavigate();
 
-  const courseList = props.courseList;
-  const userData = props.userData;
-
   const onClick = () => {
-    navigate(`/mayo-main/${props.clickTo}`, {
-      state: { userData, courseList },
-    });
+    navigate(`/mayo-main/${props.clickTo}`);
   };
 
   return (

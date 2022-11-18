@@ -12,6 +12,8 @@ public class UserRequestDto {
     private String userPw;
     private String userName;
     private UserRole userRole;
+    private int userScore;
+    private int userPrevScore;
 
     public UserEntity toEntity(){
         UserEntity userEntity = UserEntity.builder()
@@ -19,6 +21,8 @@ public class UserRequestDto {
                 .userPw(userPw)
                 .userName(userName)
                 .userRole(userRole)
+                .userScore(userScore)
+                .userPrevScore(userPrevScore)
                 .build();
         return userEntity;
     }

@@ -11,9 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserSubjectRequestDto {
+    private Long id;
     private UserEntity userEntity;
     private String major;
-    private int grade;
+    private String grade;
     private String subject_name;
     private int subject_id;
     private String subject_type;

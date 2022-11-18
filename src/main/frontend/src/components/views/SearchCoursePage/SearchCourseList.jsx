@@ -56,7 +56,7 @@ const Th = styled.th`
   padding-bottom: 0.23vw;
   margin: 0px;
   font-size: 13.5px;
-  font-weight:normal;
+  font-weight: normal;
   background-color: #ffcc1d;
   color: #ffffff;
   border: 0px;
@@ -95,8 +95,8 @@ function SearchCourseList(props) {
                     <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
           {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
-        {courseList.map((item) => {
-          return <SearchCourseItem item={item} />;
+        {courseList.map((item, idx) => {
+          return <SearchCourseItem item={item} idx={idx}/>;
         })}
       </Table>
     </Wrapper>

@@ -5,6 +5,52 @@ import styled from "styled-components";
 
 import SidebarContent from "./SidebarContent";
 
+function SidebarPage(props) {
+
+  // sidebar toggle event
+  const [isOpen, setIsOpen] = useState(true);
+  const [xPosition, setXPosition] = useState(0);
+  const sidebar = useRef();
+
+  const toggleSidebar = () => {
+    if (xPosition < 0) {
+      props.getXPosition(xPosition);
+      setXPosition(0);
+      setIsOpen(true);
+    } else {
+      props.getXPosition(xPosition);
+      setXPosition(-props.width);
+      setIsOpen(false);
+    }
+  };
+
+  return (
+    <Sidebar
+      ref={sidebar}
+      isOpen={isOpen}
+      style={{
+        width: `${props.width}px`,
+        height: "100%",
+        transform: `translateX(${-xPosition}px)`,
+      }}
+    >
+      <ToggleButton onClick={() => toggleSidebar()}>
+        {isOpen ? (
+          <CloseImage
+            src="assets/img/rightArrow3.png"
+            alt="rightArrowLeftArrow"
+          />
+        ) : (
+          <OpenImage src="assets/img/leftArrow3.png" alt="leftArrow" />
+        )}
+      </ToggleButton>
+      <SidebarContent />
+    </Sidebar>
+  );
+}
+
+export default SidebarPage;
+
 const Sidebar = styled.div`
   background-color: #ffffff;
   box-shadow: -1px 0px 35px -22px gray;
@@ -48,49 +94,3 @@ const OpenImage = styled(FaAngleDoubleLeft)`
   height: 100%;
   color: #fff;
 `;
-
-function SidebarPage(props) {
-  const [isOpen, setIsOpen] = useState(true);
-  const [xPosition, setXPosition] = useState(0);
-  const sidebar = useRef();
-
-  const userData = props.userData;
-
-  const toggleSidebar = () => {
-    if (xPosition < 0) {
-      props.getXPosition(xPosition);
-      setXPosition(0);
-      setIsOpen(true);
-    } else {
-      props.getXPosition(xPosition);
-      setXPosition(-props.width);
-      setIsOpen(false);
-    }
-  };
-
-  return (
-    <Sidebar
-      ref={sidebar}
-      isOpen={isOpen}
-      style={{
-        width: `${props.width}px`,
-        height: "100%",
-        transform: `translateX(${-xPosition}px)`,
-      }}
-    >
-      <ToggleButton onClick={() => toggleSidebar()}>
-        {isOpen ? (
-            <CloseImage
-                src="assets/img/rightArrow3.png"
-                alt="rightArrowLeftArrow"
-            />
-        ) : (
-            <OpenImage src="assets/img/leftArrow3.png" alt="leftArrow" />
-        )}
-      </ToggleButton>
-      <SidebarContent userData={userData} />
-    </Sidebar>
-  );
-}
-
-export default SidebarPage;

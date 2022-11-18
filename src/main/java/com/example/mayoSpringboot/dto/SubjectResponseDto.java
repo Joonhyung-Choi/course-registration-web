@@ -8,7 +8,7 @@ public class SubjectResponseDto {
     //@Enumerated(Enum)
     private String major;
     private String subject_name;
-    private int grade;
+    private String grade;
     private int subject_id;
     private String subject_type;
     private int score;

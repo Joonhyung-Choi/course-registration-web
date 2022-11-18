@@ -33,4 +33,10 @@ public class UserEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole userRole;
+
+    @Column(nullable = false)
+    private int userScore = 0;
+
+    @Column(nullable = false)
+    private int userPrevScore = 0;
 }

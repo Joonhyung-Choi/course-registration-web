@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import { useRecoilValue } from "recoil";
+import { courseListState } from "../../recoil/userDataStates";
+
 import axios from "axios";
 
-import {BsCaretRightFill,BsFillSquareFill} from 'react-icons/bs';
+import { BsCaretRightFill, BsFillSquareFill } from "react-icons/bs";
 
 function SearchCourseFilter(props) {
   let dum = 1;
-  const [courseList, setCourseList] = useState(props.courseList); // Initial Data List
+  const courseListG = useRecoilValue(courseListState); // Initial Data List
   const [isSelMajor, setIsSelMajor] = useState(true);
   const [subjectTypeValue, setSubjectTypeValue] = useState("");
   const [majorValue, setMajorValue] = useState("");
   const [subjectNameValue, setSubjectNameValue] = useState("");
   const [subjectIdInput, setSubjectIdInput] = useState("");
-  const [filterList, setFilterList] = useState(courseList);
+  const [filterList, setFilterList] = useState(courseListG);
   let filteringValue = filterList; // Final Data List
 
   // categorySel Event
@@ -28,13 +31,13 @@ function SearchCourseFilter(props) {
     if (!isSelMajor) {
       dum = 0;
       if (dum === 0) {
-        props.getFilteringList(courseList);
+        props.getFilteringList(courseListG);
       }
     } else if (isSelMajor) {
       dum = 1;
       if (dum === 1) {
         {
-          props.getFilteringList(courseList);
+          props.getFilteringList(courseListG);
         }
       }
     }
@@ -69,7 +72,7 @@ function SearchCourseFilter(props) {
   // filterList Event
   const getFilterList = () => {
     setFilterList(
-      courseList.filter((item) => {
+      courseListG.filter((item) => {
         if (item.major === majorValue) {
           if (subjectTypeValue.includes(item.subject_type)) {
             return item;
@@ -106,13 +109,10 @@ function SearchCourseFilter(props) {
       props.getFilteringList(filteringValue);
     }
   };
-
   return (
     <Wrapper>
       <InnerWrap>
         <BoardTrg />
-        <BoardLeg  style={{left:"30px"}}/>
-        <BoardLeg style={{right:"24px"}}/>
         <DivCategory>
           <PCategory>카테고리&nbsp;</PCategory>
           <SelCategory onClick={onClickCategory} onChange={onChangeCategory}>
@@ -184,7 +184,7 @@ function SearchCourseFilter(props) {
               <PSubjectName>과목명&nbsp;</PSubjectName>
               <OutputSubjectName>
                 {subjectIdInput.length === 5 &&
-                  courseList.map((item) => {
+                  courseListG.map((item) => {
                     if (String(item.subject_id) === subjectIdInput) {
                       return item.subject_name;
                     }
@@ -217,27 +217,18 @@ const InnerWrap = styled.div`
   height: 23px;
   padding: 2px;
   padding-left: 8px;
-  border-radius:4px;
-  background-color:#b19879;
+  border-radius: 4px;
+  background-color: rgb(129, 138, 146);
   align-items: center;
-  color:#fff;
+  color: #fff;
 `;
 const BoardTrg = styled(BsCaretRightFill)`
-  display:flex;
-  position:absolute;
-  height:31px;
-  width:auto;
-  right:-17px;
-  color:#b19879;
-`;
-const BoardLeg = styled(BsFillSquareFill)`
-  display:flex;
-  position:absolute;
-  height:18px;
-  width:auto;
-  bottom: 4px;
-  color:#b19879;
-  transform: translate(0,100%);
+  display: flex;
+  position: absolute;
+  height: 31px;
+  width: auto;
+  right: -17px;
+  color: rgb(129, 138, 146);
 `;
 // [카테고리] -> 1. 전공/학과 조회  2. 과목검색
 const DivCategory = styled.div`
@@ -256,17 +247,18 @@ const PCategory = styled.p`
 const SelCategory = styled.select`
   padding: 0px;
   margin: 0px;
+  height: 15px;
   align-items: center;
   font-size: 11px;
-  border-radius:7px;
+  border-radius: 7px;
   border: 1px solid #fff;
   background-color: rgba(0, 0, 0, 0);
-  color:#fff;
+  color: #fff;
 `;
 const Option = styled.option`
   align-items: center;
   font-size: 11px;
-  color:#313131;
+  color: #313131;
 `;
 // 1. 전공/학과 조회
 // major
@@ -286,11 +278,12 @@ const PMajor = styled.p`
 const SelMajor = styled.select`
   padding: 0px;
   margin: 0px;
+  height: 15px;
   align-items: center;
   font-size: 11px;
-  border-radius:7px;
+  border-radius: 7px;
   border: 1px solid #fff;
-  color:#fff;
+  color: #fff;
   background-color: rgba(0, 0, 0, 0);
 `;
 // subject_type
@@ -310,11 +303,12 @@ const PSubjectType = styled.p`
 const SelSubjectType = styled.select`
   padding: 0px;
   margin: 0px;
+  height: 15px;
   align-items: center;
   font-size: 11px;
-  border-radius:7px;
+  border-radius: 7px;
   border: 1px solid #fff;
-  color:#fff;
+  color: #fff;
   background-color: rgba(0, 0, 0, 0);
 `;
 // subject_name
@@ -334,12 +328,13 @@ const PSubjectName = styled.p`
 const SelSubjectName = styled.select`
   padding: 0px;
   margin: 0px;
+  height: 15px;
   width: 225px;
   align-items: center;
   font-size: 11px;
-  border-radius:7px;
+  border-radius: 7px;
   border: 1px solid #fff;
-  color:#fff;
+  color: #fff;
   background-color: rgba(0, 0, 0, 0);
 `;
 // 2. 과목검색
@@ -361,31 +356,41 @@ const InputSubjectId = styled.input`
   padding: 0px;
   padding-left: 3px;
   margin: 0px;
-  width: 126px;
+  height: 15px;
+  width: 128px;
   align-items: center;
   font-size: 11px;
-  border-radius:7px;
+  border-radius: 7px;
   border: 1px solid #fff;
-  color:#fff;
+  color: #fff;
   background-color: rgba(0, 0, 0, 0);
+  &::placeholder {
+    color: #cccccc;
+  }
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
 `;
 // subject_name
 const OutputSubjectName = styled.div`
   padding: 0px;
   padding-left: 3px;
   margin: 0px;
-  width: 225px;
-  height: 13.5px;
+  width: 210px;
+  height: 13px;
   align-items: center;
   font-size: 11px;
   border: none;
-  border-bottom: 1px solid #313131;
+  border-bottom: 1px solid #ffffff;
   background-color: rgba(0, 0, 0, 0);
 `;
 // BtnSearch
 const BtnSearch = styled.a`
   padding: 0px 5px;
-  padding-top:3px;
+  padding-top: 3px;
   height: 15px;
   align-items: center;
   justify-content: center;

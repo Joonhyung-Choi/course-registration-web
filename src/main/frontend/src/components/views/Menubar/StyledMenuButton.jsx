@@ -2,8 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
-import { currentPageState } from "../../recoil/currentPageStates";
+
+import { useRecoilValue, useRecoilState } from "recoil";
+import { currentPageState } from "../../recoil/currentStates";
+import {
+  courseListState,
+  userPrevRegisterState,
+  userRegisterState,
+} from "../../recoil/userDataStates";
 
 const Button = styled.button`
   height: 91%;
@@ -25,21 +31,35 @@ const Button = styled.button`
 `;
 
 function StyledMenuButton(props) {
-  const currentPageG = useRecoilValue(currentPageState);
-
   const navigate = useNavigate();
 
-  const courseList = props.courseList;
-  const userData = props.userData;
-  const [prevRegister, setPrevRegister] = useState([]);
+  const currentPageG = useRecoilValue(currentPageState);
+  const [courseListG, setCourseListG] = useRecoilState(courseListState);
+  const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
+  const [userRG, setUserRG] = useRecoilState(userRegisterState);
 
-  const onClick = () => {
-    axios.get("/api/prevget").then((res) => {
-      setPrevRegister(res.data);
+  const onClick = async () => {
+    await axios.get("/api/courseListGet").then((res) => {
+      setCourseListG(res.data.content);
     });
-    navigate(`/mayo-main/${props.clickTo}`, {
-      state: { userData, courseList, prevRegister },
+    await axios.get("/api/prevGet").then((res) => {
+      setUserPRG(res.data);
     });
+    // register axios
+    switch (props.clickTo) {
+      case "search-course":
+        navigate(`/mayo-main/${props.clickTo}`);
+        break;
+      case "prev-register":
+        navigate(`/mayo-main/${props.clickTo}`);
+        break;
+      case "register":
+        navigate(`/mayo-main/${props.clickTo}`);
+        break;
+      case "my-register":
+        navigate(`/mayo-main/${props.clickTo}`);
+        break;
+    }
   };
 
   return (

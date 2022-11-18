@@ -1,47 +1,30 @@
 import React, { useState, useEffect } from "react";
+
 import { useLocation } from "react-router-dom";
 
-import {useRecoilState} from "recoil";
-import {currentPageState} from "../../recoil/currentPageStates";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { currentPageState } from "../../recoil/currentStates";
+import { courseListState } from "../../recoil/userDataStates";
 
 import styled from "styled-components";
 
 import SearchCourseList from "./SearchCourseList";
 import SearchCourseFilter from "./SearchCourseFilter";
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
-`;
-
-const SizingBox = styled.div`
-  width: 95%;
-  height: 95%;
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
-`;
-
 function SearchCoursePage(props) {
   const location = useLocation();
-  const courseList = location.state.courseList;
+  const courseListG = useRecoilValue(courseListState);
 
-  // current page
+  // current states
   const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
-  useEffect(()=>{
-    if(location.pathname==="/mayo-main/search-course"){
-      setCurrentPageG('search-course');
+  useEffect(() => {
+    if (location.pathname === "/mayo-main/search-course") {
+      setCurrentPageG("search-course");
     }
-  },[]);
+  }, []);
 
   // filtering
-  const [filteringList, setFilteringList] = useState(courseList);
+  const [filteringList, setFilteringList] = useState(courseListG);
   const getFilteringList = (filteringList) => {
     setFilteringList(filteringList);
   };
@@ -49,10 +32,7 @@ function SearchCoursePage(props) {
   return (
     <Wrapper>
       <SizingBox>
-        <SearchCourseFilter
-          courseList={courseList}
-          getFilteringList={getFilteringList}
-        />
+        <SearchCourseFilter getFilteringList={getFilteringList} />
         <SearchCourseList filteringList={filteringList} />
       </SizingBox>
     </Wrapper>
@@ -60,3 +40,16 @@ function SearchCoursePage(props) {
 }
 
 export default SearchCoursePage;
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
+const SizingBox = styled.div`
+  width: 95%;
+  height: 95%;
+`;

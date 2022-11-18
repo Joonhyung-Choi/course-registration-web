@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+
+import axios from "axios";
+
 import styled from "styled-components";
 
 import MenuButton from "../Menubar/MenuButton";
@@ -30,8 +33,22 @@ const Main = styled.div`
 
 function MainPage() {
   const location = useLocation();
-  const courseList = location.state.courseList;
-  const userData = location.state.userData;
+
+  // 새로고침 막기
+  const preventClose = (e) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
+  useEffect(() => {
+    (() => {
+      window.addEventListener("beforeunload", preventClose);
+    })();
+
+    return () => {
+      window.removeEventListener("beforeunload", preventClose);
+    };
+  }, []);
+
   // sidebar 크기 조절
   const [xPosition, setXPosition] = useState(-350);
   const getXPosition = (xPosition) => {
@@ -40,11 +57,7 @@ function MainPage() {
 
   return (
     <Wrapper>
-      <MenuButton
-        courseList={courseList}
-        userData={userData}
-        xPosition={xPosition}
-      />
+      <MenuButton xPosition={xPosition} />
       <Main style={{ width: `calc(100vw + ${xPosition}px)` }}>
         <Routes>
           <Route path="" element={<NoticePage />} />
@@ -55,11 +68,7 @@ function MainPage() {
         </Routes>
       </Main>
       {/* SidebarPage width 줄이면 MainPage랑 MenuButton의 xNum도 꼭 맞춰서 수정해주기! */}
-      <SidebarPage
-        width={350}
-        getXPosition={getXPosition}
-        userData={userData}
-      />
+      <SidebarPage width={350} getXPosition={getXPosition} />
     </Wrapper>
   );
 }

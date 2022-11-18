@@ -1,13 +1,20 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import { useRecoilState } from "recoil";
+import { userInfoState } from "../../recoil/userDataStates";
+
+import styled from "styled-components";
 
 import SignUpPage from "./SignUpPage";
 import FindIdPwPage from "./FindIdPwPage";
 
 function LoginPage() {
   const navigate = useNavigate();
+
+  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
+
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
 
@@ -20,8 +27,6 @@ function LoginPage() {
     setToggleFind(toggleFind);
   };
 
-  let courseList = null;
-  let userData = null;
   // input 변경값 감지
   const handleInputId = (e) => {
     setUserId(e.target.value);
@@ -57,33 +62,14 @@ function LoginPage() {
           userPw,
         })
         .then((res) => {
-          userData = res.data;
+          setUserInfoG(res.data);
+          console.log("login");
+          navigate("/mayo-main");
         })
         .catch(function (error) {
-          console.log("Login(Id, Pw) Error");
-          console.log(error);
-          // 오류발생시 실행
+          console.log("login-error");
+          alert("잘못된 아이디 또는 비밀번호입니다.");
         });
-
-      await axios
-        .get("/api/main")
-        .then((res) => {
-          courseList = res.data.content;
-        })
-        .catch(function (error) {
-          console.log("MainDB Get Error");
-          console.log(error);
-        });
-
-      if (userData !== null) {
-        console.log("login");
-        navigate("/mayo-main", { state: { userData, courseList } });
-      } else if (userData === null) {
-        console.log("login-error");
-        alert("잘못된 아이디 또는 비밀번호입니다.");
-      } else {
-        console.log("unexpected-error");
-      }
     }
   };
 
@@ -162,11 +148,9 @@ const LogoImg = styled.img`
 `;
 
 const ButtonImg = styled.img`
-  width: 65%;
   height: 55%;
   min-height: 15px;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin: auto 0px;
   opacity: 0.4;
 `;
 

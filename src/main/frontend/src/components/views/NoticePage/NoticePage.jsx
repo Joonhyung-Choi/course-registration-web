@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
-import {useRecoilState} from "recoil";
-import {currentPageState} from "../../recoil/currentPageStates";
+import axios from "axios";
+
+import { useRecoilState } from "recoil";
+import { currentPageState } from "../../recoil/currentStates";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
@@ -19,11 +21,11 @@ function NoticePage(props) {
 
   // current page
   const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
-  useEffect(()=>{
-    if(location.pathname==="/mayo-main/"){
-      setCurrentPageG('');
+  useEffect(() => {
+    if (location.pathname === "/mayo-main/") {
+      setCurrentPageG("");
     }
-  },[]);
+  }, []);
 
   const [Notices, setNotices] = useState([
     {
@@ -128,7 +130,7 @@ const ImgNotice = styled.img`
   display: flex;
   width: 90%;
   height: auto;
-  margin:auto;
+  margin: auto;
 `;
 const BtnSwiperPrev = styled.a`
   position: absolute;

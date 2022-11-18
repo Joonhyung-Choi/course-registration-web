@@ -26,7 +26,7 @@ public class UserPreSubjectEntity {
     @Column
     private String major; // 개설학과
     @Column
-    private int grade; // 학년
+    private String grade; // 학년
     @Column
     private String subject_name; // 교과목명
     @Column

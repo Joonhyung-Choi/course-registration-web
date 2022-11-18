@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
+
 import { useLocation } from "react-router-dom";
 
 import { useRecoilState } from "recoil";
-import { currentPageState } from "../../recoil/currentPageStates";
+import { currentPageState } from "../../recoil/currentStates";
 
 import styled from "styled-components";
 
@@ -21,7 +22,7 @@ const classInfo = [
     score: 3,
     max_count: 30,
     register_count: 22,
-    subject_time: "월1,2,3(이405)",
+    subject_time: "월1,2,3",
     professor: "공동환",
   },
 
@@ -35,7 +36,7 @@ const classInfo = [
     score: 3,
     max_count: 30,
     register_count: 30,
-    subject_time: "수2,3,4(이101)",
+    subject_time: "수2,3,4",
     professor: "김효석",
   },
 
@@ -49,7 +50,7 @@ const classInfo = [
     score: 3,
     max_count: 30,
     register_count: 9,
-    subject_time: "화3,4,5(이101)",
+    subject_time: "화3,4,5",
     professor: "김형준",
   },
 
@@ -63,7 +64,7 @@ const classInfo = [
     score: 3,
     max_count: 30,
     register_count: 24,
-    subject_time: "목4,5,6(이204)",
+    subject_time: "목4,5,6",
     professor: "공동환",
   },
 
@@ -77,10 +78,44 @@ const classInfo = [
     score: 3,
     max_count: 30,
     register_count: 27,
-    subject_time: "금4,5,6(이204)",
+    subject_time: "금4,5,6",
     professor: "유대현",
   },
 ];
+
+function MyRegisterPage(props) {
+  const location = useLocation();
+  // 예비수강신청 목록 연동시켜놓은 상태, 나중에 수강신청 목록으로 바꿀 예정
+  // const register = classInfo; // 하드코딩 데이터 테스트용
+
+  // current page
+  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
+  useEffect(() => {
+    if (location.pathname === "/mayo-main/my-register") {
+      setCurrentPageG("my-register");
+    }
+  }, []);
+
+  return (
+    <Wrapper>
+      <SizingBox>
+        <MyCourseList /> {/*수강 내역 리스트 컴포넌트*/}
+        <hr />
+        <TimeTable /> {/*시간표 컴포넌트*/}
+        <button
+          onClick={() => {
+            //console.log(register);
+            console.log(classInfo);
+          }}
+        >
+          Test
+        </button>
+      </SizingBox>
+    </Wrapper>
+  );
+}
+
+export default MyRegisterPage;
 
 const Wrapper = styled.div`
   display: flex;
@@ -108,31 +143,3 @@ const SizingBox = styled.div`
 //   background-color: #BBBBBB;
 //   border-radius: 5px;
 // `
-
-function MyRegisterPage(props) {
-  const location = useLocation();
-  // const courseList = location.state.courseList;
-
-  // current page
-  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
-  useEffect(() => {
-    if (location.pathname === "/mayo-main/my-register") {
-      setCurrentPageG("my-register");
-    }
-  }, []);
-
-  const registeredClass = classInfo;
-
-  return (
-    <Wrapper>
-      <SizingBox>
-        <MyCourseList registeredClass={registeredClass} />{" "}
-        {/*수강 내역 리스트 컴포넌트*/}
-        <hr />
-        <TimeTable registeredClass={registeredClass} /> {/*시간표 컴포넌트*/}
-      </SizingBox>
-    </Wrapper>
-  );
-}
-
-export default MyRegisterPage;

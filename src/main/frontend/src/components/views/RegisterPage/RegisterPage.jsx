@@ -1,11 +1,62 @@
-import React, {useEffect} from "react";
-import {useLocation} from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 
-import {useRecoilState} from "recoil";
-import {currentPageState} from "../../recoil/currentPageStates";
+import { useLocation } from "react-router-dom";
+
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  currentPageState,
+  registerSwitchState,
+} from "../../recoil/currentStates";
+import { courseListState } from "../../recoil/userDataStates";
 
 import styled from "styled-components";
+
+import PrevRegisterFilter from "./RegisterFilter";
+import RegisterSwitch from "./RegisterSwitch";
+import RegisterList from "./RegisterList";
+import MyRegisterList from "./MyRegisterList";
+
+function RegisterPage() {
+  const location = useLocation();
+  const courseListG = useRecoilValue(courseListState);
+  const registerSwitchG = useRecoilValue(registerSwitchState);
+
+  // current page
+  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
+  useEffect(() => {
+    if (location.pathname === "/mayo-main/register") {
+      setCurrentPageG("register");
+    }
+  }, []);
+
+  // filtering
+  const [filteringList, setFilteringList] = useState(courseListG);
+  const getFilteringList = (filteringList) => {
+    setFilteringList(filteringList);
+  };
+
+  return (
+    <Wrapper>
+      <SizingBox>
+        <RegisterBox>
+          <PrevRegisterFilter getFilteringList={getFilteringList} />
+          <RegisterSwitch />
+          {registerSwitchG ? (
+            <RegisterList filteringList={filteringList} />
+          ) : (
+            <MyRegisterList />
+          )}
+        </RegisterBox>
+        <MyRegisterBox>
+          <Hr />
+          <MyRegisterList />
+        </MyRegisterBox>
+      </SizingBox>
+    </Wrapper>
+  );
+}
+
+export default RegisterPage;
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,39 +64,24 @@ const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
 `;
-
 const SizingBox = styled.div`
-  width: 90%;
-  height: 90%;
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
+  width: 95%;
+  height: 95%;
 `;
-
-function RegisterPage(props) {
-    const location = useLocation();
-    const courseList = location.state.courseList;
-
-    // current page
-    const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
-    useEffect(()=>{
-        if(location.pathname==="/mayo-main/register"){
-            setCurrentPageG('register');
-        }
-    },[]);
-
-    let dataBung = [];
-
-    return (
-        <Wrapper>
-            <SizingBox>
-            </SizingBox>
-        </Wrapper>
-    );
-}
-
-export default RegisterPage;
+const RegisterBox = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  height: 50%;
+  overflow: auto;
+`;
+const Hr = styled.div`
+  margin: 10px;
+`;
+const MyRegisterBox = styled.div`
+  width: 100%;
+  height: 50%;
+  overflow: auto;
+`;

@@ -3,7 +3,9 @@ package com.example.mayoSpringboot.controller;
 import com.example.mayoSpringboot.dto.LoginRequsetDto;
 import com.example.mayoSpringboot.dto.SignUpDto;
 import com.example.mayoSpringboot.dto.user.UserRequestDto;
+import com.example.mayoSpringboot.dto.user.UserResponseDto;
 import com.example.mayoSpringboot.entity.UserEntity;
+import com.example.mayoSpringboot.error.ErrorCode;
 import com.example.mayoSpringboot.error.exception.UnAuthorizedException;
 import com.example.mayoSpringboot.repository.UserRepository;
 import com.example.mayoSpringboot.service.LoginService;
@@ -26,7 +28,7 @@ public class LoginController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     @PostMapping("/api/login")
-    public String login(@RequestBody LoginRequsetDto loginRequsetDto,
+    public UserResponseDto login(@RequestBody LoginRequsetDto loginRequsetDto,
                         HttpServletResponse response){
         UserEntity userEntity = userRepository.findByUserName(loginRequsetDto.getUserId());
         if (userEntity == null) {
@@ -35,12 +37,15 @@ public class LoginController {
         if ( !passwordEncoder.matches(loginRequsetDto.getUserPw(),userEntity.getUserPw()) ) {
             throw new RuntimeException("비밃번호가 맞지 않습니다.");
         }
-        return loginService.login(userEntity.getUserName(), response);
+        UserResponseDto userResponseDto = new UserResponseDto(userEntity);
+        return loginService.login(userResponseDto, response);
     }
 
     @PostMapping("/api/signup")
-    public void signUp(@RequestBody SignUpDto signUpDto){
-        UserRequestDto userRequestDto = new UserRequestDto(signUpDto.getUserId(), signUpDto.getUserPw(), signUpDto.getUserName(),null);
+    public void signUp(@RequestBody UserRequestDto userRequestDto){
+        if (userRepository.existsByUserId(userRequestDto.getUserId())) {
+            throw new UnAuthorizedException(ErrorCode.DUPLICATE_USER,"해당 계정이 이미 존재합니다.");
+        }
         loginService.signUp(userRequestDto);
     }
 
