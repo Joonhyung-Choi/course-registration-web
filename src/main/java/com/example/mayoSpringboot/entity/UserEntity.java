@@ -35,8 +35,14 @@ public class UserEntity extends BaseTimeEntity {
     private UserRole userRole;
 
     @Column(nullable = false)
-    private int userScore = 0;
+    private int userScore;
 
     @Column(nullable = false)
-    private int userPrevScore = 0;
+    private int userPrevScore;
+
+    @Column(nullable = false)
+    private int userScoreDefault;
+
+    @Column(nullable = false)
+    private int userPrevScoreDefault;
 }

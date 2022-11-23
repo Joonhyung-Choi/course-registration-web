@@ -1,6 +1,5 @@
 // 시간표 위에 뜨는 과목 별 영역
-
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const ClassDiv = styled.div`

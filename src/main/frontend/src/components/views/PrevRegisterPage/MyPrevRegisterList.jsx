@@ -1,18 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-
 import { useRecoilValue } from "recoil";
-import { userPrevRegisterState } from "../../recoil/userDataStates";
-
-import axios from "axios";
-
+import {
+  userInfoState,
+  userPrevRegisterState,
+} from "../../recoil/userDataStates";
 import MyPrevRegisterItem from "./MyPrevRegisterItem";
 
 function MyPrevRegisterList(props) {
+  const userInfoG = useRecoilValue(userInfoState);
   const userPRG = useRecoilValue(userPrevRegisterState);
 
   return (
     <Wrapper>
+      <PrevScore>
+        <P>예비수강신청학점: {userInfoG.userPrevScoreDefault}</P>
+        <P>예비수강신청가능학점: {userInfoG.userPrevScore}</P>
+      </PrevScore>
       <Table>
         <Tr>
           <Th name="id" style={{ borderTopLeftRadius: "15px" }}>
@@ -21,11 +25,11 @@ function MyPrevRegisterList(props) {
           <Th name="major">개설학과</Th>
           <Th name="grade">학년</Th>
           <Th name="subject_name">과목이름</Th>
-          <Th name="subject_id">과목코드</Th>
+          <Th name="subjectId">과목코드</Th>
           <Th name="subject_type">이수구분</Th>
           <Th name="score">학점</Th>
           <Th name="max_count">정원</Th>
-          <Th name="register_count">신청인원</Th>
+          <Th name="register_count">예비수강신청인원</Th>
           <Th name="subject_time">수업시간</Th>
           <Th name="professor">담당교수</Th>
           <Th style={{ borderTopRightRadius: "15px" }}>수강취소</Th>
@@ -77,7 +81,16 @@ const Wrapper = styled.div`
     border-radius: 100px;
   }
 `;
-
+const PrevScore = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 3px 13px;
+`;
+const P = styled.p`
+  font-size: 12px;
+  margin-right: 20px;
+`;
 const Table = styled.table`
   width: 100%;
   background-color: white;
@@ -88,13 +101,11 @@ const Table = styled.table`
   align-items: center;
   text-align: center;
 `;
-
 const Tr = styled.tr`
   width: 100%;
   align-items: center;
   text-align: center;
 `;
-
 const Th = styled.th`
   padding: 0.45vw;
   padding-bottom: 0.23vw;

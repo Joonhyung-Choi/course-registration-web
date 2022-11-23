@@ -1,8 +1,6 @@
 package com.example.mayoSpringboot.controller;
 
-import com.example.mayoSpringboot.entity.Article;
-import com.example.mayoSpringboot.error.ErrorCode;
-import com.example.mayoSpringboot.error.exception.UnAuthorizedException;
+import com.example.mayoSpringboot.entity.subjectEntity.Article;
 import com.example.mayoSpringboot.repository.ArticleRepository;
 import com.example.mayoSpringboot.time.TimeGet;
 import lombok.RequiredArgsConstructor;
@@ -10,15 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -36,14 +28,12 @@ public class SubjectController {
         pageable = PageRequest.of(page, 20);
 
         Page<Article> result = articleRepository.findAll(pageable);
-//        log.info(result.toString());
-
 
         return articleRepository.findAll(pageable);//pageable
         //Collections.sort(articlePage,new IdComparator());
         //return articlePage;
     }
-    class IdComparator implements Comparator<Article>{
+    /*class IdComparator implements Comparator<Article>{
         @Override
         public int compare(Article a, Article b){
             if(a.getId() > b.getId()){
@@ -51,12 +41,11 @@ public class SubjectController {
             }else
                 return -1;
         }
-    }
+    }*/
 
     @GetMapping("/api/time")
     public String timeThrow(){
         TimeGet timeGet = new TimeGet();
-        log.info(timeGet.getTime());
         return timeGet.getTime();
     }
 }

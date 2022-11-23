@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import axios from "axios";
-
 import { useRecoilState } from "recoil";
 import {
+  userInfoState,
   courseListState,
   userPrevRegisterState,
 } from "../../recoil/userDataStates";
+import { currentErrorState } from "../../recoil/currentStates";
+import axios from "axios";
 
 function PrevRegisterItem(props) {
+  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
   const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
   const [courseListG, setCourseListG] = useRecoilState(courseListState);
+  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
+
   let prevBtnValue = {};
 
   const registerButtonClicked = async () => {
@@ -21,7 +25,7 @@ function PrevRegisterItem(props) {
         major: prevBtnValue.major,
         subject_name: prevBtnValue.subject_name,
         grade: prevBtnValue.grade,
-        subject_id: prevBtnValue.subject_id,
+        subjectId: prevBtnValue.subjectId,
         subject_type: prevBtnValue.subject_type,
         score: prevBtnValue.score,
         max_count: prevBtnValue.max_count,
@@ -29,9 +33,14 @@ function PrevRegisterItem(props) {
         subject_time: prevBtnValue.subject_time,
         professor: prevBtnValue.professor,
       })
+      .then((res) => setUserInfoG(res.data))
       .catch(function (error) {
         console.log("PrevBtn Error");
         console.log(error);
+        setCurrentErrorG([error.response.data.errorMessage, true]);
+        setTimeout(function () {
+          setCurrentErrorG([error.response.data.errorMessage, false]);
+        }, 2000);
       });
     await axios.get("/api/prevGet").then((res) => setUserPRG(res.data));
     await axios
@@ -45,11 +54,14 @@ function PrevRegisterItem(props) {
       <Td name={props.item.major}>{props.item.major}</Td>
       <Td name={props.item.grade}>{props.item.grade}</Td>
       <Td name={props.item.subject_name}>{props.item.subject_name}</Td>
-      <Td name={props.item.subject_id}>{props.item.subject_id}</Td>
+      <Td name={props.item.subjectId}>{props.item.subjectId}</Td>
       <Td name={props.item.subject_type}>{props.item.subject_type}</Td>
       <Td name={props.item.score}>{props.item.score}</Td>
       <Td name={props.item.max_count}>{props.item.max_count}</Td>
-      <Td name={props.item.register_count}>{props.item.register_count}</Td>
+      <Td name={props.item.register_count}>
+        {props.item.register_count}&nbsp;(
+        {(props.item.register_count / props.item.max_count).toFixed(4) * 100}%)
+      </Td>
       <Td name={props.item.subject_time}>{props.item.subject_time}</Td>
       <Td name={props.item.professor}>{props.item.professor}</Td>
       <Td>

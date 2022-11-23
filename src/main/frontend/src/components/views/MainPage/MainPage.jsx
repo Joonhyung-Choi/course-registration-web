@@ -1,53 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-
-import axios from "axios";
-
 import styled from "styled-components";
-
 import MenuButton from "../Menubar/MenuButton";
 import SidebarPage from "../SidebarPage/SidebarPage";
-
 import NoticePage from "../NoticePage/NoticePage";
 import SearchCoursePage from "../SearchCoursePage/SearchCoursePage";
 import PrevRegisterPage from "../PrevRegisterPage/PrevRegisterPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import MyRegisterPage from "../MyRegisterPage/MyRegisterPage";
 
-const Wrapper = styled.div`
-  background-color: #ffffff;
-  width: 100vw;
-  height: 100vh;
-`;
-const Main = styled.div`
-  height: 96.5vh;
-  border: 0px;
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
-  background-color: white;
-  z-index: 100;
-  transition: 0.4s ease;
-`;
-
 function MainPage() {
   const location = useLocation();
 
   // 새로고침 막기
-  const preventClose = (e) => {
-    e.preventDefault();
-    e.returnValue = "";
-  };
-  useEffect(() => {
-    (() => {
-      window.addEventListener("beforeunload", preventClose);
-    })();
+  // const preventClose = (e) => {
+  //   e.preventDefault();
+  //   e.returnValue = "";
+  // };
+  // useEffect(() => {
+  //   (() => {
+  //     window.addEventListener("beforeunload", preventClose);
+  //   })();
 
-    return () => {
-      window.removeEventListener("beforeunload", preventClose);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", preventClose);
+  //   };
+  // }, []);
 
   // sidebar 크기 조절
   const [xPosition, setXPosition] = useState(-350);
@@ -74,3 +53,20 @@ function MainPage() {
 }
 
 export default MainPage;
+
+const Wrapper = styled.div`
+  background-color: #ffffff;
+  width: 100vw;
+  height: 100vh;
+`;
+const Main = styled.div`
+  display: flex;
+  height: 96.5vh;
+  border: 0px;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  background-color: white;
+  z-index: 80;
+  transition: 0.4s ease;
+`;

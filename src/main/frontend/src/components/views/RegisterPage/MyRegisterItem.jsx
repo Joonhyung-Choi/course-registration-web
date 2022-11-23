@@ -1,32 +1,42 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-
 import { useRecoilState } from "recoil";
 import {
+  userInfoState,
   courseListState,
   userPrevRegisterState,
+  userRegisterState,
 } from "../../recoil/userDataStates";
+import { currentErrorState } from "../../recoil/currentStates";
 import axios from "axios";
 
 function MyRegisterItem(props) {
-  const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
+  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
   const [courseListG, setCourseListG] = useRecoilState(courseListState);
+  const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
+  const [userRG, setUserRG] = useRecoilState(userRegisterState);
+  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
 
-  let myPrevBtnValue = {};
+  let myRegisterBtnValue = {};
 
   const registerButtonClicked = async () => {
-    myPrevBtnValue = props.item;
-    console.log(myPrevBtnValue.subject_id);
+    myRegisterBtnValue = props.item;
     await axios
-      .delete("/api/prevDelete", {data:myPrevBtnValue.subject_id},)
+      .post("/api/subjectDelete", { subjectId: myRegisterBtnValue.subjectId })
+      .then((res) => setUserInfoG(res.data))
       .catch(function (error) {
-        console.log("MyPrevBtn Error");
+        console.log("MyRegisterBtn Error");
         console.log(error);
+        setCurrentErrorG([error.response.data.errorMessage, true]);
+        setTimeout(function () {
+          setCurrentErrorG([error.response.data.errorMessage, false]);
+        }, 2000);
       });
-    await axios.get("/api/prevGet").then((res) => setUserPRG(res.data));
+    await axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
     await axios
-      .get("/api/main")
+      .get("/api/courseListGet")
       .then((res) => setCourseListG(res.data.content));
+    await axios.get("/api/prevGet").then((res) => setUserPRG(res.data));
   };
 
   return (
@@ -35,11 +45,14 @@ function MyRegisterItem(props) {
       <Td name={props.item.major}>{props.item.major}</Td>
       <Td name={props.item.grade}>{props.item.grade}</Td>
       <Td name={props.item.subject_name}>{props.item.subject_name}</Td>
-      <Td name={props.item.subject_id}>{props.item.subject_id}</Td>
+      <Td name={props.item.subjectId}>{props.item.subjectId}</Td>
       <Td name={props.item.subject_type}>{props.item.subject_type}</Td>
       <Td name={props.item.score}>{props.item.score}</Td>
       <Td name={props.item.max_count}>{props.item.max_count}</Td>
-      <Td name={props.item.register_count}>{props.item.register_count}</Td>
+      <Td name={props.item.register_count}>
+        {props.item.register_count}&nbsp;(
+        {(props.item.register_count / props.item.max_count).toFixed(4) * 100}%)
+      </Td>
       <Td name={props.item.subject_time}>{props.item.subject_time}</Td>
       <Td name={props.item.professor}>{props.item.professor}</Td>
       <Td>

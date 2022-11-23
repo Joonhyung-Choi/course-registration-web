@@ -1,31 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-
 import { useRecoilValue } from "recoil";
-import {
-  courseListState,
-  userPrevRegisterState,
-} from "../../recoil/userDataStates";
-
+import { userRegisterState } from "../../recoil/userDataStates";
 import RegisterItem from "./RegisterItem";
-import axios from "axios";
 
 function RegisterList(props) {
   const filteringList = props.filteringList;
-  const userPRG = useRecoilValue(userPrevRegisterState);
+  const userRG = useRecoilValue(userRegisterState);
 
-  let tempF = filteringList.map((item) => item.subject_id);
-  let tempU = userPRG.map((item) => item.subject_id);
+  let tempF = filteringList.map((item) => item.subjectId);
+  let tempU = userRG.map((item) => item.subjectId);
   let courseListT = tempF.filter((item) => !tempU.includes(item));
 
   useEffect(() => {
-    tempF = filteringList.map((item) => item.subject_id);
-    tempU = userPRG.map((item) => item.subject_id);
+    tempF = filteringList.map((item) => item.subjectId);
+    tempU = userRG.map((item) => item.subjectId);
     courseListT = tempF.filter((item) => !tempU.includes(item));
-  }, [filteringList, userPRG]);
+  }, [filteringList, userRG]);
 
   const courseList = filteringList.filter((item) => {
-    if (courseListT.includes(item.subject_id)) {
+    if (courseListT.includes(item.subjectId)) {
       return item;
     }
   });
@@ -40,11 +34,11 @@ function RegisterList(props) {
           <Th name="major">개설학과</Th>
           <Th name="grade">학년</Th>
           <Th name="subject_name">과목이름</Th>
-          <Th name="subject_id">과목코드</Th>
+          <Th name="subjectId">과목코드</Th>
           <Th name="subject_type">이수구분</Th>
           <Th name="score">학점</Th>
           <Th name="max_count">정원</Th>
-          <Th name="register_count">신청인원</Th>
+          <Th name="register_count">수강신청인원</Th>
           <Th name="subject_time">수업시간</Th>
           <Th name="professor">담당교수</Th>
           <Th style={{ borderTopRightRadius: "15px" }}>수강신청</Th>
@@ -56,7 +50,7 @@ function RegisterList(props) {
                     <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
           {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
-        {courseList.map((item,idx) => {
+        {courseList.map((item, idx) => {
           return <RegisterItem item={item} idx={idx} />;
         })}
       </Table>
@@ -96,7 +90,6 @@ const Wrapper = styled.div`
     border-radius: 100px;
   }
 `;
-
 const Table = styled.table`
   width: 100%;
   background-color: white;
@@ -107,13 +100,11 @@ const Table = styled.table`
   align-items: center;
   text-align: center;
 `;
-
 const Tr = styled.tr`
   width: 100%;
   align-items: center;
   text-align: center;
 `;
-
 const Th = styled.th`
   padding: 0.45vw;
   padding-bottom: 0.23vw;

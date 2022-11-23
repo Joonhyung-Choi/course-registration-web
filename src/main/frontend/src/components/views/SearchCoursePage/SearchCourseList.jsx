@@ -1,7 +1,48 @@
 import React from "react";
 import styled from "styled-components";
-
 import SearchCourseItem from "./SearchCourseItem";
+import {useRecoilValue} from "recoil";
+import {courseListState} from "../../recoil/userDataStates";
+
+function SearchCourseList(props) {
+  const courseListG = useRecoilValue(courseListState);
+  const courseList = props.filteringList;
+
+  return (
+    <Wrapper>
+      <Table>
+        <Tr>
+          <Th name="id" style={{ borderTopLeftRadius: "15px" }}>
+            No.
+          </Th>
+          <Th name="major">개설학과</Th>
+          <Th name="grade">학년</Th>
+          <Th name="subject_name">과목이름</Th>
+          <Th name="subjectId">과목코드</Th>
+          <Th name="subject_type">이수구분</Th>
+          <Th name="score">학점</Th>
+          <Th name="max_count">정원</Th>
+          <Th name="subject_time">수업시간</Th>
+          <Th name="professor" style={{ borderTopRightRadius: "15px" }}>
+            담당교수
+          </Th>
+          {/*<Th name="courseSortation">수업구분</Th>
+                    <Th name="coursePreRequest">예비신청(비율)</Th>--------------------
+                    <Th name="courseTheory">이론</Th>
+                    <Th name="coursePractice">실습</Th>
+                    <Th name="courseArea">영역</Th>
+                    <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
+          {/* <Th name="courseDistribution">분반</Th> */}
+        </Tr>
+        {courseList.map((item, idx) => {
+          return <SearchCourseItem item={item} idx={idx} />;
+        })}
+      </Table>
+    </Wrapper>
+  );
+}
+
+export default SearchCourseList;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -33,7 +74,6 @@ const Wrapper = styled.div`
     border-radius: 100px;
   }
 `;
-
 const Table = styled.table`
   width: 100%;
   background-color: white;
@@ -44,13 +84,11 @@ const Table = styled.table`
   align-items: center;
   text-align: center;
 `;
-
 const Tr = styled.tr`
   width: 100%;
   align-items: center;
   text-align: center;
 `;
-
 const Th = styled.th`
   padding: 0.45vw;
   padding-bottom: 0.23vw;
@@ -64,43 +102,3 @@ const Th = styled.th`
   top: 0;
   align-items: center;
 `;
-
-function SearchCourseList(props) {
-  const courseList = props.filteringList;
-
-  return (
-    <Wrapper>
-      <Table>
-        <Tr>
-          <Th name="id" style={{ borderTopLeftRadius: "15px" }}>
-            No.
-          </Th>
-          <Th name="major">개설학과</Th>
-          <Th name="grade">학년</Th>
-          <Th name="subject_name">과목이름</Th>
-          <Th name="subject_id">과목코드</Th>
-          <Th name="subject_type">이수구분</Th>
-          <Th name="score">학점</Th>
-          <Th name="max_count">정원</Th>
-          <Th name="register_count">신청인원</Th>
-          <Th name="subject_time">수업시간</Th>
-          <Th name="professor" style={{ borderTopRightRadius: "15px" }}>
-            담당교수
-          </Th>
-          {/*<Th name="courseSortation">수업구분</Th>
-                    <Th name="coursePreRequest">예비신청(비율)</Th>--------------------
-                    <Th name="courseTheory">이론</Th>
-                    <Th name="coursePractice">실습</Th>
-                    <Th name="courseArea">영역</Th>
-                    <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
-          {/* <Th name="courseDistribution">분반</Th> */}
-        </Tr>
-        {courseList.map((item, idx) => {
-          return <SearchCourseItem item={item} idx={idx}/>;
-        })}
-      </Table>
-    </Wrapper>
-  );
-}
-
-export default SearchCourseList;

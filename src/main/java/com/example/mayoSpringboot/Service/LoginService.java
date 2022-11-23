@@ -50,4 +50,11 @@ public class LoginService {
         UserEntity userEntity = userRequestDto.toEntity();
         userRepository.save(userEntity);
     }
+    public UserResponseDto cookieGet(String user){
+        UserEntity userEntity = userRepository.findByUserName(user);
+        UserResponseDto userResponseDto = new UserResponseDto(userEntity);
+        userResponseDto.setUserId(null);
+        userResponseDto.setUserPw(null);
+        return userResponseDto;
+    }
 }

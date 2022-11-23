@@ -1,55 +1,6 @@
 // 시간표 컴포넌트
-
 import React, { useState } from "react";
 import styled from "styled-components";
-
-const Wrapper = styled.div`
-  margin: 10px;
-  text-align: center;
-  position: static;
-`;
-
-const Table = styled.table`
-  padding: 0;
-  margin: auto;
-  border: 1px solid;
-  border-collapse: collapse;
-  text-align: center;
-  background-color: #fffffb8e;
-  position: static;
-`;
-
-const Tr = styled.tr`
-  padding: 0;
-  margin: 0;
-  border: 1px solid;
-`;
-
-const TdDay = styled.td`
-  width: 10vw;
-  height: 2vw;
-  padding: 0;
-  border: 1px solid;
-`;
-
-const Th = styled.th`
-  width: 10vw;
-  border: 1px solid;
-`;
-
-const Td = styled.td`
-  width: 10vw;
-  height: 3vw;
-  padding: 0;
-  border: 1px solid;
-`;
-
-const ClassTest = styled.div`
-  margin: 10px auto;
-  padding: 10px;
-  border: 1px solid;
-  width: 50%;
-`;
 
 // ===== 시간표 컴포넌트 =====
 
@@ -61,7 +12,6 @@ function TimeTable(props) {
       const day = "월화수목금";
       return day.indexOf(courseTime[0]);
     }
-
     // 과목 시간 정보에서 강의 시간(몇 교시인지) 추출
     function checkTime(courseTime) {
       courseTime = courseTime.substr(0, courseTime.indexOf("("));
@@ -233,3 +183,45 @@ function TimeTable(props) {
 }
 
 export default TimeTable;
+
+const Wrapper = styled.div`
+  margin: 10px;
+  text-align: center;
+  position: static;
+`;
+const Table = styled.table`
+  padding: 0;
+  margin: auto;
+  border: 1px solid;
+  border-collapse: collapse;
+  text-align: center;
+  background-color: #fffffb8e;
+  position: static;
+`;
+const Tr = styled.tr`
+  padding: 0;
+  margin: 0;
+  border: 1px solid;
+`;
+const TdDay = styled.td`
+  width: 10vw;
+  height: 2vw;
+  padding: 0;
+  border: 1px solid;
+`;
+const Th = styled.th`
+  width: 10vw;
+  border: 1px solid;
+`;
+const Td = styled.td`
+  width: 10vw;
+  height: 3vw;
+  padding: 0;
+  border: 1px solid;
+`;
+const ClassTest = styled.div`
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid;
+  width: 50%;
+`;

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-
 import { useRecoilValue, useRecoilState } from "recoil";
 import { currentPageState } from "../../recoil/currentStates";
 import {
@@ -10,25 +9,6 @@ import {
   userPrevRegisterState,
   userRegisterState,
 } from "../../recoil/userDataStates";
-
-const Button = styled.button`
-  height: 91%;
-  width: 14%;
-  min-width: 140px;
-  font-size: 14px;
-  color: #313131;
-  background-color: #fff7d8;
-  border: 0px;
-  border-radius: 10px 10px 0px 0px;
-  margin: 0px;
-  padding: 0px;
-  padding-top: 0.4vh;
-  box-shadow: 3px -3px 15px -9px gray;
-  cursor: pointer;
-  &:hover {
-    background-color: #e9e2c4;
-  }
-`;
 
 function StyledMenuButton(props) {
   const navigate = useNavigate();
@@ -45,6 +25,7 @@ function StyledMenuButton(props) {
     await axios.get("/api/prevGet").then((res) => {
       setUserPRG(res.data);
     });
+    await axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
     // register axios
     switch (props.clickTo) {
       case "search-course":
@@ -77,3 +58,22 @@ function StyledMenuButton(props) {
 }
 
 export default StyledMenuButton;
+
+const Button = styled.button`
+  height: 91%;
+  width: 14%;
+  min-width: 140px;
+  font-size: 13px;
+  color: #313131;
+  background-color: #fff7d8;
+  border: 0px;
+  border-radius: 10px 10px 0px 0px;
+  margin: 0px;
+  padding: 0px;
+  padding-top: 3px;
+  box-shadow: 3px -3px 15px -9px gray;
+  cursor: pointer;
+  &:hover {
+    background-color: #e9e2c4;
+  }
+`;

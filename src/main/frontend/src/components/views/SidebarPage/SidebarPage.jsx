@@ -1,12 +1,9 @@
 import React, { useRef, useState } from "react";
-
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
 import styled from "styled-components";
-
 import SidebarContent from "./SidebarContent";
 
 function SidebarPage(props) {
-
   // sidebar toggle event
   const [isOpen, setIsOpen] = useState(true);
   const [xPosition, setXPosition] = useState(0);
@@ -63,15 +60,17 @@ const Sidebar = styled.div`
   height: 100%;
   z-index: 99;
 `;
-
 const ToggleButton = styled.button`
+  display: flex;
   position: fixed;
-  left: -55px;
+  left: -42px;
   bottom: 15px;
-  width: 55px;
-  height: 40px;
+  width: 42px;
+  height: 33px;
   z-index: 99;
-  padding-left: 7px;
+  align-items: center;
+  justify-content: center;
+  padding-left: 4px;
   transition: 0.8s ease;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -82,15 +81,13 @@ const ToggleButton = styled.button`
   transition: 0.2s ease;
   cursor: pointer;
 `;
-
 const CloseImage = styled(FaAngleDoubleRight)`
   width: 100%;
   height: 100%;
   color: #fff;
 `;
-
 const OpenImage = styled(FaAngleDoubleLeft)`
-  width: 100%;
-  height: 100%;
+  width: 92%;
+  height: 92%;
   color: #fff;
 `;

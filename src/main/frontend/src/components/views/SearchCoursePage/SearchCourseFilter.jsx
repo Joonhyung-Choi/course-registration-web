@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
 import { useRecoilValue } from "recoil";
 import { courseListState } from "../../recoil/userDataStates";
-
-import axios from "axios";
-
-import { BsCaretRightFill, BsFillSquareFill } from "react-icons/bs";
+import { BsCaretRightFill } from "react-icons/bs";
 
 function SearchCourseFilter(props) {
   let dum = 1;
@@ -18,7 +14,6 @@ function SearchCourseFilter(props) {
   const [subjectIdInput, setSubjectIdInput] = useState("");
   const [filterList, setFilterList] = useState(courseListG);
   let filteringValue = filterList; // Final Data List
-
   // categorySel Event
   const onClickCategory = (e) => {
     setIsSelMajor(Boolean(e.target.value));
@@ -102,7 +97,7 @@ function SearchCourseFilter(props) {
       props.getFilteringList(filteringValue);
     } else if (!isSelMajor) {
       filteringValue = filterList.filter((item) => {
-        if (String(item.subject_id) === subjectIdInput) {
+        if (String(item.subjectId) === subjectIdInput) {
           return item;
         }
       });
@@ -185,7 +180,7 @@ function SearchCourseFilter(props) {
               <OutputSubjectName>
                 {subjectIdInput.length === 5 &&
                   courseListG.map((item) => {
-                    if (String(item.subject_id) === subjectIdInput) {
+                    if (String(item.subjectId) === subjectIdInput) {
                       return item.subject_name;
                     }
                   })}
@@ -338,7 +333,7 @@ const SelSubjectName = styled.select`
   background-color: rgba(0, 0, 0, 0);
 `;
 // 2. 과목검색
-// subject_id
+// subjectId
 const DivSubjectId = styled.div`
   display: flex;
   flex-direction: row;

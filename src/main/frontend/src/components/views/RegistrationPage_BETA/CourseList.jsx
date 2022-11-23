@@ -1,51 +1,9 @@
 // 수강신청 표 컴포넌트
-
 import React, { useState } from "react";
 import styled from "styled-components";
-
 import CourseItem from "./CourseItem.jsx";
 
-const Wrapper = styled.div`
-  margin: 10px;
-`;
-
-const Table = styled.table`
-  background-color: #ffcc1d;
-  color: #ffffff;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  margin: auto;
-  font-size: 10pt;
-`;
-
-const Tr = styled.tr`
-  border-bottom: 2px solid #ffca1d3b;
-`;
-
-const Td = styled.td`
-  padding: 7px;
-  padding-bottom: 3px;
-  border-bottom: solid 1px white;
-  border-left: solid 1px white;
-`;
-
-// 표에서 각 칸마다 왼쪽에 구분선이 있는데 첫번째 열은 외곽선 제거
-const TdFirst = styled(Td)`
-  border-left: 0;
-`;
-
-const RegisterButton = styled.button`
-  background-color: #ff8000;
-  margin: auto;
-  border: 0;
-  border-radius: 4px;
-  &:active {
-    background-color: #e06000;
-  }
-`;
-
 // 강의 정보 데이터 (하드코딩)
-
 const classInfo = [
   {
     indexNumber: 1,
@@ -200,3 +158,37 @@ function CourseList(props) {
 }
 
 export default CourseList;
+
+const Wrapper = styled.div`
+  margin: 10px;
+`;
+const Table = styled.table`
+  background-color: #ffcc1d;
+  color: #ffffff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  margin: auto;
+  font-size: 10pt;
+`;
+const Tr = styled.tr`
+  border-bottom: 2px solid #ffca1d3b;
+`;
+const Td = styled.td`
+  padding: 7px;
+  padding-bottom: 3px;
+  border-bottom: solid 1px white;
+  border-left: solid 1px white;
+`;
+// 표에서 각 칸마다 왼쪽에 구분선이 있는데 첫번째 열은 외곽선 제거
+const TdFirst = styled(Td)`
+  border-left: 0;
+`;
+const RegisterButton = styled.button`
+  background-color: #ff8000;
+  margin: auto;
+  border: 0;
+  border-radius: 4px;
+  &:active {
+    background-color: #e06000;
+  }
+`;

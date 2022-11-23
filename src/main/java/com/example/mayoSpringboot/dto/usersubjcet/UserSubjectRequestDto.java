@@ -16,7 +16,7 @@ public class UserSubjectRequestDto {
     private String major;
     private String grade;
     private String subject_name;
-    private int subject_id;
+    private int subjectId;
     private String subject_type;
     private int score;
     private int max_count;

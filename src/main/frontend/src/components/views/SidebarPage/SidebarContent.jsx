@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-
-import {useRecoilValue} from "recoil";
-import {userInfoState} from "../../recoil/userDataStates";
-
-import { BsPersonFill, BsBox, BsTable } from "react-icons/bs";
+import { useRecoilValue } from "recoil";
+import { userInfoState } from "../../recoil/userDataStates";
+import { BsPersonFill } from "react-icons/bs";
 import { HiDocumentText } from "react-icons/hi";
+
+import MiniTable from "./MiniTable";
 
 function SidebarContent(props) {
   const userInfoG = useRecoilValue(userInfoState);
@@ -27,16 +27,19 @@ function SidebarContent(props) {
             <PrevRegister>
               <LeftP>예비수강신청학점</LeftP>
               <Hr />
-              <RightP>{userInfoG.userPrevScore}</RightP>
+              <RightP>{userInfoG.userPrevScoreDefault}</RightP>
             </PrevRegister>
             <Register>
               <LeftP>수강신청학점</LeftP>
               <Hr />
-              <RightP>{userInfoG.userScore}</RightP>
+              <RightP>{userInfoG.userScoreDefault}</RightP>
             </Register>
           </RegisterContext>
         </RegisterInfo>
       </Info>
+      <TableArea>
+        <MiniTable/>
+      </TableArea>
     </Wrapper>
   );
 }
@@ -63,18 +66,18 @@ const UserInfo = styled.div`
   margin-bottom: 35px;
 `;
 const UserIcon = styled(BsPersonFill)`
-  width: 25px;
-  height: 25px;
-  margin-right: 18px;
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
   color: #313131;
 `;
 const UserContext = styled.div`
   display: flex;
   flex-direction: column;
   color: #313131;
-  padding-top: 7px;
+  padding-top: 5px;
   margin: 0;
-  font-size: 16px;
+  font-size: 13px;
 `;
 const RegisterInfo = styled.div`
   display: flex;
@@ -82,15 +85,15 @@ const RegisterInfo = styled.div`
   margin-bottom: 35px;
 `;
 const RegisterIcon = styled(HiDocumentText)`
-  width: 25px;
-  height: 25px;
-  margin-right: 18px;
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
   color: #313131;
 `;
 const RegisterContext = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 7px;
+  padding-top: 5px;
   width: 130px;
 `;
 const PrevRegister = styled.div`
@@ -105,12 +108,13 @@ const Register = styled.div`
 const LeftP = styled.p`
   display: flex;
   color: #313131;
-  font-size: 14px;
+  font-size: 12px;
+  letter-spacing: -0.8px;
 `;
 const RightP = styled.p`
   display: flex;
   color: #313131;
-  font-size: 16px;
+  font-size: 13px;
   margin-left: auto;
 `;
 const Hr = styled.div`
@@ -118,4 +122,8 @@ const Hr = styled.div`
   height: 1px;
   margin: 4px 0;
   border-bottom: 1px solid #aaaaaa;
+`;
+const TableArea = styled.div`
+  width: 100%;
+  height: 30%;
 `;

@@ -1,33 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-
-import axios from "axios";
-
+import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import { userInfoState } from "../../recoil/userDataStates";
 import { currentPageState } from "../../recoil/currentStates";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./Swiper.css";
-
 import styled from "styled-components";
 import { HiChevronRight, HiChevronLeft } from "react-icons/hi";
+import axios from "axios";
 
 function NoticePage(props) {
+  const navigate = useNavigate();
   const location = useLocation();
 
   // current page
   const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
+  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
   useEffect(() => {
     if (location.pathname === "/mayo-main/") {
       setCurrentPageG("");
     }
+    axios.post("/api/cookieGet").then((res) => {
+      setUserInfoG(res.data);
+      if (res.data.userName === "") {
+        navigate("/");
+      }
+    }).catch(error=>{
+    });
   }, []);
 
-  const [Notices, setNotices] = useState([
+  const Notices=[
     {
       index: 0,
       src: "/assets/img/notice1.jpg",
@@ -54,7 +60,7 @@ function NoticePage(props) {
       index: 5,
       src: "/assets/img/notice2.jpg",
     },
-  ]);
+  ];
 
   SwiperCore.use([Navigation, Pagination]);
 
@@ -142,8 +148,8 @@ const BtnSwiperPrev = styled.a`
   transform: translate(0, 0);
 `;
 const ImgSwiperPrev = styled(HiChevronLeft)`
-  width: 50px;
-  height: 50px;
+  width: 38px;
+  height: 38px;
   color: #313131;
 `;
 const BtnSwiperNext = styled.a`
@@ -156,8 +162,8 @@ const BtnSwiperNext = styled.a`
   transform: translate(0, 0);
 `;
 const ImgSwiperNext = styled(HiChevronRight)`
-  width: 50px;
-  height: 50px;
+  width: 38px;
+  height: 38px;
   color: #313131;
 `;
 const DivPagination = styled.div`

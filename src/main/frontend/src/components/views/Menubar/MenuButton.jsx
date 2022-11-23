@@ -1,41 +1,9 @@
 import React from "react";
-
 import { useRecoilValue } from "recoil";
 import { serverTimeState } from "../../recoil/currentStates";
-
 import styled from "styled-components";
-
 import StyledMenuButton from "./StyledMenuButton";
 import StyledHomeButton from "./StyledHomeButton";
-
-const Wrapper = styled.div`
-  width: 100vw;
-  height: 3.5vh;
-  background-color: #f6f6f6;
-`;
-
-const Menubar = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: row;
-  justify-content: left;
-  align-items: flex-end;
-  background-color: #f6f6f6;
-  height: 3.6vh;
-  padding: 0;
-  margin: 0;
-  z-index: 9;
-  transition: 0.4s ease;
-`;
-
-const ServerTime = styled.div`
-  display: flex;
-  position: absolute;
-  font-size: 13px;
-  color: #888888;
-  bottom: 0px;
-  right: 5px;
-`;
 
 function MenuButton(props) {
   const serverTimeG = useRecoilValue(serverTimeState);
@@ -71,3 +39,30 @@ function MenuButton(props) {
 }
 
 export default MenuButton;
+
+const Wrapper = styled.div`
+  width: 100vw;
+  height: 3.5vh;
+  background-color: #f6f6f6;
+`;
+const Menubar = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: left;
+  align-items: flex-end;
+  background-color: #f6f6f6;
+  height: 3.6vh;
+  padding: 0;
+  margin: 0;
+  z-index: 9;
+  transition: 0.4s ease;
+`;
+const ServerTime = styled.div`
+  display: flex;
+  position: absolute;
+  font-size: 13px;
+  color: #888888;
+  bottom: 0px;
+  right: 5px;
+`;

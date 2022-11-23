@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { currentPageState } from "../../recoil/currentStates";
-
 import { HiHome } from "react-icons/hi";
 import styled from "styled-components";
 
@@ -40,7 +39,7 @@ const Button = styled.button`
   border: 0px;
   border-radius: 10px 10px 0px 0px;
   margin: 0px;
-  padding: 3px 5px;
+  padding: 4px 5px 3px;
   box-shadow: 3px -3px 15px -10px gray;
   cursor: pointer;
   &:hover {
@@ -51,7 +50,7 @@ const Button = styled.button`
   }
 `;
 const ImgHome = styled(HiHome)`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   color: #313131;
 `;

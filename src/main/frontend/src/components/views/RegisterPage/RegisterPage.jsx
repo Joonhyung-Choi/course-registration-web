@@ -1,34 +1,47 @@
 import React, { useEffect, useState } from "react";
-
-import { useLocation } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   currentPageState,
   registerSwitchState,
 } from "../../recoil/currentStates";
-import { courseListState } from "../../recoil/userDataStates";
-
+import {
+  userInfoState,
+  courseListState,
+  userRegisterState,
+} from "../../recoil/userDataStates";
 import styled from "styled-components";
-
-import PrevRegisterFilter from "./RegisterFilter";
+import RegisterFilter from "./RegisterFilter";
 import RegisterSwitch from "./RegisterSwitch";
+import PrevRegisterList from "./PrevRegisterList";
 import RegisterList from "./RegisterList";
 import MyRegisterList from "./MyRegisterList";
+import axios from "axios";
 
 function RegisterPage() {
+  const navigate = useNavigate();
   const location = useLocation();
-  const courseListG = useRecoilValue(courseListState);
   const registerSwitchG = useRecoilValue(registerSwitchState);
-
   // current page
   const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
+  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
+  const [courseListG, setCourseListG] = useRecoilState(courseListState);
+  const [userRG, setUserRG] = useRecoilState(userRegisterState);
   useEffect(() => {
     if (location.pathname === "/mayo-main/register") {
       setCurrentPageG("register");
     }
+    axios
+      .post("/api/cookieGet")
+      .then((res) => {
+        setUserInfoG(res.data);
+        if (res.data.userName === "") {
+          navigate("/");
+        }
+      })
+      .catch((error) => {});
+    axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
   }, []);
-
   // filtering
   const [filteringList, setFilteringList] = useState(courseListG);
   const getFilteringList = (filteringList) => {
@@ -39,12 +52,12 @@ function RegisterPage() {
     <Wrapper>
       <SizingBox>
         <RegisterBox>
-          <PrevRegisterFilter getFilteringList={getFilteringList} />
+          <RegisterFilter getFilteringList={getFilteringList} />
           <RegisterSwitch />
           {registerSwitchG ? (
-            <RegisterList filteringList={filteringList} />
+            <PrevRegisterList filteringList={filteringList} />
           ) : (
-            <MyRegisterList />
+            <RegisterList filteringList={filteringList} />
           )}
         </RegisterBox>
         <MyRegisterBox>

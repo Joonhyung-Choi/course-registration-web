@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-
-import { AiFillDropboxSquare, AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import { MdAssignmentTurnedIn } from "react-icons/md";
+import {useRecoilState} from "recoil";
+import {currentErrorState} from "../../recoil/currentStates";
 
 function SignUpPage(props) {
+  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
+
   const axiosConfig = {
     headers: {
       "Content-Type": "application/json",
@@ -13,6 +16,9 @@ function SignUpPage(props) {
   };
   // Close Toggle Event
   const onClickClose = () => {
+    setUserName("");
+    setUserId("");
+    setUserPw("");
     props.getToggleSignUp(false);
   };
   // input 변경값 감지
@@ -32,13 +38,22 @@ function SignUpPage(props) {
   // LoginBtn Click Event
   const onClickSignUp = async () => {
     if (userName === "") {
-      alert("이름을 입력하세요.");
+      setCurrentErrorG(["이름을 입력하세요.", true]);
+      setTimeout(function () {
+        setCurrentErrorG(["이름을 입력하세요.", false]);
+      }, 2000);
       document.getElementById("signup_name").focus();
     } else if (userId === "") {
-      alert("아이디를 입력하세요.");
+      setCurrentErrorG(["아이디를 입력하세요.", true]);
+      setTimeout(function () {
+        setCurrentErrorG(["아이디를 입력하세요.", false]);
+      }, 2000);
       document.getElementById("signup_id").focus();
     } else if (userPw === "") {
-      alert("비밀번호를 입력하세요.");
+      setCurrentErrorG(["비밀번호를 입력하세요.", true]);
+      setTimeout(function () {
+        setCurrentErrorG(["비밀번호를 입력하세요.", false]);
+      }, 2000);
       document.getElementById("signup_pw").focus();
     } else {
       //0->실패 1->성공 2->ID중복
@@ -54,7 +69,10 @@ function SignUpPage(props) {
         )
         .then((res) => {
           console.log("signup");
-          alert("회원가입이 정상적으로 완료되었습니다.");
+          setCurrentErrorG(["회원가입이 완료되었습니다.", true]);
+          setTimeout(function () {
+            setCurrentErrorG(["회원가입이 완료되었습니다.", false]);
+          }, 2000);
           setUserName("");
           setUserId("");
           setUserPw("");
@@ -62,12 +80,10 @@ function SignUpPage(props) {
         })
         .catch(function (error) {
           console.log("SignUp(Name, Id, Pw) Post Error");
-          console.log(error);
-          alert("회원가입이 정상적으로 완료되지 않았습니다.");
-          setUserName("");
-          setUserId("");
-          setUserPw("");
-          props.getToggleSignUp(true);
+          setCurrentErrorG([error.response.data.errorMessage, true]);
+          setTimeout(function () {
+            setCurrentErrorG([error.response.data.errorMessage, false]);
+          }, 2000);
         });
     }
   };

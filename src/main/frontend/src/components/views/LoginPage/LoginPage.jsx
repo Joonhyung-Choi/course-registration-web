@@ -1,19 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
-import { useRecoilState } from "recoil";
-import { userInfoState } from "../../recoil/userDataStates";
-
+import { useNavigate, Navigate } from "react-router-dom";
 import styled from "styled-components";
-
 import SignUpPage from "./SignUpPage";
 import FindIdPwPage from "./FindIdPwPage";
+import { useRecoilState } from "recoil";
+import { userInfoState } from "../../recoil/userDataStates";
+import { currentErrorState } from "../../recoil/currentStates";
 
 function LoginPage() {
   const navigate = useNavigate();
 
   const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
+  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
+
+  useEffect(() => {
+    axios.post("/api/cookieGet").then((res) => {
+      setUserInfoG(res.data);
+      if (res.data.userName !== "") {
+        navigate("/mayo-main");
+      }
+    }).catch(error=>{
+    });
+  }, []);
 
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
@@ -50,10 +59,16 @@ function LoginPage() {
   // LoginBtn Click Event
   const onClickLogin = async () => {
     if (userId === "") {
-      alert("아이디를 입력하세요.");
+      setCurrentErrorG(["아이디를 입력하세요.", true]);
+      setTimeout(function () {
+        setCurrentErrorG(["아이디를 입력하세요.", false]);
+      }, 2000);
       document.getElementById("login_id").focus();
     } else if (userPw === "") {
-      alert("비밀번호를 입력하세요.");
+      setCurrentErrorG(["비밀번호를 입력하세요.", true]);
+      setTimeout(function () {
+        setCurrentErrorG(["비밀번호를 입력하세요.", false]);
+      }, 2000);
       document.getElementById("login_pw").focus();
     } else {
       await axios
@@ -68,7 +83,10 @@ function LoginPage() {
         })
         .catch(function (error) {
           console.log("login-error");
-          alert("잘못된 아이디 또는 비밀번호입니다.");
+          setCurrentErrorG([error.response.data.errorMessage, true]);
+          setTimeout(function () {
+            setCurrentErrorG([error.response.data.errorMessage, false]);
+          }, 2000);
         });
     }
   };
@@ -139,30 +157,26 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
 const LogoImg = styled.img`
-  width: 6.5%;
+  width: 6%;
   min-width: 80px;
   height: auto;
   margin: 0 auto;
 `;
-
 const ButtonImg = styled.img`
   height: 55%;
   min-height: 15px;
   margin: auto 0px;
   opacity: 0.4;
 `;
-
 const Form = styled.div`
   display: flex;
   flex-direction: column;
-  width: 11%;
-  min-width: 152px;
+  width: 10%;
+  min-width: 140px;
   margin: 0 auto;
   background-color: #fff;
 `;
-
 const IdPwDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -173,25 +187,21 @@ const IdPwDiv = styled.div`
   align-items: center;
   margin-left: auto;
   margin-right: auto;
-
-  margin-top: 5.5vh;
-  margin-bottom: 4.4vh;
+  margin-top: 60px;
+  margin-bottom: 40px;
 `;
-
 const PWButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
-
   // width: 13%;
   // height: auto;
   width: 100%;
   height: 50%;
   justify-content: center;
 `;
-
 const InputID = styled.input`
   position: relative;
-  font-size: 15px;
+  font-size: 13px;
   color: #313131;
   height: 50%;
   width: 100%;
@@ -205,14 +215,13 @@ const InputID = styled.input`
     z-index: 2;
   }
   &::-webkit-input-placeholder {
-    font-size: 15px;
+    font-size: 13px;
     color: rgba(0, 0, 0, 0.3);
   }
 `;
-
 const InputPW = styled.input`
   position: relative;
-  font-size: 15px;
+  font-size: 13px;
   color: #313131;
   height: 100%;
   width: 100%;
@@ -225,11 +234,10 @@ const InputPW = styled.input`
     z-index: 2;
   }
   &::-webkit-input-placeholder {
-    font-size: 15px;
+    font-size: 13px;
     color: rgba(0, 0, 0, 0.3);
   }
 `;
-
 const Button = styled.button`
   min-width: 40px;
   position: relative;
@@ -237,7 +245,6 @@ const Button = styled.button`
   min-height: 26px;
   height: 100%;
   width: 20%;
-
   padding-top: 6px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom-right-radius: 6px;
@@ -250,16 +257,14 @@ const Button = styled.button`
     background: rgb(223, 223, 223, 0.9);
   }
 `;
-
 const P = styled.p`
   padding: 0;
   color: #313131;
   margin: 0;
   margin-bottom: 10px;
-  font-size: 12px;
+  font-size: 11px;
   margin: 0 auto;
 `;
-
 const Span = styled.span`
   color: #d32f2fcb;
   font-weight: 600;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-
 import { AiOutlineClose } from "react-icons/ai";
 
 function FindIdPwPage(props) {

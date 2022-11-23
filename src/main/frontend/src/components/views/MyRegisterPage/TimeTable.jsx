@@ -1,73 +1,14 @@
 // 시간표 컴포넌트
 import React, { useState } from "react";
 import styled from "styled-components";
-
 import { useRecoilValue } from "recoil";
-import { userPrevRegisterState } from "../../recoil/userDataStates";
-
+import { userRegisterState } from "../../recoil/userDataStates";
 import TimeTableClass from "./TimeTableClass";
-
-const Wrapper = styled.div`
-  width: 100%;
-  height: 70%;
-  margin: 10px;
-  text-align: center;
-  margin: auto;
-`;
-
-const TableOuter = styled.div`
-  margin: 0 20px;
-`;
-
-const TableWrapper = styled.div`
-  margin: auto;
-  position: relative;
-`;
-
-const Table = styled.table`
-  margin: auto;
-  padding: 0;
-  width: 100%;
-  text-align: center;
-  background-color: #ffcc1d;
-  color: #404040;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  overflow: hidden;
-  table-layout: fixed;
-`;
-
-const Tr = styled.tr`
-  padding: 0;
-  margin: 0;
-  border-bottom: 2px solid #ffca1d3b;
-`;
-
-const TdDay = styled.td`
-  padding: 0;
-  background-color: #ffcc1d;
-  border-left: solid 1px white;
-  border-bottom: solid 1px white;
-  white-space: nowrap;
-`;
-
-const Th = styled.td`
-  background-color: #ffcc1d;
-  border-bottom: solid 1px white;
-  overflow: hidden;
-`;
-
-const Td = styled.td`
-  padding: 0;
-  border-left: solid 1px white;
-  background-color: #fffdad;
-  color: #000000;
-`;
 
 // ===== 시간표 컴포넌트 =====
 
 function TimeTable(props) {
-  const registeredClass = useRecoilValue(userPrevRegisterState);
+  const registeredClass = useRecoilValue(userRegisterState);
 
   return (
     <Wrapper>
@@ -213,3 +154,53 @@ function TimeTable(props) {
 }
 
 export default TimeTable;
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 70%;
+  margin: 10px;
+  text-align: center;
+  margin: auto;
+`;
+const TableOuter = styled.div`
+  margin: 0 20px;
+`;
+const TableWrapper = styled.div`
+  margin: auto;
+  position: relative;
+`;
+const Table = styled.table`
+  margin: auto;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+  background-color: #ffcc1d;
+  color: #404040;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  overflow: hidden;
+  table-layout: fixed;
+`;
+const Tr = styled.tr`
+  padding: 0;
+  margin: 0;
+  border-bottom: 2px solid #ffca1d3b;
+`;
+const TdDay = styled.td`
+  padding: 0;
+  background-color: #ffcc1d;
+  border-left: solid 1px white;
+  border-bottom: solid 1px white;
+  white-space: nowrap;
+`;
+const Th = styled.td`
+  background-color: #ffcc1d;
+  border-bottom: solid 1px white;
+  overflow: hidden;
+`;
+const Td = styled.td`
+  padding: 0;
+  border-left: solid 1px white;
+  background-color: #fffdad;
+  color: #000000;
+`;

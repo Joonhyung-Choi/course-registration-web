@@ -1,6 +1,6 @@
 package com.example.mayoSpringboot.dto;
 
-import com.example.mayoSpringboot.entity.Article;
+import com.example.mayoSpringboot.entity.subjectEntity.Article;
 import lombok.Getter;
 
 @Getter
@@ -9,7 +9,7 @@ public class SubjectResponseDto {
     private String major;
     private String subject_name;
     private String grade;
-    private int subject_id;
+    private int subjectId;
     private String subject_type;
     private int score;
     private int max_count;
@@ -22,7 +22,7 @@ public class SubjectResponseDto {
         this.major = article.getMajor();
         this.subject_name = article.getSubject_name();
         this.grade = article.getGrade();
-        this.subject_id = article.getSubject_id();
+        this.subjectId = article.getSubjectId();
         this.subject_type = article.getSubject_type();
         this.score = article.getScore();
         this.max_count = article.getMax_count();

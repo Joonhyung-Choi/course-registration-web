@@ -14,10 +14,10 @@
   align-items: center;
 }
 .swiper_pagination_notice .swiper-pagination-bullet {
-  margin: 0 4px;
+  margin: 0 3px;
   padding: 0;
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background-color: #222222;
   opacity: 0.2;

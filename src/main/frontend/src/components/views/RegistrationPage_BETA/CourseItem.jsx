@@ -1,37 +1,6 @@
 // 교과목 리스트 표에 들어갈 각 과목 정보 컴포넌트
-
 import React, { useState } from "react";
 import styled from "styled-components";
-
-const Tr = styled.tr`
-  border-bottom: 2px solid #ffca1d3b;
-`;
-
-const Td = styled.td`
-  padding: 7px;
-  padding-bottom: 3px;
-  border-left: solid 1px white;
-  background-color: #fffdad;
-  color: #000000;
-`;
-
-const TdFirst = styled(Td)`
-  background-color: #ffcc1d;
-  color: #ffffff;
-  border-left: 0;
-`;
-
-const RegisterButton = styled.button`
-  background-color: ${({ classStatus }) =>
-    classStatus ? "#ff8000" : "#00a0ff"};
-  margin: auto;
-  border: 0;
-  border-radius: 4px;
-  &:active {
-    background-color: ${({ classStatus }) =>
-      classStatus ? "#e06000" : "#0080e0"};
-  }
-`;
 
 // 교과목 리스트 표에 들어갈 각 과목 정보 컴포넌트
 function CourseItem(props) {
@@ -144,3 +113,30 @@ function CourseItem(props) {
 }
 
 export default CourseItem;
+
+const Tr = styled.tr`
+  border-bottom: 2px solid #ffca1d3b;
+`;
+const Td = styled.td`
+  padding: 7px;
+  padding-bottom: 3px;
+  border-left: solid 1px white;
+  background-color: #fffdad;
+  color: #000000;
+`;
+const TdFirst = styled(Td)`
+  background-color: #ffcc1d;
+  color: #ffffff;
+  border-left: 0;
+`;
+const RegisterButton = styled.button`
+  background-color: ${({ classStatus }) =>
+    classStatus ? "#ff8000" : "#00a0ff"};
+  margin: auto;
+  border: 0;
+  border-radius: 4px;
+  &:active {
+    background-color: ${({ classStatus }) =>
+      classStatus ? "#e06000" : "#0080e0"};
+  }
+`;

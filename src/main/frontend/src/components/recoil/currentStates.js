@@ -6,7 +6,7 @@ export const currentPageState = atom({
 });
 
 export const registerSwitchState = atom({
-  key:"registerSwitch",
+  key: "registerSwitch",
   default: true,
 });
 
@@ -15,3 +15,7 @@ export const serverTimeState = atom({
   default: "",
 });
 
+export const currentErrorState = atom({
+  key: "currentError",
+  default: ["", false],
+});
