@@ -24,7 +24,7 @@ public class UserEntity extends BaseTimeEntity {
     @Column(nullable = false, length = 30)
     private String userId;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 255)
     private String userPw;
 
     @Column(nullable = false, length = 10)
@@ -33,4 +33,16 @@ public class UserEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole userRole;
+
+    @Column(nullable = false)
+    private int userScore;
+
+    @Column(nullable = false)
+    private int userPrevScore;
+
+    @Column(nullable = false)
+    private int userScoreDefault;
+
+    @Column(nullable = false)
+    private int userPrevScoreDefault;
 }

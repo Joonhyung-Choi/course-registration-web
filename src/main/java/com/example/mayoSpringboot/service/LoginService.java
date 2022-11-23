@@ -1,11 +1,15 @@
 package com.example.mayoSpringboot.service;
 
-import com.example.mayoSpringboot.dto.UserRequestDto;
+import com.example.mayoSpringboot.dto.user.UserRequestDto;
+import com.example.mayoSpringboot.dto.user.UserResponseDto;
 import com.example.mayoSpringboot.entity.UserEntity;
 import com.example.mayoSpringboot.enumcustom.UserRole;
+import com.example.mayoSpringboot.error.ErrorCode;
+import com.example.mayoSpringboot.error.exception.UnAuthorizedException;
 import com.example.mayoSpringboot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,35 +24,37 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LoginService {
     private final UserRepository userRepository;
-    private final Map<String, Object> sessionBox = new HashMap<>();
+    public static final Map<String, String> sessionBox = new HashMap<>();
 
     private final PasswordEncoder passwordEncoder;
 
-    public String login(String userName, HttpServletResponse response) {
+    public UserResponseDto login(UserResponseDto userResponseDto, HttpServletResponse response) {
         String session = UUID.randomUUID().toString();
-        sessionBox.put(session, userName);
-
+        sessionBox.put(session, userResponseDto.getUserName());
         Cookie cookie = new Cookie("userName", session);
-        cookie.setMaxAge(5 * 60);
+        log.info(String.valueOf(cookie));
+        cookie.setMaxAge(30 * 60);
         response.addCookie(cookie);
-        log.info(cookie.getValue());
 
-        return cookie.getValue();
+        userResponseDto.setUserPw(null);
+        userResponseDto.setUserId(null);
+        return userResponseDto;
     }
 
-    public String signUp(UserRequestDto userRequestDto) { //회원가입
-        if (userRepository.existsByUserId(userRequestDto.getUserId())) {
-            throw new RuntimeException("해당 ID는 이미 사용되고 있어요!");
-        }
+    public void signUp(UserRequestDto userRequestDto) { //회원가입
         String encodedPassEncoder = passwordEncoder.encode(userRequestDto.getUserPw());
         userRequestDto.setUserPw(encodedPassEncoder);
 
-        log.info(userRequestDto.getUserId());
-
         userRequestDto.setUserRole(UserRole.USER);
-
+        userRequestDto.setUserScore(18);
         UserEntity userEntity = userRequestDto.toEntity();
         userRepository.save(userEntity);
-        return "회원가입 완료";
+    }
+    public UserResponseDto cookieGet(String user){
+        UserEntity userEntity = userRepository.findByUserName(user);
+        UserResponseDto userResponseDto = new UserResponseDto(userEntity);
+        userResponseDto.setUserId(null);
+        userResponseDto.setUserPw(null);
+        return userResponseDto;
     }
 }
