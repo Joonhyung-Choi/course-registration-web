@@ -51,7 +51,8 @@ function MyRegisterItem(props) {
       <Td name={props.item.max_count}>{props.item.max_count}</Td>
       <Td name={props.item.register_count}>
         {props.item.register_count}&nbsp;(
-        {(props.item.register_count / props.item.max_count).toFixed(4) * 100}%)
+        {((props.item.register_count / props.item.max_count) * 100).toFixed(2)}
+        %)
       </Td>
       <Td name={props.item.subject_time}>{props.item.subject_time}</Td>
       <Td name={props.item.professor}>{props.item.professor}</Td>

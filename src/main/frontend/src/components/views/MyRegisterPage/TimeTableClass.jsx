@@ -3,12 +3,15 @@ import React from "react";
 import styled from "styled-components";
 
 const ClassDiv = styled.div`
+  display: flex;
   position: absolute;
   width: 16%;
-  border: 3px solid orange;
-  background-color: #ffffd0;
+  background-color: #ffcc1d;
   transition: 0.4s ease;
+  opacity: 0.6;
   overflow: hidden;
+  align-items: center;
+  justify-content: center;
 `;
 
 function TimeTableClass(props) {
@@ -30,12 +33,13 @@ function TimeTableClass(props) {
   return (
     <ClassDiv
       style={{
-        left: `${20 + checkDay(item.subject_time) * 15.95}%`,
-        top: `${6 + 10.4 * (checkTime(item.subject_time)[0] - 1)}%`,
-        height: `${checkTime(item.subject_time).length * 10.5}%`,
+        left: `${20 + checkDay(item.subject_time) * 16}%`,
+        top: `${7 + 10.3 * (checkTime(item.subject_time)[0] - 1)}%`,
+        height: `${checkTime(item.subject_time).length * 10.4}%`,
       }}
     >
       {item.subject_name}
+      <br />
       <br />
       {item.subject_time}
       <br />

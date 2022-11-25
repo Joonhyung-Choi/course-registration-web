@@ -13,5 +13,8 @@ public interface UserSubjectRepository extends JpaRepository<UserSubjectEntity, 
     UserSubjectEntity findByUserEntityIdAndSubjectId(Long id, int subjectId);
 
     @Query("SELECT u FROM UserSubjectEntity u JOIN FETCH u.userEntity WHERE u.userEntity.userName =:userName")
-    public List<UserSubjectEntity> findAllByUserSubject(@Param("userName")String userName);
+    public List<UserSubjectEntity> findByUserSubject(@Param("userName")String userName);
+
+    @Query("SELECT u FROM UserSubjectEntity u JOIN FETCH u.userEntity")
+    public List<UserSubjectEntity> findAllUserSubject();
 }

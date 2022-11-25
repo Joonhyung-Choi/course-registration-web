@@ -1,4 +1,4 @@
-package com.example.mayoSpringboot.dto.usersubjcet;
+package com.example.mayoSpringboot.dto.subjcet;
 
 import com.example.mayoSpringboot.entity.UserEntity;
 import lombok.AllArgsConstructor;

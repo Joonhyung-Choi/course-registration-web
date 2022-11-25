@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { userInfoState } from "../../recoil/userDataStates";
-import { currentPageState } from "../../recoil/currentStates";
+import { userInfoState, userRegisterState } from "../../recoil/userDataStates";
+import { currentPageState, serverTimeState } from "../../recoil/currentStates";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 import "swiper/css";
@@ -19,21 +19,35 @@ function NoticePage(props) {
 
   // current page
   const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
+  const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
   const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
+  const [userRG, setUserRG] = useRecoilState(userRegisterState);
   useEffect(() => {
     if (location.pathname === "/mayo-main/") {
       setCurrentPageG("");
     }
-    axios.post("/api/cookieGet").then((res) => {
-      setUserInfoG(res.data);
-      if (res.data.userName === "") {
+    axios
+      .post("/api/cookieGet")
+      .then((res) => {
+        setUserInfoG(res.data);
+        if (res.data.userName === "") {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
         navigate("/");
-      }
-    }).catch(error=>{
+      });
+    axios.get("/api/time").then((res) => {
+      let time = res.data.split(":");
+      time[2] = time[2].split(".")[0];
+      const second =
+          Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
+      setServerTimeG(second);
     });
+    axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
   }, []);
 
-  const Notices=[
+  const Notices = [
     {
       index: 0,
       src: "/assets/img/notice1.jpg",

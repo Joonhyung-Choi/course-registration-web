@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SignUpPage from "./SignUpPage";
 import FindIdPwPage from "./FindIdPwPage";
 import { useRecoilState } from "recoil";
 import { userInfoState } from "../../recoil/userDataStates";
 import { currentErrorState } from "../../recoil/currentStates";
+import { BiLogIn } from "react-icons/bi";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -15,13 +16,15 @@ function LoginPage() {
   const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
 
   useEffect(() => {
-    axios.post("/api/cookieGet").then((res) => {
-      setUserInfoG(res.data);
-      if (res.data.userName !== "") {
-        navigate("/mayo-main");
-      }
-    }).catch(error=>{
-    });
+    axios
+      .post("/api/cookieGet")
+      .then((res) => {
+        setUserInfoG(res.data);
+        if (res.data.userName !== "") {
+          navigate("/mayo-main");
+        }
+      })
+      .catch((error) => {});
   }, []);
 
   const [userId, setUserId] = useState("");
@@ -120,7 +123,7 @@ function LoginPage() {
               placeholder="Password"
             />
             <Button type="button" onClick={onClickLogin}>
-              <ButtonImg src="assets/img/sign-in.png" alt="signIn" />
+              <ButtonImg />
             </Button>
           </PWButtonDiv>
         </IdPwDiv>
@@ -163,11 +166,13 @@ const LogoImg = styled.img`
   height: auto;
   margin: 0 auto;
 `;
-const ButtonImg = styled.img`
-  height: 55%;
+const ButtonImg = styled(BiLogIn)`
+  height: 62%;
+  width: auto;
   min-height: 15px;
   margin: auto 0px;
-  opacity: 0.4;
+  opacity: 0.6;
+  color: #313131;
 `;
 const Form = styled.div`
   display: flex;

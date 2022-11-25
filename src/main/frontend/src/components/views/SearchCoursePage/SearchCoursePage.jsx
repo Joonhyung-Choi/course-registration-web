@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { currentPageState } from "../../recoil/currentStates";
-import { userInfoState, courseListState } from "../../recoil/userDataStates";
+import { useRecoilState } from "recoil";
+import {currentPageState, serverTimeState} from "../../recoil/currentStates";
+import {
+  userInfoState,
+  courseListState,
+  userRegisterState,
+} from "../../recoil/userDataStates";
 import styled from "styled-components";
 import SearchCourseList from "./SearchCourseList";
 import SearchCourseFilter from "./SearchCourseFilter";
@@ -13,9 +17,11 @@ function SearchCoursePage(props) {
   const location = useLocation();
 
   // current states
+  const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
   const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
   const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
   const [courseListG, setCourseListG] = useRecoilState(courseListState);
+  const [userRG, setUserRG] = useRecoilState(userRegisterState);
   useEffect(() => {
     if (location.pathname === "/mayo-main/search-course") {
       setCurrentPageG("search-course");
@@ -29,9 +35,17 @@ function SearchCoursePage(props) {
         }
       })
       .catch((error) => {});
+    axios.get("/api/time").then((res) => {
+      let time = res.data.split(":");
+      time[2] = time[2].split(".")[0];
+      const second =
+          Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
+      setServerTimeG(second);
+    });
     axios.get("/api/courseListGet").then((res) => {
       setCourseListG(res.data.content);
     });
+    axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
   }, []);
 
   // filtering

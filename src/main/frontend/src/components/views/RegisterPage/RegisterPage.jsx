@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   currentPageState,
+  serverTimeState,
   registerSwitchState,
 } from "../../recoil/currentStates";
 import {
@@ -24,6 +25,7 @@ function RegisterPage() {
   const registerSwitchG = useRecoilValue(registerSwitchState);
   // current page
   const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
+  const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
   const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
   const [courseListG, setCourseListG] = useRecoilState(courseListState);
   const [userRG, setUserRG] = useRecoilState(userRegisterState);
@@ -39,7 +41,16 @@ function RegisterPage() {
           navigate("/");
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        navigate("/");
+      });
+    axios.get("/api/time").then((res) => {
+      let time = res.data.split(":");
+      time[2] = time[2].split(".")[0];
+      const second =
+          Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
+      setServerTimeG(second);
+    });
     axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
   }, []);
   // filtering

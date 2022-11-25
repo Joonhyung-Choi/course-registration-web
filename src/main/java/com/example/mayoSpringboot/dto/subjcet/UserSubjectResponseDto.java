@@ -1,4 +1,4 @@
-package com.example.mayoSpringboot.dto.usersubjcet;
+package com.example.mayoSpringboot.dto.subjcet;
 
 import com.example.mayoSpringboot.entity.UserEntity;
 import com.example.mayoSpringboot.entity.subjectEntity.UserPreSubjectEntity;
@@ -6,8 +6,10 @@ import com.example.mayoSpringboot.entity.subjectEntity.UserSubjectEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserSubjectResponseDto {

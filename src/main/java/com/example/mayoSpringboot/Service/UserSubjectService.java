@@ -2,8 +2,8 @@ package com.example.mayoSpringboot.service;
 
 import com.example.mayoSpringboot.dto.ArticleDto;
 import com.example.mayoSpringboot.dto.user.UserRequestDto;
-import com.example.mayoSpringboot.dto.usersubjcet.UserSubjectRequestDto;
-import com.example.mayoSpringboot.dto.usersubjcet.UserSubjectResponseDto;
+import com.example.mayoSpringboot.dto.subjcet.UserSubjectRequestDto;
+import com.example.mayoSpringboot.dto.subjcet.UserSubjectResponseDto;
 import com.example.mayoSpringboot.entity.subjectEntity.Article;
 import com.example.mayoSpringboot.entity.UserEntity;
 import com.example.mayoSpringboot.entity.subjectEntity.UserSubjectEntity;
@@ -65,7 +65,7 @@ public class UserSubjectService {
         UserEntity userEntity = userRepository.findByUserName(user);
         if (userEntity == null){throw new UnAuthorizedException(ACCESS_DENIED_EXCEPTION,"E0001");}
 
-        List<UserSubjectEntity> entityList = userSubjectRepository.findAllByUserSubject(user);
+        List<UserSubjectEntity> entityList = userSubjectRepository.findByUserSubject(user);
         List<UserSubjectResponseDto> dtoList = new ArrayList<>();
         for (UserSubjectEntity userSubjectEntity : entityList){
             dtoList.add(new UserSubjectResponseDto(userSubjectEntity));

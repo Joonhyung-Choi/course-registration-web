@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { userInfoState } from "../../recoil/userDataStates";
-import { currentPageState } from "../../recoil/currentStates";
+import { userInfoState, userRegisterState } from "../../recoil/userDataStates";
+import { currentPageState, serverTimeState } from "../../recoil/currentStates";
 import styled from "styled-components";
 import TimeTable from "./TimeTable";
 import MyCourseList from "./MyCourseList";
@@ -89,26 +89,44 @@ function MyRegisterPage(props) {
 
   // current page
   const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
+  const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
   const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
+  const [userRG, setUserRG] = useRecoilState(userRegisterState);
   useEffect(() => {
     if (location.pathname === "/mayo-main/my-register") {
       setCurrentPageG("my-register");
     }
-    axios.post("/api/cookieGet").then((res) => {
-      setUserInfoG(res.data);
-      if (res.data.userName === "") {
+    axios
+      .post("/api/cookieGet")
+      .then((res) => {
+        setUserInfoG(res.data);
+        if (res.data.userName === "") {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
         navigate("/");
-      }
-    }).catch(error=>{
+      });
+    axios.get("/api/time").then((res) => {
+      let time = res.data.split(":");
+      time[2] = time[2].split(".")[0];
+      const second =
+          Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
+      setServerTimeG(second);
     });
+    axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
   }, []);
 
   return (
     <Wrapper>
       <SizingBox>
-        <MyCourseList /> {/*수강 내역 리스트 컴포넌트*/}
-        <Hr />
-        <TimeTable /> {/*시간표 컴포넌트*/}
+        <MyRegisterBox>
+          <MyCourseList /> {/*수강 내역 리스트 컴포넌트*/}
+          <Hr />
+        </MyRegisterBox>
+        <TimeTableBox>
+          <TimeTable /> {/*시간표 컴포넌트*/}
+        </TimeTableBox>
       </SizingBox>
     </Wrapper>
   );
@@ -127,6 +145,8 @@ const Wrapper = styled.div`
   padding: 0px;
 `;
 const SizingBox = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 90%;
   height: 90%;
   box-sizing: border-box;
@@ -136,10 +156,20 @@ const SizingBox = styled.div`
 const Hr = styled.div`
   margin: 10px;
 `;
+const MyRegisterBox = styled.div`
+  display: flex;
+  width: 100%;
+  height: 25%;
+`;
+const TimeTableBox = styled.div`
+  display: flex;
+  width: 100%;
+  height: 75%;
+`;
 // const DivisionLine = styled.div`
 //   width: 90vw;
 //   height: 10px;
 //   margin: 20px auto;
 //   background-color: #BBBBBB;
 //   border-radius: 5px;
-// `ㄴ
+// `

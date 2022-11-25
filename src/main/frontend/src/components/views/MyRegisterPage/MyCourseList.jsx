@@ -47,7 +47,7 @@ export default MyCourseList;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 30%;
+  height: calc(100% - 20px);
   overflow: auto;
   box-sizing: border-box;
   margin: 0px;

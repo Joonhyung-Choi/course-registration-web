@@ -5,8 +5,8 @@ import styled from "styled-components";
 const ClassDiv = styled.div`
   position: absolute;
   width: 16%;
-  border: 3px solid orange;
-  background-color: #ffffd0;
+  // border: 3px solid orange;
+  background-color: rgba(255, 204, 29, 0.5);
   transition: 0.4s ease;
   overflow: hidden;
 `;
@@ -31,8 +31,8 @@ function TimeTableClass(props) {
         <ClassDiv
             style={{
                 left: `${20 + checkDay(item.subject_time) * 15.95}%`,
-                top: `${9.5 + 10 * (checkTime(item.subject_time)[0] - 1)}%`,
-                height: `${checkTime(item.subject_time).length * 10}%`,
+                top: `${10 + 10 * (checkTime(item.subject_time)[0] - 1)}%`,
+                height: `${checkTime(item.subject_time).length * 10.1}%`,
             }}
         >
             {/*{item.subject_name}*/}

@@ -1,9 +1,9 @@
 package com.example.mayoSpringboot.controller;
 
 import com.example.mayoSpringboot.dto.user.UserRequestDto;
-import com.example.mayoSpringboot.dto.usersubjcet.DeleteDto;
-import com.example.mayoSpringboot.dto.usersubjcet.UserSubjectRequestDto;
-import com.example.mayoSpringboot.dto.usersubjcet.UserSubjectResponseDto;
+import com.example.mayoSpringboot.dto.subjcet.DeleteDto;
+import com.example.mayoSpringboot.dto.subjcet.UserSubjectRequestDto;
+import com.example.mayoSpringboot.dto.subjcet.UserSubjectResponseDto;
 import com.example.mayoSpringboot.error.exception.UnAuthorizedException;
 import com.example.mayoSpringboot.service.LoginService;
 import com.example.mayoSpringboot.service.UserPrevSubjectService;
@@ -40,7 +40,7 @@ public class UserPrevSubjectController {
         return userPrevSubjectService.prevRead(user);
     }
 
-   @PostMapping("/api/prevDelete")//수정??
+   @PostMapping("/api/prevDelete")
     public UserRequestDto prevDelete(@CookieValue(value = "userName",required = false)String userName, @RequestBody DeleteDto deleteDto){
        if (userName == null){throw new UnAuthorizedException(ACCESS_DENIED_EXCEPTION,"E0001");}
        log.info("prevDelete");

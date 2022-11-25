@@ -148,23 +148,23 @@ const Tr = styled.tr`
   padding: 0;
   margin: 0;
   /* border-bottom: 2px solid #ffca1d3b; */
-  height: 23px;
+  height: 27px;
 `;
 const TdDay = styled.td`
   padding: 0;
   background-color: #ffcc1d;
   white-space: nowrap;
-  padding-top: 3px;
+  padding-top: 4px;
 `;
 const Th = styled.td`
   background-color: #ffcc1d;
   // border-bottom: solid 1px white;
   overflow: hidden;
-  padding-top: 3px;
+  padding-top: 4px;
 `;
 const Td = styled.td`
   padding: 0;
   /* border-left: solid 1px white; */
-  background-color: #fffdad;
+  background-color: #fff;
   color: #000000;
 `;

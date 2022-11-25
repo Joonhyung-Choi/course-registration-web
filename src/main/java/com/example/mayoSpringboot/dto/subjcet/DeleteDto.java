@@ -1,4 +1,4 @@
-package com.example.mayoSpringboot.dto.usersubjcet;
+package com.example.mayoSpringboot.dto.subjcet;
 
 import lombok.Getter;
 

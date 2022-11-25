@@ -8,6 +8,14 @@ import StyledHomeButton from "./StyledHomeButton";
 function MenuButton(props) {
   const serverTimeG = useRecoilValue(serverTimeState);
 
+
+  function fillZero(width, time) {
+    const str = time + "";
+    return str.length >= width
+      ? str
+      : new Array(width - str.length + 1).join("0") + str; //남는 길이만큼 0으로 채움
+  }
+
   return (
     <Wrapper>
       <Menubar style={{ width: `calc(100vw + ${props.xPosition}px)` }}>
@@ -32,7 +40,11 @@ function MenuButton(props) {
           zIndex="10"
           clickTo="my-register"
         />
-        <ServerTime>{serverTimeG}</ServerTime>
+        <ServerTime>
+          {fillZero(2, parseInt(serverTimeG / 3600))} :{" "}
+          {fillZero(2, parseInt((serverTimeG % 3600) / 60))} :{" "}
+          {fillZero(2, (serverTimeG % 3600) % 60)}
+        </ServerTime>
       </Menubar>
     </Wrapper>
   );

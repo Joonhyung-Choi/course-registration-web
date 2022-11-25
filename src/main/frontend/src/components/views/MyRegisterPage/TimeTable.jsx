@@ -25,12 +25,12 @@ function TimeTable(props) {
             </colgroup>
             <thead>
               <Tr>
-                <Th>시간</Th>
+                <Th style={{ borderTopLeftRadius: "10px" }}>시간</Th>
                 <TdDay>월요일</TdDay>
                 <TdDay>화요일</TdDay>
                 <TdDay>수요일</TdDay>
                 <TdDay>목요일</TdDay>
-                <TdDay>금요일</TdDay>
+                <TdDay style={{ borderTopRightRadius: "10px" }}>금요일</TdDay>
               </Tr>
             </thead>
             <tbody>
@@ -157,7 +157,7 @@ export default TimeTable;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 70%;
+  height: 100%;
   margin: 10px;
   text-align: center;
   margin: auto;
@@ -174,7 +174,7 @@ const Table = styled.table`
   padding: 0;
   width: 100%;
   text-align: center;
-  background-color: #ffcc1d;
+  background-color: rgb(237 226 182);
   color: #404040;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -184,23 +184,21 @@ const Table = styled.table`
 const Tr = styled.tr`
   padding: 0;
   margin: 0;
-  border-bottom: 2px solid #ffca1d3b;
 `;
 const TdDay = styled.td`
-  padding: 0;
-  background-color: #ffcc1d;
+  padding: 10px;
+  background-color: #fff7d8;
   border-left: solid 1px white;
   border-bottom: solid 1px white;
   white-space: nowrap;
 `;
 const Th = styled.td`
-  background-color: #ffcc1d;
-  border-bottom: solid 1px white;
+  padding: 10px;
+  background-color: #fff7d8;
   overflow: hidden;
 `;
 const Td = styled.td`
-  padding: 0;
-  border-left: solid 1px white;
-  background-color: #fffdad;
+  padding: 10px;
+  background-color: #ffffff;
   color: #000000;
 `;

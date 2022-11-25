@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { currentPageState } from "../../recoil/currentStates";
+import {currentPageState, serverTimeState} from "../../recoil/currentStates";
 import {
   userInfoState,
   courseListState,
   userPrevRegisterState,
+  userRegisterState,
 } from "../../recoil/userDataStates";
 import styled from "styled-components";
 import PrevRegisterFilter from "./PrevRegisterFilter";
@@ -19,9 +20,11 @@ function PrevRegisterPage() {
 
   // current page
   const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
+  const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
   const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
   const [courseListG, setCourseListG] = useRecoilState(courseListState);
   const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
+  const [userRG, setUserRG] = useRecoilState(userRegisterState);
   useEffect(() => {
     if (location.pathname === "/mayo-main/prev-register") {
       setCurrentPageG("prev-register");
@@ -34,13 +37,27 @@ function PrevRegisterPage() {
           navigate("/");
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        navigate("/");
+      });
+    axios.get("/api/time").then((res) => {
+      let time = res.data.split(":");
+      time[2] = time[2].split(".")[0];
+      const second =
+          Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
+      setServerTimeG(second);
+    });
     axios.get("/api/courseListGet").then((res) => {
       setCourseListG(res.data.content);
     });
     axios.get("/api/prevGet").then((res) => {
       setUserPRG(res.data);
     });
+    axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
+    // 잠깐 테스트용
+    // axios.get("/api/adminSubjectGet").then((res) => {
+    //   console.log(res.data);
+    // });
   }, []);
 
   // filtering

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import MenuButton from "../Menubar/MenuButton";
 import SidebarPage from "../SidebarPage/SidebarPage";
@@ -11,22 +10,19 @@ import RegisterPage from "../RegisterPage/RegisterPage";
 import MyRegisterPage from "../MyRegisterPage/MyRegisterPage";
 
 function MainPage() {
-  const location = useLocation();
-
   // 새로고침 막기
-  // const preventClose = (e) => {
-  //   e.preventDefault();
-  //   e.returnValue = "";
-  // };
-  // useEffect(() => {
-  //   (() => {
-  //     window.addEventListener("beforeunload", preventClose);
-  //   })();
-
-  //   return () => {
-  //     window.removeEventListener("beforeunload", preventClose);
-  //   };
-  // }, []);
+  const preventClose = (e) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
+  useEffect(() => {
+    (() => {
+      window.addEventListener("beforeunload", preventClose);
+    })();
+    return () => {
+      window.removeEventListener("beforeunload", preventClose);
+    };
+  }, []);
 
   // sidebar 크기 조절
   const [xPosition, setXPosition] = useState(-350);

@@ -1,9 +1,9 @@
 package com.example.mayoSpringboot.controller;
 
 import com.example.mayoSpringboot.dto.user.UserRequestDto;
-import com.example.mayoSpringboot.dto.usersubjcet.DeleteDto;
-import com.example.mayoSpringboot.dto.usersubjcet.UserSubjectRequestDto;
-import com.example.mayoSpringboot.dto.usersubjcet.UserSubjectResponseDto;
+import com.example.mayoSpringboot.dto.subjcet.DeleteDto;
+import com.example.mayoSpringboot.dto.subjcet.UserSubjectRequestDto;
+import com.example.mayoSpringboot.dto.subjcet.UserSubjectResponseDto;
 import com.example.mayoSpringboot.error.exception.UnAuthorizedException;
 import com.example.mayoSpringboot.service.LoginService;
 import com.example.mayoSpringboot.service.UserSubjectService;

@@ -1,14 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "../../recoil/userDataStates";
+import { BiLogOut } from "react-icons/bi";
 import { BsPersonFill } from "react-icons/bs";
 import { HiDocumentText } from "react-icons/hi";
-
 import MiniTable from "./MiniTable";
+import axios from "axios";
 
 function SidebarContent(props) {
   const userInfoG = useRecoilValue(userInfoState);
+  const navigate = useNavigate();
+
+  const onClickLogout = () => {
+    axios.post("/api/logout").then((res) => {
+      console.log("logout");
+      navigate("/");
+    });
+  };
 
   return (
     <Wrapper>
@@ -20,6 +30,11 @@ function SidebarContent(props) {
         <UserInfo>
           <UserIcon />
           <UserContext>{userInfoG.userName}</UserContext>
+          <UserContext
+            style={{ color: "#be4545", marginLeft: "7px", fontSize: "11px" }}
+          >
+            {userInfoG.userRole}
+          </UserContext>
         </UserInfo>
         <RegisterInfo>
           <RegisterIcon />
@@ -37,9 +52,15 @@ function SidebarContent(props) {
           </RegisterContext>
         </RegisterInfo>
       </Info>
-      <TableArea>
-        <MiniTable/>
-      </TableArea>
+      <MiniScheduleInfo>
+        <MiniTable />
+      </MiniScheduleInfo>
+      <LogoutDiv>
+        <LogoutBtn onClick={onClickLogout}>
+          <LogoutIcon />
+          <LogoutContext>로그아웃</LogoutContext>
+        </LogoutBtn>
+      </LogoutDiv>
     </Wrapper>
   );
 }
@@ -82,7 +103,7 @@ const UserContext = styled.div`
 const RegisterInfo = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 35px;
+  margin-bottom: 60px;
 `;
 const RegisterIcon = styled(HiDocumentText)`
   width: 20px;
@@ -123,7 +144,37 @@ const Hr = styled.div`
   margin: 4px 0;
   border-bottom: 1px solid #aaaaaa;
 `;
-const TableArea = styled.div`
+const MiniScheduleInfo = styled.div`
   width: 100%;
   height: 30%;
+`;
+// logout
+const LogoutDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: auto;
+`;
+const LogoutBtn = styled.button`
+  display: flex;
+  border: none;
+  background: rgb(240, 240, 240);
+  padding: 6px;
+  border-radius: 9px;
+  box-shadow: 2px 2px 3px rgb(49 49 49 / 34%);
+  cursor: pointer;
+  &:active {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+`;
+const LogoutIcon = styled(BiLogOut)`
+  width: 20px;
+  height: 20px;
+  margin-right: 7px;
+  color: #313131;
+`;
+const LogoutContext = styled.p`
+  font-size: 11px;
+  padding-top: 5px;
+  color: #313131;
 `;
