@@ -2,13 +2,11 @@ package com.example.mayoSpringboot.service;
 
 import com.example.mayoSpringboot.dto.ArticleDto;
 import com.example.mayoSpringboot.dto.user.UserRequestDto;
-import com.example.mayoSpringboot.dto.user.UserResponseDto;
-import com.example.mayoSpringboot.dto.usersubjcet.UserSubjectRequestDto;
-import com.example.mayoSpringboot.dto.usersubjcet.UserSubjectResponseDto;
+import com.example.mayoSpringboot.dto.subjcet.UserSubjectRequestDto;
+import com.example.mayoSpringboot.dto.subjcet.UserSubjectResponseDto;
 import com.example.mayoSpringboot.entity.subjectEntity.Article;
 import com.example.mayoSpringboot.entity.UserEntity;
 import com.example.mayoSpringboot.entity.subjectEntity.UserPreSubjectEntity;
-import com.example.mayoSpringboot.entity.subjectEntity.UserSubjectEntity;
 import com.example.mayoSpringboot.enumcustom.UserRole;
 import com.example.mayoSpringboot.error.ErrorCode;
 import com.example.mayoSpringboot.error.exception.ForbiddenException;
@@ -38,7 +36,7 @@ public class UserPrevSubjectService {
     @Transactional
     public UserRequestDto prevAdd(String userName, UserSubjectRequestDto userSubjectRequestDto){
         UserEntity userEntity = userRepository.findByUserName(userName);
-        if(!userEntity.getUserRole().equals(UserRole.USER)){
+        if(!(userEntity.getUserRole().equals(UserRole.USER))||!(userEntity.getUserRole().equals(UserRole.ADMIN))){
             throw new ForbiddenException(ErrorCode.FORBIDDEN_EXCEPTION, "유저계정으로 로그인하세요.");
         }
 
@@ -53,14 +51,18 @@ public class UserPrevSubjectService {
         //아티클에 예비신청인원 추가
         Article article = articleRepository.findById(userSubjectRequestDto.getId()).orElseThrow(()->{throw new NotFoundException(NOT_FOUND_EXCEPTION,"E0004");});
         ArticleDto articleDto = new ArticleDto(article);
-        int a = articleDto.getPrev_register_count();
-        articleDto.setPrev_register_count(++a);
+       /* int a = ++(articleDto.getPrev_register_count());*/
+        articleDto.setPrev_register_count(article.getPrev_register_count()+1);
         article.update(articleDto);
+        article.getPrev_register_count();
         articleRepository.save(article);
 
 
         userSubjectRequestDto.setUserEntity(userEntity);
+
+        userSubjectRequestDto.setRegister_count(article.getPrev_register_count());
         UserPreSubjectEntity userPreSubjectEntity = new UserPreSubjectEntity();
+
         userPreSubjectEntity.update(userSubjectRequestDto);
         userPrevSubjectRepository.save(userPreSubjectEntity);
         return userRequestDto;
@@ -81,6 +83,12 @@ public class UserPrevSubjectService {
     public UserRequestDto prevDelete(String user,int subjectId){
         UserEntity userEntity = userRepository.findByUserName(user);
         UserPreSubjectEntity userPreSubjectEntity = userPrevSubjectRepository.findByUserEntityIdAndSubjectId(userEntity.getId(),subjectId);
+        //과목의 예비수강신청 인원 -1
+        Article article = articleRepository.findBySubjectId(subjectId);
+        ArticleDto articleDto = new ArticleDto(article);
+        articleDto.setPrev_register_count(article.getPrev_register_count()-1);
+        article.update(articleDto);
+
 
         //취소한 과목의 학점만큼 유저의 학점 되돌리기
         UserRequestDto userRequestDto  = new UserRequestDto(userEntity);

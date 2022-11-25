@@ -1,6 +1,6 @@
 package com.example.mayoSpringboot.entity.subjectEntity;
 
-import com.example.mayoSpringboot.dto.usersubjcet.UserSubjectRequestDto;
+import com.example.mayoSpringboot.dto.subjcet.UserSubjectRequestDto;
 import com.example.mayoSpringboot.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

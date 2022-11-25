@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalTime;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -44,8 +46,8 @@ public class SubjectController {
     }*/
 
     @GetMapping("/api/time")
-    public String timeThrow(){
+    public LocalTime timeThrow(){
         TimeGet timeGet = new TimeGet();
-        return timeGet.getTime();
+        return timeGet.getNow();
     }
 }

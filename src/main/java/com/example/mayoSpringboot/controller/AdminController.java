@@ -1,10 +1,12 @@
 package com.example.mayoSpringboot.controller;
 
+import com.example.mayoSpringboot.service.AdminService;
 import com.example.mayoSpringboot.dto.ArticleDto;
 import com.example.mayoSpringboot.dto.user.UserResponseDto;
-import com.example.mayoSpringboot.dto.usersubjcet.UserSubjectResponseDto;
-import com.example.mayoSpringboot.service.AdminService;
+import com.example.mayoSpringboot.dto.subjcet.UserSubjectResponseDto;
+import com.example.mayoSpringboot.service.LoginService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,18 +18,25 @@ public class AdminController {
 
     private final AdminService adminService;
 
-    @GetMapping("/api/adminUser")
-    public List<UserResponseDto> getAllUser(){
-        return adminService.getAllUser();
+    @GetMapping("/api/adminUserGet")
+    public List<UserResponseDto> getAllUser(@CookieValue(value="userName", required = false)
+                                                String userName){
+        String user = LoginService.sessionBox.get(userName);
+
+        return adminService.getAllUser(user);
     }
 
-    @GetMapping("/api/adminSubject")
-    public List<ArticleDto> getAllArticle(){
-        return adminService.getAllSubject();
+    @GetMapping("/api/adminSubjectGet")
+    public List<ArticleDto> getAllArticle(@CookieValue(value="userName", required = false)
+                                              String userName){
+        String user = LoginService.sessionBox.get(userName);
+        return adminService.getAllSubject(user);
     }
 
-    @GetMapping("/api/adminUserSubject")
-    public List<UserSubjectResponseDto> getAllUsersSubject(){
-        return adminService.getAllUsersSubject();
+    @GetMapping("/api/adminUserSubjectGet")
+    public List<UserSubjectResponseDto> getAllUsersSubject(@CookieValue(value="userName", required = false)
+                                                               String userName){
+        String user = LoginService.sessionBox.get(userName);
+        return adminService.getAllUsersSubject(user);
     }
 }
