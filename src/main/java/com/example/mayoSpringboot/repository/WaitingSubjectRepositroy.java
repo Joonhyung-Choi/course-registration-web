@@ -13,7 +13,7 @@ public interface WaitingSubjectRepositroy extends JpaRepository<WaitingSubjectEn
     @Query("SELECT w FROM WaitingSubjectEntity w JOIN FETCH w.userEntity WHERE w.userEntity.userName =:userName")
     public List<WaitingSubjectEntity> findByWaitOfUserName(@Param("userName")String userName);
 
-    @Query("SELECT w FROM WaitingSubjectEntity w JOIN FETCH w.userEntity WHERE W.userEntity.userName =:userName AND w.subjectId =:subjectId")
+    @Query(value = "SELECT w FROM WaitingSubjectEntity w JOIN FETCH w.userEntity WHERE W.userEntity.userName =:userName AND w.subjectId =:subjectId",nativeQuery = true)
     public WaitingSubjectEntity finByWaitOfUserNameAndSubjectId(@Param("userName")String userName,@Param("subjectId")int subjectId);
 
     @Query("SELECT w FROM WaitingSubjectEntity w JOIN FETCH w.userEntity WHERE w.subjectId =:subjectId")
