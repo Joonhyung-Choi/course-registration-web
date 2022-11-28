@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
-import { userInfoState, userRegisterState } from "../../recoil/userDataStates";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { myRegisterSwitchState } from "../../recoil/currentStates";
+import { userInfoState, courseListState ,userRegisterState } from "../../recoil/userDataStates";
 import MyRegisterItem from "./MyRegisterItem";
 
 function MyRegisterList(props) {
   const userInfoG = useRecoilValue(userInfoState);
-  const userRG = useRecoilValue(userRegisterState);
+  const courseListG = useRecoilValue(courseListState);
+  const [userRG, setUserRG] = useRecoilState(userRegisterState);
+  const [myRegisterSwitchG, setMyRegisterSwitchG] = useRecoilState(
+    myRegisterSwitchState
+  );
+
+  useEffect(() => {
+    let temp = [];
+    userRG.map((item, idx) => {
+      temp.push(item);
+      let dum = courseListG.filter((i) => i.subjectId === temp[idx].subjectId);
+      temp[idx].register_count = dum.register_count;
+        console.log(temp[idx]);
+    });
+    setUserRG(temp);
+  }, []);
 
   return (
     <Wrapper>
@@ -14,6 +30,23 @@ function MyRegisterList(props) {
         <P>수강신청학점: {userInfoG.userScoreDefault}</P>
         <P>수강신청가능학점: {userInfoG.userScore}</P>
       </PrevScore>
+      <TagBtn
+        onClick={() => {
+          setMyRegisterSwitchG(false);
+          console.log(myRegisterSwitchG);
+        }}
+      >
+        대기열
+      </TagBtn>
+      <TagBtn
+        style={{ transform: "translate(-78px, 0)" }}
+        onClick={() => {
+          setMyRegisterSwitchG(true);
+          console.log(myRegisterSwitchG);
+        }}
+      >
+        신청완료
+      </TagBtn>
       <Table>
         <Tr>
           <Th name="id" style={{ borderTopLeftRadius: "15px" }}>
@@ -49,6 +82,9 @@ function MyRegisterList(props) {
 export default MyRegisterList;
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
   width: 100%;
   height: calc(100% - 20px);
   overflow: auto;
@@ -87,6 +123,23 @@ const PrevScore = styled.div`
 const P = styled.p`
   font-size: 12px;
   margin-right: 20px;
+`;
+const TagBtn = styled.button`
+  display: flex;
+  position: absolute;
+  background: rgb(129, 138, 146);
+  top: 0px;
+  right: 10px;
+  width: 80px;
+  height: 24px;
+  justify-content: center;
+  align-content: center;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border: 2px solid rgb(147 155 163);
+  color: #fff;
+  font-size: 12px;
+  padding-top: 2px;
 `;
 const Table = styled.table`
   width: 100%;

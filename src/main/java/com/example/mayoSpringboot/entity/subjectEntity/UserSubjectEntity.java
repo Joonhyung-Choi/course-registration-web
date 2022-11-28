@@ -1,6 +1,7 @@
 package com.example.mayoSpringboot.entity.subjectEntity;
 
 import com.example.mayoSpringboot.dto.subjcet.UserSubjectRequestDto;
+import com.example.mayoSpringboot.dto.subjcet.UserSubjectResponseDto;
 import com.example.mayoSpringboot.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -56,5 +57,18 @@ public class UserSubjectEntity {
         this.register_count = userSubjectRequestDto.getRegister_count();
         this.subject_time = userSubjectRequestDto.getSubject_time();
         this.professor = userSubjectRequestDto.getProfessor();
+    }
+    public void upDate(UserSubjectResponseDto userSubjectResponseDto){
+        this.userEntity = userSubjectResponseDto.getUserEntity();
+        this.major = userSubjectResponseDto.getMajor();
+        this.grade = userSubjectResponseDto.getGrade();
+        this.subject_name = userSubjectResponseDto.getSubject_name();
+        this.subjectId = userSubjectResponseDto.getSubjectId();
+        this.subject_type = userSubjectResponseDto.getSubject_type();
+        this.score = userSubjectResponseDto.getScore();
+        this.max_count = userSubjectResponseDto.getMax_count();
+        this.register_count = userSubjectResponseDto.getRegister_count();
+        this.subject_time = userSubjectResponseDto.getSubject_time();
+        this.professor = userSubjectResponseDto.getProfessor();
     }
 }

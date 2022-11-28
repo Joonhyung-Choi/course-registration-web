@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import {
+  courseListState,
   userPrevRegisterState,
   userRegisterState,
 } from "../../recoil/userDataStates";
@@ -9,15 +10,21 @@ import PrevRegisterItem from "./PrevRegisterItem";
 
 function PrevRegisterList(props) {
   const filteringList = props.filteringList;
-  const userPRG = useRecoilValue(userPrevRegisterState);
+  const courseListG = useRecoilValue(courseListState);
+  const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
   const userRG = useRecoilValue(userRegisterState);
 
-  let courseListF = filteringList
-    .map((item) => item.subjectId)
-    .filter((item) => userPRG.map((item) => item.subjectId).includes(item));
-  let courseListT = courseListF
-    .map((item) => item)
-    .filter((item) => !userRG.map((item) => item.subjectId).includes(item));
+  let courseListF = [];
+  let courseListT = [];
+  useEffect(() => {
+    let temp = [];
+    userPRG.map((item, idx) => {
+      temp.push(item);
+      let dum = courseListG.filter((i) => i.subjectId === temp[idx].subjectId);
+      temp[idx].register_count = dum.register_count;
+    });
+    setUserPRG(temp);
+  }, []);
 
   useEffect(() => {
     courseListF = filteringList

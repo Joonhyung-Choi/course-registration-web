@@ -20,8 +20,10 @@ function LoginPage() {
       .post("/api/cookieGet")
       .then((res) => {
         setUserInfoG(res.data);
-        if (res.data.userName !== "") {
+        if (res.data.userRole !== "ADMIN") {
           navigate("/mayo-main");
+        } else {
+          navigate("/mayo-admin");
         }
       })
       .catch((error) => {});
@@ -82,7 +84,11 @@ function LoginPage() {
         .then((res) => {
           setUserInfoG(res.data);
           console.log("login");
-          navigate("/mayo-main");
+          if (res.data.userRole !== "ADMIN") {
+            navigate("/mayo-main");
+          } else {
+            navigate("/mayo-admin");
+          }
         })
         .catch(function (error) {
           console.log("login-error");

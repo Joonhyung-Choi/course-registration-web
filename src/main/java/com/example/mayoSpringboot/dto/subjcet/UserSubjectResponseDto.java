@@ -39,6 +39,7 @@ public class UserSubjectResponseDto {
 
     public UserSubjectResponseDto(UserPreSubjectEntity userPreSubjectEntity){
         this.id = userPreSubjectEntity.getId();
+        this.userEntity = userPreSubjectEntity.getUserEntity();
         this.major = userPreSubjectEntity.getMajor();
         this.grade = userPreSubjectEntity.getGrade();
         this.subject_name = userPreSubjectEntity.getSubject_name();
@@ -52,6 +53,7 @@ public class UserSubjectResponseDto {
     }
     public UserSubjectResponseDto(UserSubjectEntity userSubjectEntity){
         this.id = userSubjectEntity.getId();
+        this.userEntity = userSubjectEntity.getUserEntity();
         this.major = userSubjectEntity.getMajor();
         this.grade = userSubjectEntity.getGrade();
         this.subject_name = userSubjectEntity.getSubject_name();

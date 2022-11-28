@@ -1,15 +1,27 @@
-import React from "react";
+import React,{useEffect} from "react";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import {
+  courseListState,
   userInfoState,
   userPrevRegisterState,
 } from "../../recoil/userDataStates";
 import MyPrevRegisterItem from "./MyPrevRegisterItem";
 
 function MyPrevRegisterList(props) {
+  const courseListG = useRecoilValue(courseListState);
   const userInfoG = useRecoilValue(userInfoState);
-  const userPRG = useRecoilValue(userPrevRegisterState);
+  const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
+
+  useEffect(() => {
+    let temp = [];
+    userPRG.map((item, idx) => {
+      temp.push(item);
+      let dum = courseListG.filter((i) => i.subjectId === temp[idx].subjectId);
+      temp[idx].register_count = dum.prev_register_count;
+    });
+    setUserPRG(temp);
+  }, []);
 
   return (
     <Wrapper>

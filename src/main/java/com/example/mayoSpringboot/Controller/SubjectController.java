@@ -31,7 +31,7 @@ public class SubjectController {
 
         Page<Article> result = articleRepository.findAll(pageable);
 
-        return articleRepository.findAll(pageable);//pageable
+        return articleRepository.findAll(pageable);
         //Collections.sort(articlePage,new IdComparator());
         //return articlePage;
     }

@@ -5,7 +5,8 @@ import "./App.css";
 import ErrorModal from "./components/views/ErrorModal/ErrorModal";
 import LoginPage from "./components/views/LoginPage/LoginPage";
 import MainPage from "./components/views/MainPage/MainPage";
-import ManagePage from "./components/views/ManagePage/ManagePage";
+//import ManagePage from "./components/views/ManagePage/ManagePage";
+import AdminPage from "./components/views/AdminPage/AdminPage";
 import NotFoundPage from "./components/views/NotFoundPage/NotFoundPage";
 import { useRecoilState } from "recoil";
 import { serverTimeState } from "./components/recoil/currentStates";
@@ -35,7 +36,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/mayo-main/*" element={<MainPage />} />
-        <Route path="/mayo-manage" element={<ManagePage />} />
+        <Route path="/mayo-admin" element={<AdminPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Wrapper>
@@ -47,6 +48,6 @@ export default App;
 const Wrapper = styled.div`
   display: flex;
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
 `;

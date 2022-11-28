@@ -29,7 +29,7 @@ function PrevRegisterItem(props) {
         subject_type: prevBtnValue.subject_type,
         score: prevBtnValue.score,
         max_count: prevBtnValue.max_count,
-        register_count: prevBtnValue.register_count,
+        prev_register_count: prevBtnValue.register_count,
         subject_time: prevBtnValue.subject_time,
         professor: prevBtnValue.professor,
       })
@@ -58,9 +58,9 @@ function PrevRegisterItem(props) {
       <Td name={props.item.subject_type}>{props.item.subject_type}</Td>
       <Td name={props.item.score}>{props.item.score}</Td>
       <Td name={props.item.max_count}>{props.item.max_count}</Td>
-      <Td name={props.item.register_count}>
-        {props.item.register_count}&nbsp;(
-        {((props.item.register_count / props.item.max_count) * 100).toFixed(2)}
+      <Td name={props.item.prev_register_count}>
+        {props.item.prev_register_count}&nbsp;(
+        {((props.item.prev_register_count / props.item.max_count) * 100).toFixed(2)}
         %)
       </Td>
       <Td name={props.item.subject_time}>{props.item.subject_time}</Td>

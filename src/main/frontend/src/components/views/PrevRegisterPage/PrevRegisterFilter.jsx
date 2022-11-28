@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { courseListState } from "../../recoil/userDataStates";
 import { BsCaretRightFill } from "react-icons/bs";
+import axios from "axios";
 
 function PrevRegisterFilter(props) {
   let dum = 1;
-  const courseListG = useRecoilValue(courseListState); // Initial Data List
+  const [courseListG, setCourseListG] = useRecoilState(courseListState); // Initial Data List
   const [isSelMajor, setIsSelMajor] = useState(true);
   const [subjectTypeValue, setSubjectTypeValue] = useState("");
   const [majorValue, setMajorValue] = useState("");
@@ -14,6 +15,12 @@ function PrevRegisterFilter(props) {
   const [subjectIdInput, setSubjectIdInput] = useState("");
   const [filterList, setFilterList] = useState(courseListG);
   let filteringValue = filterList; // Final Data List
+
+  useEffect(() => {
+    axios
+      .get("/api/courseListGet")
+      .then((res) => setCourseListG(res.data.content));
+  }, []);
 
   // categorySel Event
   const onClickCategory = (e) => {

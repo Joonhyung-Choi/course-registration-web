@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userInfoState, userRegisterState } from "../../recoil/userDataStates";
-import { currentPageState, serverTimeState } from "../../recoil/currentStates";
+import {
+  currentErrorState,
+  currentPageState,
+  serverTimeState,
+} from "../../recoil/currentStates";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 import "swiper/css";
@@ -20,6 +24,7 @@ function NoticePage(props) {
   // current page
   const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
   const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
+  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
   const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
   const [userRG, setUserRG] = useRecoilState(userRegisterState);
   useEffect(() => {
@@ -30,18 +35,26 @@ function NoticePage(props) {
       .post("/api/cookieGet")
       .then((res) => {
         setUserInfoG(res.data);
-        if (res.data.userName === "") {
+        if (res.data.userRole === "ADMIN") {
           navigate("/");
+          setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
+          setTimeout(function () {
+            setCurrentErrorG(["인가되지 않은 접근입니다.", false]);
+          }, 2000);
         }
       })
       .catch((error) => {
         navigate("/");
+        setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
+        setTimeout(function () {
+          setCurrentErrorG(["인가되지 않은 접근입니다.", false]);
+        }, 2000);
       });
     axios.get("/api/time").then((res) => {
       let time = res.data.split(":");
       time[2] = time[2].split(".")[0];
       const second =
-          Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
+        Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
       setServerTimeG(second);
     });
     axios.get("/api/subjectGet").then((res) => setUserRG(res.data));

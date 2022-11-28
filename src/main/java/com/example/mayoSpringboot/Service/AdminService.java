@@ -32,18 +32,16 @@ public class AdminService {
             throw new ForbiddenException(ErrorCode.FORBIDDEN_EXCEPTION,"E0003");
         }
         List<UserEntity> entityList = userRepository.findAll();
-        return entityList.stream().map(UserResponseDto::new).sorted().collect(Collectors.toList());
+        return entityList.stream().map(UserResponseDto::new).collect(Collectors.toList());
     }
 
     @Transactional
-    public List<ArticleDto> getAllSubject(String user){
+    public List<Article> getAllSubject(String user){
         UserEntity userEntity = userRepository.findByUserName(user);
         if ( !userEntity.getUserRole().equals(UserRole.ADMIN) ){
             throw new ForbiddenException(ErrorCode.FORBIDDEN_EXCEPTION,"E0003");
         }
-
-        List<Article> entityList = articleRepository.findAll();
-        return entityList.stream().map(ArticleDto::new).sorted().collect(Collectors.toList());
+        return articleRepository.findAll();
     }
 
     @Transactional
@@ -54,6 +52,6 @@ public class AdminService {
         }
 
         List<UserSubjectEntity> entityList = userSubjectRepository.findAllUserSubject();
-        return entityList.stream().map(UserSubjectResponseDto::new).sorted().collect(Collectors.toList());
+        return entityList.stream().map(UserSubjectResponseDto::new).collect(Collectors.toList());
     }
 }

@@ -11,7 +11,6 @@ function RegisterList(props) {
   let tempF = filteringList.map((item) => item.subjectId);
   let tempU = userRG.map((item) => item.subjectId);
   let courseListT = tempF.filter((item) => !tempU.includes(item));
-
   useEffect(() => {
     tempF = filteringList.map((item) => item.subjectId);
     tempU = userRG.map((item) => item.subjectId);

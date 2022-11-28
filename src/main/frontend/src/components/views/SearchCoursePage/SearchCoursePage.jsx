@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import {currentPageState, serverTimeState} from "../../recoil/currentStates";
+import {
+  currentPageState,
+  serverTimeState,
+  currentErrorState,
+} from "../../recoil/currentStates";
 import {
   userInfoState,
   courseListState,
@@ -19,6 +23,7 @@ function SearchCoursePage(props) {
   // current states
   const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
   const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
+  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
   const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
   const [courseListG, setCourseListG] = useRecoilState(courseListState);
   const [userRG, setUserRG] = useRecoilState(userRegisterState);
@@ -30,16 +35,26 @@ function SearchCoursePage(props) {
       .post("/api/cookieGet")
       .then((res) => {
         setUserInfoG(res.data);
-        if (res.data.userName === "") {
+        if (res.data.userRole === "ADMIN") {
           navigate("/");
+          setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
+          setTimeout(function () {
+            setCurrentErrorG(["인가되지 않은 접근입니다.", false]);
+          }, 2000);
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        navigate("/");
+        setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
+        setTimeout(function () {
+          setCurrentErrorG(["인가되지 않은 접근입니다.", false]);
+        }, 2000);
+      });
     axios.get("/api/time").then((res) => {
       let time = res.data.split(":");
       time[2] = time[2].split(".")[0];
       const second =
-          Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
+        Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
       setServerTimeG(second);
     });
     axios.get("/api/courseListGet").then((res) => {

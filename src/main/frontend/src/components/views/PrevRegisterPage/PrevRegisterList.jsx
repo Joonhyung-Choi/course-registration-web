@@ -38,7 +38,7 @@ function PrevRegisterList(props) {
           <Th name="subject_type">이수구분</Th>
           <Th name="score">학점</Th>
           <Th name="max_count">정원</Th>
-          <Th name="register_count">예비수강신청인원</Th>
+          <Th name="prev_register_count">예비수강신청인원</Th>
           <Th name="subject_time">수업시간</Th>
           <Th name="professor">담당교수</Th>
           <Th style={{ borderTopRightRadius: "15px" }}>수강신청</Th>

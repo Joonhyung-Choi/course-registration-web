@@ -1,6 +1,7 @@
 package com.example.mayoSpringboot.entity.subjectEntity;
 
 import com.example.mayoSpringboot.dto.subjcet.UserSubjectRequestDto;
+import com.example.mayoSpringboot.dto.subjcet.WaitingRequsetDto;
 import com.example.mayoSpringboot.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,9 +28,9 @@ public class WaitingSubjectEntity {
     private int subjectId; // 과목번호
 
 
-    public void update(UserSubjectRequestDto userSubjectRequestDto){
-        this.userEntity = userSubjectRequestDto.getUserEntity();
-        this.subjectId = userSubjectRequestDto.getSubjectId();
+    public void update(WaitingRequsetDto waitingRequsetDto){
+        this.userEntity = waitingRequsetDto.getUserEntity();
+        this.subjectId = waitingRequsetDto.getSubjectId();
     }
 
 }

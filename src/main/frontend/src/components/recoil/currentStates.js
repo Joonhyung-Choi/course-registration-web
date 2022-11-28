@@ -10,6 +10,11 @@ export const registerSwitchState = atom({
   default: true,
 });
 
+export const myRegisterSwitchState = atom({
+  key: "myRegisterSwitch",
+  default: true,
+});
+
 export const serverTimeState = atom({
   key: "serverTime",
   default: "",

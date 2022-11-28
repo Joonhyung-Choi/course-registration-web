@@ -36,7 +36,7 @@ public class UserPrevSubjectService {
     @Transactional
     public UserRequestDto prevAdd(String userName, UserSubjectRequestDto userSubjectRequestDto){
         UserEntity userEntity = userRepository.findByUserName(userName);
-        if(!(userEntity.getUserRole().equals(UserRole.USER))||!(userEntity.getUserRole().equals(UserRole.ADMIN))){
+        if(userEntity.getUserRole().equals(UserRole.GUEST)){
             throw new ForbiddenException(ErrorCode.FORBIDDEN_EXCEPTION, "유저계정으로 로그인하세요.");
         }
 

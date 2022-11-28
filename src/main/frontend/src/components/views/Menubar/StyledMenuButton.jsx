@@ -6,6 +6,7 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import { currentPageState } from "../../recoil/currentStates";
 import {
   courseListState,
+  userInfoState,
   userPrevRegisterState,
   userRegisterState,
 } from "../../recoil/userDataStates";
@@ -14,6 +15,7 @@ function StyledMenuButton(props) {
   const navigate = useNavigate();
 
   const currentPageG = useRecoilValue(currentPageState);
+  const userInfoG = useRecoilValue(userInfoState);
   const [courseListG, setCourseListG] = useRecoilState(courseListState);
   const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
   const [userRG, setUserRG] = useRecoilState(userRegisterState);
@@ -32,14 +34,29 @@ function StyledMenuButton(props) {
         navigate(`/mayo-main/${props.clickTo}`);
         break;
       case "prev-register":
-        navigate(`/mayo-main/${props.clickTo}`);
-        break;
+        if (userInfoG.userRole === "USER") {
+          navigate(`/mayo-main/${props.clickTo}`);
+          break;
+        } else {
+          navigate("/");
+          break;
+        }
       case "register":
-        navigate(`/mayo-main/${props.clickTo}`);
-        break;
+        if (userInfoG.userRole === "USER") {
+          navigate(`/mayo-main/${props.clickTo}`);
+          break;
+        } else {
+          navigate("/");
+          break;
+        }
       case "my-register":
-        navigate(`/mayo-main/${props.clickTo}`);
-        break;
+        if (userInfoG.userRole === "USER") {
+          navigate(`/mayo-main/${props.clickTo}`);
+          break;
+        } else {
+          navigate("/");
+          break;
+        }
     }
   };
 

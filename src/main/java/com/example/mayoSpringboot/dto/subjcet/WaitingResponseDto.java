@@ -11,12 +11,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class WaitingResponsDto {
+public class WaitingResponseDto {
     private Long id;
     private UserEntity userEntity;
     private int subjectId;
 
-    public WaitingResponsDto(WaitingSubjectEntity waitingSubjectEntity){
+    public WaitingResponseDto(WaitingSubjectEntity waitingSubjectEntity){
         this.id = waitingSubjectEntity.getId();
         this.userEntity = waitingSubjectEntity.getUserEntity();
         this.subjectId = waitingSubjectEntity.getSubjectId();

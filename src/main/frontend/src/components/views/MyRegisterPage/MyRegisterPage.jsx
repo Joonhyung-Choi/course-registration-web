@@ -2,84 +2,15 @@ import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userInfoState, userRegisterState } from "../../recoil/userDataStates";
-import { currentPageState, serverTimeState } from "../../recoil/currentStates";
+import {
+  currentErrorState,
+  currentPageState,
+  serverTimeState,
+} from "../../recoil/currentStates";
 import styled from "styled-components";
 import TimeTable from "./TimeTable";
 import MyCourseList from "./MyCourseList";
 import axios from "axios";
-
-// 임의의 수강신청 목록 하드코딩
-const classInfo = [
-  {
-    id: 1,
-    major: "컴퓨터공학과",
-    grade: 1,
-    subject_name: "C프로그래밍언어II",
-    subjectId: 13025,
-    subject_type: "전공기초",
-    score: 3,
-    max_count: 30,
-    register_count: 22,
-    subject_time: "월1,2,3",
-    professor: "공동환",
-  },
-
-  {
-    id: 2,
-    major: "ICT융합학과",
-    grade: 1,
-    subject_name: "자료구조와알고리즘",
-    subjectId: 14580,
-    subject_type: "전공필수",
-    score: 3,
-    max_count: 30,
-    register_count: 30,
-    subject_time: "수2,3,4",
-    professor: "김효석",
-  },
-
-  {
-    id: 3,
-    major: "컴퓨터공학과",
-    grade: 3,
-    subject_name: "디지털영상처리",
-    subjectId: 13028,
-    subject_type: "전공선택",
-    score: 3,
-    max_count: 30,
-    register_count: 9,
-    subject_time: "화3,4,5",
-    professor: "김형준",
-  },
-
-  {
-    id: 4,
-    major: "컴퓨터공학과",
-    grade: 3,
-    subject_name: "오픈소스소프트웨어기반캡스톤디자인",
-    subjectId: 15231,
-    subject_type: "전공필수",
-    score: 3,
-    max_count: 30,
-    register_count: 24,
-    subject_time: "목4,5,6",
-    professor: "공동환",
-  },
-
-  {
-    id: 5,
-    major: "컴퓨터공학과",
-    grade: 4,
-    subject_name: "졸업프로젝트II",
-    subjectId: 13591,
-    subject_type: "전공필수",
-    score: 3,
-    max_count: 30,
-    register_count: 27,
-    subject_time: "금4,5,6",
-    professor: "유대현",
-  },
-];
 
 function MyRegisterPage(props) {
   const navigate = useNavigate();
@@ -90,6 +21,7 @@ function MyRegisterPage(props) {
   // current page
   const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
   const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
+  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
   const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
   const [userRG, setUserRG] = useRecoilState(userRegisterState);
   useEffect(() => {
@@ -100,18 +32,26 @@ function MyRegisterPage(props) {
       .post("/api/cookieGet")
       .then((res) => {
         setUserInfoG(res.data);
-        if (res.data.userName === "") {
+        if (res.data.userRole !== "USER") {
           navigate("/");
+          setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
+          setTimeout(function () {
+            setCurrentErrorG(["인가되지 않은 접근입니다.", false]);
+          }, 2000);
         }
       })
       .catch((error) => {
         navigate("/");
+        setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
+        setTimeout(function () {
+          setCurrentErrorG(["인가되지 않은 접근입니다.", false]);
+        }, 2000);
       });
     axios.get("/api/time").then((res) => {
       let time = res.data.split(":");
       time[2] = time[2].split(".")[0];
       const second =
-          Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
+        Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
       setServerTimeG(second);
     });
     axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
