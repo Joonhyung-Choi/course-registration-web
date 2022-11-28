@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 /node_modules
 /.gradle/7.5/executionHistory/executionHistory.bin
+/static/static
 
 ### STS ###
 .apt_generated
