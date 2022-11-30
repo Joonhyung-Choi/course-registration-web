@@ -1,22 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
+import {currentPageState} from "../../recoil/currentStates";
 import { userInfoState } from "../../recoil/userDataStates";
+import axios from "axios";
 import { BiLogOut } from "react-icons/bi";
 import { BsPersonFill } from "react-icons/bs";
 import { HiDocumentText } from "react-icons/hi";
 import MiniTable from "./MiniTable";
-import axios from "axios";
 
 function SidebarContent(props) {
   const userInfoG = useRecoilValue(userInfoState);
+  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
   const navigate = useNavigate();
 
   const onClickLogout = () => {
     axios.post("/api/logout").then((res) => {
       console.log("logout");
       navigate("/");
+      setCurrentPageG("");
     });
   };
 

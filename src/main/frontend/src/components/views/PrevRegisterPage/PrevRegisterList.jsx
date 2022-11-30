@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { userPrevRegisterState, prevRegisterFilteringState, courseListState } from "../../recoil/userDataStates";
+import {
+  userPrevRegisterState,
+  prevRegisterFilteringState,
+  courseListState,
+} from "../../recoil/userDataStates";
 import PrevRegisterItem from "./PrevRegisterItem";
 
 function PrevRegisterList() {
@@ -10,10 +14,18 @@ function PrevRegisterList() {
   const filteringPRG = useRecoilValue(prevRegisterFilteringState);
 
   // filteringPRG와 userPRG 겹치는 item 제거
-  // tempPR의 subject_time 변경
-  const [tempPR, setTempPR] = useState(filteringPRG.filter(item => !(userPRG.map((item) => item.subjectId).includes(item.subjectId))));
+  const [tempPR, setTempPR] = useState(
+    filteringPRG.filter(
+      (item) => !userPRG.map((item) => item.subjectId).includes(item.subjectId)
+    )
+  );
   useEffect(() => {
-    setTempPR(filteringPRG.filter(item => !(userPRG.map((item) => item.subjectId).includes(item.subjectId))));
+    setTempPR(
+      filteringPRG.filter(
+        (item) =>
+          !userPRG.map((item) => item.subjectId).includes(item.subjectId)
+      )
+    );
   }, [filteringPRG, userPRG]);
 
   return (

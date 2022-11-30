@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { registerFilteringState, userRegisterState } from "../../recoil/userDataStates";
+import {
+  registerFilteringState,
+  userRegisterState,
+} from "../../recoil/userDataStates";
 import RegisterItem from "./RegisterItem";
 
 function RegisterList() {
@@ -10,9 +13,17 @@ function RegisterList() {
 
   // filteringRG와 userRG 겹치는 item 제거
   // tempR의 subject_time 변경
-  const [tempR, setTempR] = useState(filteringRG.filter(item => !(userRG.map((item) => item.subjectId).includes(item.subjectId))));
+  const [tempR, setTempR] = useState(
+    filteringRG.filter(
+      (item) => !userRG.map((item) => item.subjectId).includes(item.subjectId)
+    )
+  );
   useEffect(() => {
-    setTempR(filteringRG.filter(item => !(userRG.map((item) => item.subjectId).includes(item.subjectId))));
+    setTempR(
+      filteringRG.filter(
+        (item) => !userRG.map((item) => item.subjectId).includes(item.subjectId)
+      )
+    );
   }, [filteringRG, userRG]);
 
   return (

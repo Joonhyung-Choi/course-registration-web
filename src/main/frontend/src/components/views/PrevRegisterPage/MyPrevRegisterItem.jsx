@@ -35,7 +35,6 @@ function MyPrevRegisterItem(props) {
       .get("/api/courseListGet")
       .then((res) => setCourseListG(res.data.content));
   };
-
   return (
     <Tr>
       <Td name={props.idx}>{props.idx + 1}</Td>
@@ -48,7 +47,10 @@ function MyPrevRegisterItem(props) {
       <Td name={props.item.max_count}>{props.item.max_count}</Td>
       <Td name={props.item.register_count}>
         {props.item.register_count}&nbsp;(
-        {((props.item.register_count / props.item.max_count) * 100).toFixed(2)}
+        {(
+          (props.item.register_count / props.item.max_count) *
+          100
+        ).toFixed(2)}
         %)
       </Td>
       <Td name={props.item.subject_time}>{props.item.subject_time}</Td>

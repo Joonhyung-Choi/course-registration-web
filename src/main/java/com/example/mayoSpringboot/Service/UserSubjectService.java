@@ -43,7 +43,7 @@ public class UserSubjectService {
             throw new ForbiddenException(ErrorCode.FORBIDDEN_EXCEPTION, "유저계정으로 로그인하세요.");
         }
         //아티클에 신청인원 추가
-        Article article = articleRepository.findById(userSubjectRequestDto.getId()).orElseThrow(()->{throw new NotFoundException(NOT_FOUND_EXCEPTION,"E0004");});
+        Article article = articleRepository.findBySubjectId(userSubjectRequestDto.getSubjectId());
         ArticleDto articleDto = new ArticleDto(article);
         //-//
         if (article.getRegister_count() < article.getMax_count()){ // a < 5 0,1,2,3,4
@@ -112,6 +112,7 @@ public class UserSubjectService {
         }
         ArticleDto articleDto = new ArticleDto(article);
         articleDto.setRegister_count(articleDto.getRegister_count()-1);
+        articleDto.setWaitingCount(article.getWaitingCount()-1);
         article.update(articleDto);
         articleRepository.save(article);
 

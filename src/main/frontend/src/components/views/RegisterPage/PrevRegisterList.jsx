@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import {
@@ -9,14 +9,37 @@ import {
 import PrevRegisterItem from "./PrevRegisterItem";
 
 function PrevRegisterList(props) {
+  const courseListG = useRecoilValue(courseListState);
   const userPRG = useRecoilValue(userPrevRegisterState);
   const userRG = useRecoilValue(userRegisterState);
 
   // userPRG 와 userRG 겹치는 item 제거
-  let tempR_PR = userPRG.filter(item => !(userRG.map((item) => item.subjectId).includes(item.subjectId)));
+  // tempPR의 register_count 변경
+  const [tempPR, setTempPR] = useState(userPRG.filter(
+    (item) => !userRG.map((item) => item.subjectId).includes(item.subjectId)
+  ));
+  const [tempPR_t, setTempPR_t] = useState(
+      tempPR.map((item) => {
+        return {
+          ...item,
+          register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].register_count,
+        };
+      })
+  );
   useEffect(() => {
-    tempR_PR = userPRG.filter(item => !(userRG.map((item) => item.subjectId).includes(item.subjectId)));
-  }, [userPRG, userRG]);
+    setTempPR(userPRG.filter(
+      (item) => !userRG.map((item) => item.subjectId).includes(item.subjectId)
+    ));
+    setTempPR_t(
+        tempPR.map((item) => {
+          return {
+            ...item,
+            register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].register_count,
+          };
+        })
+    );
+    console.log(courseListG);
+  }, [userPRG, userRG, courseListG]);
 
   return (
     <Wrapper>
@@ -37,7 +60,7 @@ function PrevRegisterList(props) {
           <Th name="professor">담당교수</Th>
           <Th style={{ borderTopRightRadius: "15px" }}>수강신청</Th>
         </Tr>
-        {tempR_PR.map((item, idx) => {
+        {tempPR_t.map((item, idx) => {
           return <PrevRegisterItem item={item} idx={idx} />;
         })}
       </Table>
@@ -53,7 +76,7 @@ const Wrapper = styled.div`
   overflow: auto;
   box-sizing: border-box;
   margin: 0px;
-  margin-top : 28px;
+  margin-top: 28px;
   padding: 0px;
   overflow-x: visible;
   &::-webkit-scrollbar {

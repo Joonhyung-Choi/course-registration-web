@@ -54,6 +54,7 @@ function MyRegisterItem(props) {
         })
         .then((res) => setUserInfoG(res.data))
         .catch(function (error) {
+            console.log(prevBtnValue);
           console.log("PrevBtn Error");
           console.log(error);
           setCurrentErrorG([error.response.data.errorMessage, true]);

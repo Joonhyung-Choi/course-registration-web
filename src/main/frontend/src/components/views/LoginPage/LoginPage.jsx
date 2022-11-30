@@ -6,13 +6,14 @@ import SignUpPage from "./SignUpPage";
 import FindIdPwPage from "./FindIdPwPage";
 import { useRecoilState } from "recoil";
 import { userInfoState } from "../../recoil/userDataStates";
-import { currentErrorState } from "../../recoil/currentStates";
+import {currentErrorState, currentPageState} from "../../recoil/currentStates";
 import { BiLogIn } from "react-icons/bi";
 
 function LoginPage() {
   const navigate = useNavigate();
 
   const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
+  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
   const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
 
   useEffect(() => {
@@ -84,6 +85,7 @@ function LoginPage() {
         .then((res) => {
           setUserInfoG(res.data);
           console.log("login");
+          setCurrentPageG("");
           if (res.data.userRole !== "ADMIN") {
             navigate("/mayo-main");
           } else {

@@ -1,6 +1,6 @@
-import React,{useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import {
   courseListState,
   userInfoState,
@@ -11,7 +11,26 @@ import MyPrevRegisterItem from "./MyPrevRegisterItem";
 function MyPrevRegisterList(props) {
   const courseListG = useRecoilValue(courseListState);
   const userInfoG = useRecoilValue(userInfoState);
-  const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
+  const userPRG = useRecoilValue(userPrevRegisterState);
+
+  const [tempMPR, setTempMPR] = useState(
+    userPRG.map((item) => {
+      return {
+        ...item,
+        register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].prev_register_count,
+      };
+    })
+  );
+  useEffect(() => {
+    setTempMPR(
+      userPRG.map((item) => {
+        return {
+          ...item,
+          register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].prev_register_count,
+        };
+      })
+    );
+  }, [userPRG, courseListG]);
 
   return (
     <Wrapper>
@@ -43,7 +62,7 @@ function MyPrevRegisterList(props) {
                     <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
           {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
-        {userPRG.map((item, idx) => {
+        {tempMPR.map((item, idx) => {
           return <MyPrevRegisterItem item={item} idx={idx} />;
         })}
       </Table>

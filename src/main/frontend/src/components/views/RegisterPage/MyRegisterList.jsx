@@ -1,18 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { myRegisterSwitchState } from "../../recoil/currentStates";
-import { userInfoState, courseListState, userRegisterState } from "../../recoil/userDataStates";
+import {
+  userInfoState,
+  courseListState,
+  userRegisterState,
+} from "../../recoil/userDataStates";
 import MyRegisterItem from "./MyRegisterItem";
 
 function MyRegisterList(props) {
   const userInfoG = useRecoilValue(userInfoState);
   const courseListG = useRecoilValue(courseListState);
-  const [userRG, setUserRG] = useRecoilState(userRegisterState);
+  const userRG = useRecoilValue(userRegisterState);
   const [myRegisterSwitchG, setMyRegisterSwitchG] = useRecoilState(
     myRegisterSwitchState
   );
 
+  const [tempMR, setTempMR] = useState(
+    userRG.map((item) => {
+      return {
+        ...item,
+          register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].register_count,
+      };
+    })
+  );
+  useEffect(() => {
+    setTempMR(
+      userRG.map((item) => {
+        return {
+          ...item,
+            register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].register_count,
+        };
+      })
+    );
+  }, [userRG, courseListG]);
 
   return (
     <Wrapper>
@@ -23,7 +45,6 @@ function MyRegisterList(props) {
       <TagBtn
         onClick={() => {
           setMyRegisterSwitchG(false);
-          console.log(myRegisterSwitchG);
         }}
       >
         대기열
@@ -32,7 +53,6 @@ function MyRegisterList(props) {
         style={{ transform: "translate(-78px, 0)" }}
         onClick={() => {
           setMyRegisterSwitchG(true);
-          console.log(myRegisterSwitchG);
         }}
       >
         신청완료
@@ -61,7 +81,7 @@ function MyRegisterList(props) {
                     <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
           {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
-        {userRG.map((item, idx) => {
+        {tempMR.map((item, idx) => {
           return <MyRegisterItem item={item} idx={idx} />;
         })}
       </Table>
