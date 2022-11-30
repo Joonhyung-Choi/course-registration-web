@@ -6,11 +6,12 @@ import {
   serverTimeState,
   currentErrorState,
   registerSwitchState,
+  myRegisterSwitchState,
 } from "../../recoil/currentStates";
 import {
   userInfoState,
-  courseListState,
   userRegisterState,
+  waitingRegisterState,
 } from "../../recoil/userDataStates";
 import styled from "styled-components";
 import RegisterFilter from "./RegisterFilter";
@@ -18,19 +19,23 @@ import RegisterSwitch from "./RegisterSwitch";
 import PrevRegisterList from "./PrevRegisterList";
 import RegisterList from "./RegisterList";
 import MyRegisterList from "./MyRegisterList";
+import WaitingRegisterList from "./WaitingRegisterList";
 import axios from "axios";
 
 function RegisterPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const registerSwitchG = useRecoilValue(registerSwitchState);
+  const [myRegisterSwitchG, setMyRegisterSwitchG] = useRecoilState(
+    myRegisterSwitchState
+  );
   // current page
   const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
   const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
   const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
   const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
-  const [courseListG, setCourseListG] = useRecoilState(courseListState);
   const [userRG, setUserRG] = useRecoilState(userRegisterState);
+  const [waitingRG, setWaitingRG] = useRecoilState(waitingRegisterState);
   useEffect(() => {
     if (location.pathname === "/mayo-main/register") {
       setCurrentPageG("register");
@@ -62,13 +67,15 @@ function RegisterPage() {
       setServerTimeG(second);
     });
     axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
+    axios.get("/api/getWaitingList").then((res) => {
+      console.log("getW",res.data);
+      setWaitingRG(res.data);
+    });
   }, []);
-
   return (
     <Wrapper>
       <SizingBox>
         <RegisterBox>
-
           <RegisterSwitch />
           {registerSwitchG ? (
             <PrevRegisterList />
@@ -81,7 +88,22 @@ function RegisterPage() {
         </RegisterBox>
         <MyRegisterBox>
           <Hr />
-          <MyRegisterList />
+          <TagBtn
+            onClick={() => {
+              setMyRegisterSwitchG(false);
+            }}
+          >
+            대기열
+          </TagBtn>
+          <TagBtn
+            style={{ transform: "translate(-78px, 0)" }}
+            onClick={() => {
+              setMyRegisterSwitchG(true);
+            }}
+          >
+            신청완료
+          </TagBtn>
+          {myRegisterSwitchG ? <MyRegisterList /> : <WaitingRegisterList />}
         </MyRegisterBox>
       </SizingBox>
     </Wrapper>
@@ -112,7 +134,27 @@ const RegisterBox = styled.div`
 const Hr = styled.div`
   margin: 10px;
 `;
+const TagBtn = styled.button`
+  display: flex;
+  position: absolute;
+  background: rgb(129, 138, 146);
+  top: 0px;
+  right: 10px;
+  width: 80px;
+  height: 24px;
+  justify-content: center;
+  align-content: center;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border: 2px solid rgb(147 155 163);
+  color: #fff;
+  font-size: 12px;
+  padding-top: 2px;
+  cursor: pointer;
+`;
 const MyRegisterBox = styled.div`
+  display: flex;
+  position: relative;
   width: 100%;
   height: 50%;
   overflow: auto;

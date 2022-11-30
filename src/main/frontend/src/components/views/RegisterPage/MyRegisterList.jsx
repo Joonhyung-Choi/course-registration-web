@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useRecoilValue, useRecoilState } from "recoil";
-import { myRegisterSwitchState } from "../../recoil/currentStates";
+import { useRecoilValue } from "recoil";
 import {
   userInfoState,
   courseListState,
@@ -9,13 +8,10 @@ import {
 } from "../../recoil/userDataStates";
 import MyRegisterItem from "./MyRegisterItem";
 
-function MyRegisterList(props) {
+function MyRegisterList() {
   const userInfoG = useRecoilValue(userInfoState);
   const courseListG = useRecoilValue(courseListState);
   const userRG = useRecoilValue(userRegisterState);
-  const [myRegisterSwitchG, setMyRegisterSwitchG] = useRecoilState(
-    myRegisterSwitchState
-  );
 
   const [tempMR, setTempMR] = useState(
     userRG.map((item) => {
@@ -42,21 +38,6 @@ function MyRegisterList(props) {
         <P>수강신청학점: {userInfoG.userScoreDefault}</P>
         <P>수강신청가능학점: {userInfoG.userScore}</P>
       </PrevScore>
-      <TagBtn
-        onClick={() => {
-          setMyRegisterSwitchG(false);
-        }}
-      >
-        대기열
-      </TagBtn>
-      <TagBtn
-        style={{ transform: "translate(-78px, 0)" }}
-        onClick={() => {
-          setMyRegisterSwitchG(true);
-        }}
-      >
-        신청완료
-      </TagBtn>
       <Table>
         <Tr>
           <Th name="id" style={{ borderTopLeftRadius: "15px" }}>
@@ -73,13 +54,6 @@ function MyRegisterList(props) {
           <Th name="subject_time">수업시간</Th>
           <Th name="professor">담당교수</Th>
           <Th style={{ borderTopRightRadius: "15px" }}>수강취소</Th>
-          {/*<Th name="courseSortation">수업구분</Th>
-                    <Th name="coursePreRequest">예비신청(비율)</Th>--------------------
-                    <Th name="courseTheory">이론</Th>
-                    <Th name="coursePractice">실습</Th>
-                    <Th name="courseArea">영역</Th>
-                    <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
-          {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
         {tempMR.map((item, idx) => {
           return <MyRegisterItem item={item} idx={idx} />;
@@ -94,7 +68,6 @@ export default MyRegisterList;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  position: relative;
   width: 100%;
   height: calc(100% - 20px);
   overflow: auto;
@@ -133,24 +106,6 @@ const PrevScore = styled.div`
 const P = styled.p`
   font-size: 12px;
   margin-right: 20px;
-`;
-const TagBtn = styled.button`
-  display: flex;
-  position: absolute;
-  background: rgb(129, 138, 146);
-  top: 0px;
-  right: 10px;
-  width: 80px;
-  height: 24px;
-  justify-content: center;
-  align-content: center;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  border: 2px solid rgb(147 155 163);
-  color: #fff;
-  font-size: 12px;
-  padding-top: 2px;
-  cursor: pointer;
 `;
 const Table = styled.table`
   width: 100%;

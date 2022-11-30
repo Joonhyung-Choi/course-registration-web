@@ -20,6 +20,11 @@ export const userRegisterState = atom({
   default: [],
 });
 
+export const waitingRegisterState = atom({
+  key:"waitingRegister",
+  default: [],
+});
+
 export const courseListFilteringState = atom({
   key:"courseListFiltering",
   default: courseListState,

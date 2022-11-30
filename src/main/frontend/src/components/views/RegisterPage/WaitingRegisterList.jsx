@@ -1,47 +1,47 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import {
+  userInfoState,
   courseListState,
-  userPrevRegisterState,
   userRegisterState,
 } from "../../recoil/userDataStates";
-import PrevRegisterItem from "./PrevRegisterItem";
+import MyRegisterItem from "./MyRegisterItem";
 
-function PrevRegisterList(props) {
+function WaitingRegisterList() {
+  const userInfoG = useRecoilValue(userInfoState);
   const courseListG = useRecoilValue(courseListState);
-  const userPRG = useRecoilValue(userPrevRegisterState);
   const userRG = useRecoilValue(userRegisterState);
 
-  // userPRG 와 userRG 겹치는 item 제거
-  // tempPR의 register_count 변경
-  const [tempPR, setTempPR] = useState(userPRG.filter(
-    (item) => !userRG.map((item) => item.subjectId).includes(item.subjectId)
-  ));
-  const [tempPR_t, setTempPR_t] = useState(
-      tempPR.map((item) => {
-        return {
-          ...item,
-          register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].register_count,
-        };
-      })
+  const [tempMR, setTempMR] = useState(
+    userRG.map((item) => {
+      return {
+        ...item,
+        register_count: courseListG.filter(
+          (i) => i.subjectId === item.subjectId
+        )[0].register_count,
+      };
+    })
   );
   useEffect(() => {
-    setTempPR(userPRG.filter(
-      (item) => !userRG.map((item) => item.subjectId).includes(item.subjectId)
-    ));
-    setTempPR_t(
-        tempPR.map((item) => {
-          return {
-            ...item,
-            register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].register_count,
-          };
-        })
+    setTempMR(
+      userRG.map((item) => {
+        return {
+          ...item,
+          register_count: courseListG.filter(
+            (i) => i.subjectId === item.subjectId
+          )[0].register_count,
+        };
+      })
     );
-  }, [userPRG, userRG, courseListG]);
+  }, [userRG, courseListG]);
 
   return (
     <Wrapper>
+      <PrevScore>
+        <P>수강신청학점: {userInfoG.userScoreDefault}</P>
+        <P>수강신청가능학점: {userInfoG.userScore}</P>
+      </PrevScore>
       <Table>
         <Tr>
           <Th name="id" style={{ borderTopLeftRadius: "15px" }}>
@@ -57,26 +57,28 @@ function PrevRegisterList(props) {
           <Th name="register_count">수강신청인원</Th>
           <Th name="subject_time">수업시간</Th>
           <Th name="professor">담당교수</Th>
-          <Th style={{ borderTopRightRadius: "15px" }}>수강신청</Th>
+          <Th style={{ borderTopRightRadius: "15px" }}>수강취소</Th>
         </Tr>
-        {tempPR_t.map((item, idx) => {
-          return <PrevRegisterItem item={item} idx={idx} />;
+        {tempMR.map((item, idx) => {
+          return <MyRegisterItem item={item} idx={idx} />;
         })}
       </Table>
     </Wrapper>
   );
 }
 
-export default PrevRegisterList;
+export default WaitingRegisterList;
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: calc(100% - 28px);
+  height: calc(100% - 20px);
   overflow: auto;
   box-sizing: border-box;
   margin: 0px;
-  margin-top: 28px;
   padding: 0px;
+  overflow-y: auto;
   overflow-x: visible;
   &::-webkit-scrollbar {
     width: 10px;
@@ -98,6 +100,16 @@ const Wrapper = styled.div`
     border: 1.5px solid transparent;
     border-radius: 100px;
   }
+`;
+const PrevScore = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 3px 13px;
+`;
+const P = styled.p`
+  font-size: 12px;
+  margin-right: 20px;
 `;
 const Table = styled.table`
   width: 100%;
@@ -124,4 +136,6 @@ const Th = styled.th`
   color: #ffffff;
   border: 0px;
   position: sticky;
+  top: 0;
+  align-items: center;
 `;
