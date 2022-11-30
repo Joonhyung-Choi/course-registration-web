@@ -63,22 +63,20 @@ function RegisterPage() {
     });
     axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
   }, []);
-  // filtering
-  const [filteringList, setFilteringList] = useState(courseListG);
-  const getFilteringList = (filteringList) => {
-    setFilteringList(filteringList);
-  };
 
   return (
     <Wrapper>
       <SizingBox>
         <RegisterBox>
-          <RegisterFilter getFilteringList={getFilteringList} />
+
           <RegisterSwitch />
           {registerSwitchG ? (
-            <PrevRegisterList filteringList={filteringList} />
+            <PrevRegisterList />
           ) : (
-            <RegisterList filteringList={filteringList} />
+            <>
+              <RegisterFilter />
+              <RegisterList />
+            </>
           )}
         </RegisterBox>
         <MyRegisterBox>

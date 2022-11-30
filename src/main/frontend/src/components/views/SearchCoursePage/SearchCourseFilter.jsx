@@ -1,19 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
-import { courseListState } from "../../recoil/userDataStates";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { courseListState, courseListFilteringState} from "../../recoil/userDataStates";
 import { BsCaretRightFill } from "react-icons/bs";
 
-function SearchCourseFilter(props) {
+function SearchCourseFilter() {
   let dum = 1;
   const courseListG = useRecoilValue(courseListState); // Initial Data List
+  const [filteringCourseListG, setFilteringCourseListG] = useRecoilState(courseListFilteringState);
+
   const [isSelMajor, setIsSelMajor] = useState(true);
   const [subjectTypeValue, setSubjectTypeValue] = useState("");
   const [majorValue, setMajorValue] = useState("");
   const [subjectNameValue, setSubjectNameValue] = useState("");
   const [subjectIdInput, setSubjectIdInput] = useState("");
-  const [filterList, setFilterList] = useState(courseListG);
-  let filteringValue = filterList; // Final Data List
+
+  useEffect(() => {
+    if (subjectIdInput.length === 5) {
+      setFilteringCourseListG(
+        courseListG.filter((item) => {
+          if (String(item.subjectId) === subjectIdInput) {
+            return item;
+          }
+        })
+      );
+    }
+    if (subjectIdInput.length === 0) {
+      setFilteringCourseListG(courseListG);
+    }
+  }, [subjectIdInput]);
+
   // categorySel Event
   const onClickCategory = (e) => {
     setIsSelMajor(Boolean(e.target.value));
@@ -26,14 +42,12 @@ function SearchCourseFilter(props) {
     if (!isSelMajor) {
       dum = 0;
       if (dum === 0) {
-        props.getFilteringList(courseListG);
+        setFilteringCourseListG(courseListG);
       }
     } else if (isSelMajor) {
       dum = 1;
       if (dum === 1) {
-        {
-          props.getFilteringList(courseListG);
-        }
+        setFilteringCourseListG(courseListG);
       }
     }
   };
@@ -53,56 +67,47 @@ function SearchCourseFilter(props) {
   // subjectNameSel Event
   const onChangeSubjectNameSel = (e) => {
     setSubjectNameValue(e.target.value);
+    getFilterList();
   };
   // subjectIdInput Event
   const onChangeSubjectId = (e) => {
     setSubjectIdInput(e.target.value);
   };
-  // Press Enter Event
-  const onEnter = (e) => {
-    if (subjectIdInput.length === 5) {
-      onClickBtn();
-    }
-  };
-  // filterList Event
+  // get filteringCourseListG Event
   const getFilterList = () => {
-    setFilterList(
+    setFilteringCourseListG(
       courseListG.filter((item) => {
         if (item.major === majorValue) {
           if (subjectTypeValue.includes(item.subject_type)) {
-            return item;
+            if (subjectNameValue === "") {
+              return item;
+            } else if (item.subject_name === subjectNameValue) {
+              return item;
+            }
           } else if (subjectTypeValue === "") {
-            return item;
+            if (subjectNameValue === "") {
+              return item;
+            } else if (item.subject_name === subjectNameValue) {
+              return item;
+            }
           }
         } else if (majorValue === "") {
           if (subjectTypeValue.includes(item.subject_type)) {
-            return item;
+            if (subjectNameValue === "") {
+              return item;
+            } else if (item.subject_name === subjectNameValue) {
+              return item;
+            }
           } else if (subjectTypeValue === "") {
-            return item;
+            if (subjectNameValue === "") {
+              return item;
+            } else if (item.subject_name === subjectNameValue) {
+              return item;
+            }
           }
         }
       })
     );
-  };
-  // BtnSearch Click Event
-  const onClickBtn = () => {
-    if (isSelMajor) {
-      filteringValue = filterList.filter((item) => {
-        if (subjectNameValue === "") {
-          return item;
-        } else if (item.subject_name === subjectNameValue) {
-          return item;
-        }
-      });
-      props.getFilteringList(filteringValue);
-    } else if (!isSelMajor) {
-      filteringValue = filterList.filter((item) => {
-        if (String(item.subjectId) === subjectIdInput) {
-          return item;
-        }
-      });
-      props.getFilteringList(filteringValue);
-    }
   };
   return (
     <Wrapper>
@@ -150,7 +155,7 @@ function SearchCourseFilter(props) {
                 value={subjectNameValue}
               >
                 <Option value={""}>전체과목</Option>
-                {filterList.map((item) => {
+                {filteringCourseListG.map((item) => {
                   return (
                     <Option value={item.subject_name}>
                       {item.subject_name}
@@ -172,23 +177,22 @@ function SearchCourseFilter(props) {
                 min="1"
                 max="5"
                 onChange={onChangeSubjectId}
-                onKeyDown={onEnter}
               />
             </DivSubjectId>
             <DivSubjectName>
               <PSubjectName>과목명&nbsp;</PSubjectName>
               <OutputSubjectName>
                 {subjectIdInput.length === 5 &&
-                  courseListG.map((item) => {
+                  filteringCourseListG.map((item) => {
                     if (String(item.subjectId) === subjectIdInput) {
                       return item.subject_name;
                     }
-                  })}
+                  })
+                }
               </OutputSubjectName>
             </DivSubjectName>
           </>
         )}
-        <BtnSearch onClick={onClickBtn}>조회</BtnSearch>
       </InnerWrap>
     </Wrapper>
   );
@@ -208,7 +212,7 @@ const InnerWrap = styled.div`
   display: flex;
   position: relative;
   flex-direction: row;
-  width: 760px;
+  width: 725px;
   height: 23px;
   padding: 2px;
   padding-left: 8px;
@@ -349,10 +353,10 @@ const PSubjectId = styled.p`
 `;
 const InputSubjectId = styled.input`
   padding: 0px;
-  padding-left: 3px;
+  padding: 1px 0px 0px 4px;
   margin: 0px;
   height: 15px;
-  width: 128px;
+  width: 120px;
   align-items: center;
   font-size: 11px;
   border-radius: 7px;
@@ -381,20 +385,4 @@ const OutputSubjectName = styled.div`
   border: none;
   border-bottom: 1px solid #ffffff;
   background-color: rgba(0, 0, 0, 0);
-`;
-// BtnSearch
-const BtnSearch = styled.a`
-  padding: 0px 5px;
-  padding-top: 3px;
-  height: 15px;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  color: #313131;
-  background-color: #f3f3f3;
-  border-radius: 6px;
-  cursor: pointer;
-  &:hover {
-    background-color: #555555;
-  }
 `;

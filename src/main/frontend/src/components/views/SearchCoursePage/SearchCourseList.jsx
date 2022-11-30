@@ -2,11 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import SearchCourseItem from "./SearchCourseItem";
 import {useRecoilValue} from "recoil";
-import {courseListState} from "../../recoil/userDataStates";
+import {courseListFilteringState} from "../../recoil/userDataStates";
 
-function SearchCourseList(props) {
-  const courseListG = useRecoilValue(courseListState);
-  const courseList = props.filteringList;
+function SearchCourseList() {
+  const filteringCourseListG = useRecoilValue(courseListFilteringState);
 
   return (
     <Wrapper>
@@ -26,15 +25,8 @@ function SearchCourseList(props) {
           <Th name="professor" style={{ borderTopRightRadius: "15px" }}>
             담당교수
           </Th>
-          {/*<Th name="courseSortation">수업구분</Th>
-                    <Th name="coursePreRequest">예비신청(비율)</Th>--------------------
-                    <Th name="courseTheory">이론</Th>
-                    <Th name="coursePractice">실습</Th>
-                    <Th name="courseArea">영역</Th>
-                    <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
-          {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
-        {courseList.map((item, idx) => {
+        {filteringCourseListG.map((item, idx) => {
           return <SearchCourseItem item={item} idx={idx} />;
         })}
       </Table>

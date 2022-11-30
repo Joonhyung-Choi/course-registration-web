@@ -14,8 +14,5 @@ public class WaitingRequsetDto {
     private UserEntity userEntity;
     private int subjectId;
 
-    public WaitingRequsetDto(UserSubjectRequestDto userSubjectRequestDto){
-        this.userEntity = userSubjectRequestDto.getUserEntity();
-        this.subjectId = userSubjectRequestDto.getSubjectId();
-    }
+
 }

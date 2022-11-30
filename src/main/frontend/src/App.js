@@ -36,7 +36,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/mayo-main/*" element={<MainPage />} />
-        <Route path="/mayo-admin" element={<AdminPage />} />
+        <Route path="/mayo-admin/*" element={<AdminPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Wrapper>

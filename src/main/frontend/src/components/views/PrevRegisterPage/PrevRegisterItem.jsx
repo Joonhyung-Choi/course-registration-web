@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import {
@@ -14,6 +14,10 @@ function PrevRegisterItem(props) {
   const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
   const [courseListG, setCourseListG] = useRecoilState(courseListState);
   const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
+
+  useEffect(()=>{
+
+  },[userPRG]);
 
   let prevBtnValue = {};
 

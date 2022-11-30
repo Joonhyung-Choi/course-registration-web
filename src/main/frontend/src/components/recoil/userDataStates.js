@@ -19,3 +19,16 @@ export const userRegisterState = atom({
   key: "userRegister",
   default: [],
 });
+
+export const courseListFilteringState = atom({
+  key:"courseListFiltering",
+  default: courseListState,
+});
+export const prevRegisterFilteringState = atom({
+  key: "prevRegisterFiltering",
+  default: courseListState,
+});
+export const registerFilteringState = atom({
+  key: "registerFiltering",
+  default: courseListState,
+});

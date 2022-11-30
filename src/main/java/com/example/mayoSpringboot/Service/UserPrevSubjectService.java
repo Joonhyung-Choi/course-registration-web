@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.mayoSpringboot.error.ErrorCode.*;
 
@@ -51,20 +52,17 @@ public class UserPrevSubjectService {
         //아티클에 예비신청인원 추가
         Article article = articleRepository.findById(userSubjectRequestDto.getId()).orElseThrow(()->{throw new NotFoundException(NOT_FOUND_EXCEPTION,"E0004");});
         ArticleDto articleDto = new ArticleDto(article);
-       /* int a = ++(articleDto.getPrev_register_count());*/
         articleDto.setPrev_register_count(article.getPrev_register_count()+1);
         article.update(articleDto);
-        article.getPrev_register_count();
         articleRepository.save(article);
 
-
+        //유저수강신청 디비의 신청
         userSubjectRequestDto.setUserEntity(userEntity);
-
-        userSubjectRequestDto.setRegister_count(article.getPrev_register_count());
+        userSubjectRequestDto.setRegister_count(userSubjectRequestDto.getRegister_count()+1);
         UserPreSubjectEntity userPreSubjectEntity = new UserPreSubjectEntity();
-
         userPreSubjectEntity.update(userSubjectRequestDto);
         userPrevSubjectRepository.save(userPreSubjectEntity);
+
         return userRequestDto;
     }
     @Transactional
@@ -73,10 +71,7 @@ public class UserPrevSubjectService {
         if (userEntity == null){throw new UnAuthorizedException(ACCESS_DENIED_EXCEPTION,"E0001");}
 
         List<UserPreSubjectEntity> entityList = userPrevSubjectRepository.findAllByUserPrevSubject(user);
-        List<UserSubjectResponseDto> dtoList = new ArrayList<>();
-        for (UserPreSubjectEntity userPreSubjectEntity : entityList){
-            dtoList.add(new UserSubjectResponseDto(userPreSubjectEntity));
-        }
+        List<UserSubjectResponseDto> dtoList = entityList.stream().map(UserSubjectResponseDto::new).collect(Collectors.toList());
         return dtoList;
     }
     @Transactional

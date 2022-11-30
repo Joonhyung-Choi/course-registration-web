@@ -1,28 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { userPrevRegisterState } from "../../recoil/userDataStates";
+import { userPrevRegisterState, prevRegisterFilteringState, courseListState } from "../../recoil/userDataStates";
 import PrevRegisterItem from "./PrevRegisterItem";
 
-function PrevRegisterList(props) {
-  const filteringList = props.filteringList;
+function PrevRegisterList() {
+  const courseListG = useRecoilValue(courseListState);
   const userPRG = useRecoilValue(userPrevRegisterState);
+  const filteringPRG = useRecoilValue(prevRegisterFilteringState);
 
-  let tempF = filteringList.map((item) => item.subjectId);
-  let tempU = userPRG.map((item) => item.subjectId);
-  let courseListT = tempF.filter((item) => !tempU.includes(item));
-
+  // filteringPRG와 userPRG 겹치는 item 제거
+  // tempPR의 subject_time 변경
+  const [tempPR, setTempPR] = useState(filteringPRG.filter(item => !(userPRG.map((item) => item.subjectId).includes(item.subjectId))));
   useEffect(() => {
-    tempF = filteringList.map((item) => item.subjectId);
-    tempU = userPRG.map((item) => item.subjectId);
-    courseListT = tempF.filter((item) => !tempU.includes(item));
-  }, [filteringList, userPRG]);
-
-  const courseList = filteringList.filter((item) => {
-    if (courseListT.includes(item.subjectId)) {
-      return item;
-    }
-  });
+    setTempPR(filteringPRG.filter(item => !(userPRG.map((item) => item.subjectId).includes(item.subjectId))));
+  }, [filteringPRG, userPRG]);
 
   return (
     <Wrapper>
@@ -42,15 +34,8 @@ function PrevRegisterList(props) {
           <Th name="subject_time">수업시간</Th>
           <Th name="professor">담당교수</Th>
           <Th style={{ borderTopRightRadius: "15px" }}>수강신청</Th>
-          {/*<Th name="courseSortation">수업구분</Th>
-                    <Th name="coursePreRequest">예비신청(비율)</Th>
-                    <Th name="courseTheory">이론</Th>
-                    <Th name="coursePractice">실습</Th>
-                    <Th name="courseArea">영역</Th>
-                    <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
-          {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
-        {courseList.map((item, idx) => {
+        {tempPR.map((item, idx) => {
           return <PrevRegisterItem item={item} idx={idx} />;
         })}
       </Table>

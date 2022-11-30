@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import {
   courseListState,
   userPrevRegisterState,
@@ -9,37 +9,14 @@ import {
 import PrevRegisterItem from "./PrevRegisterItem";
 
 function PrevRegisterList(props) {
-  const filteringList = props.filteringList;
-  const courseListG = useRecoilValue(courseListState);
-  const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
+  const userPRG = useRecoilValue(userPrevRegisterState);
   const userRG = useRecoilValue(userRegisterState);
 
-  let courseListF = [];
-  let courseListT = [];
+  // userPRG 와 userRG 겹치는 item 제거
+  let tempR_PR = userPRG.filter(item => !(userRG.map((item) => item.subjectId).includes(item.subjectId)));
   useEffect(() => {
-    let temp = [];
-    userPRG.map((item, idx) => {
-      temp.push(item);
-      let dum = courseListG.filter((i) => i.subjectId === temp[idx].subjectId);
-      temp[idx].register_count = dum.register_count;
-    });
-    setUserPRG(temp);
-  }, []);
-
-  useEffect(() => {
-    courseListF = filteringList
-      .map((item) => item.subjectId)
-      .filter((item) => userPRG.map((item) => item.subjectId).includes(item));
-    courseListT = courseListF
-      .map((item) => item)
-      .filter((item) => !userRG.map((item) => item.subjectId).includes(item));
-  }, [filteringList, userPRG, userRG]);
-
-  const courseList = filteringList.filter((item) => {
-    if (courseListT.includes(item.subjectId)) {
-      return item;
-    }
-  });
+    tempR_PR = userPRG.filter(item => !(userRG.map((item) => item.subjectId).includes(item.subjectId)));
+  }, [userPRG, userRG]);
 
   return (
     <Wrapper>
@@ -59,15 +36,8 @@ function PrevRegisterList(props) {
           <Th name="subject_time">수업시간</Th>
           <Th name="professor">담당교수</Th>
           <Th style={{ borderTopRightRadius: "15px" }}>수강신청</Th>
-          {/*<Th name="courseSortation">수업구분</Th>
-                    <Th name="coursePreRequest">예비신청(비율)</Th>--------------------
-                    <Th name="courseTheory">이론</Th>
-                    <Th name="coursePractice">실습</Th>
-                    <Th name="courseArea">영역</Th>
-                    <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
-          {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
-        {courseList.map((item, idx) => {
+        {tempR_PR.map((item, idx) => {
           return <PrevRegisterItem item={item} idx={idx} />;
         })}
       </Table>
@@ -79,10 +49,11 @@ export default PrevRegisterList;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: calc(100% - 20px);
+  height: calc(100% - 28px);
   overflow: auto;
   box-sizing: border-box;
   margin: 0px;
+  margin-top : 28px;
   padding: 0px;
   overflow-x: visible;
   &::-webkit-scrollbar {

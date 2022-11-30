@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { myRegisterSwitchState } from "../../recoil/currentStates";
-import { userInfoState, courseListState ,userRegisterState } from "../../recoil/userDataStates";
+import { userInfoState, courseListState, userRegisterState } from "../../recoil/userDataStates";
 import MyRegisterItem from "./MyRegisterItem";
 
 function MyRegisterList(props) {
@@ -13,16 +13,6 @@ function MyRegisterList(props) {
     myRegisterSwitchState
   );
 
-  useEffect(() => {
-    let temp = [];
-    userRG.map((item, idx) => {
-      temp.push(item);
-      let dum = courseListG.filter((i) => i.subjectId === temp[idx].subjectId);
-      temp[idx].register_count = dum.register_count;
-        console.log(temp[idx]);
-    });
-    setUserRG(temp);
-  }, []);
 
   return (
     <Wrapper>
@@ -140,6 +130,7 @@ const TagBtn = styled.button`
   color: #fff;
   font-size: 12px;
   padding-top: 2px;
+  cursor: pointer;
 `;
 const Table = styled.table`
   width: 100%;

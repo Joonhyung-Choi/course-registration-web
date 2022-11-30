@@ -13,16 +13,6 @@ function MyPrevRegisterList(props) {
   const userInfoG = useRecoilValue(userInfoState);
   const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
 
-  useEffect(() => {
-    let temp = [];
-    userPRG.map((item, idx) => {
-      temp.push(item);
-      let dum = courseListG.filter((i) => i.subjectId === temp[idx].subjectId);
-      temp[idx].register_count = dum.prev_register_count;
-    });
-    setUserPRG(temp);
-  }, []);
-
   return (
     <Wrapper>
       <PrevScore>

@@ -4,7 +4,9 @@ import com.example.mayoSpringboot.dto.subjcet.UserSubjectRequestDto;
 import com.example.mayoSpringboot.dto.subjcet.WaitingRequsetDto;
 import com.example.mayoSpringboot.dto.subjcet.WaitingResponseDto;
 import com.example.mayoSpringboot.dto.user.UserRequestDto;
+import com.example.mayoSpringboot.entity.UserEntity;
 import com.example.mayoSpringboot.entity.subjectEntity.WaitingSubjectEntity;
+import com.example.mayoSpringboot.repository.UserRepository;
 import com.example.mayoSpringboot.repository.WaitingSubjectRepositroy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 public class WaitingSubjectService {
 
     private final WaitingSubjectRepositroy waitingSubjectRepositroy;
+    private final UserRepository userRepository;
 
     //해당유저의 웨이팅리스트
     public List<WaitingResponseDto> getWaitingList(String userName){
@@ -26,9 +29,10 @@ public class WaitingSubjectService {
 
     }
     //수강신청에서 대기열로 넘어가기
-    public UserRequestDto subjectToWaiting(UserRequestDto userRequestDto,UserSubjectRequestDto userSubjectRequestDto){
-        WaitingRequsetDto waitingRequsetDto = new WaitingRequsetDto(userSubjectRequestDto);//dto로 바꾸고
-        WaitingSubjectEntity waitingSubjectEntity = new WaitingSubjectEntity();//대기열 엔티티 만들고
+    public UserRequestDto subjectToWaiting(UserRequestDto userRequestDto ,UserSubjectRequestDto userSubjectRequestDto){
+        UserEntity userEntity = userRepository.findByUserName(userRequestDto.getUserName());
+        WaitingRequsetDto waitingRequsetDto = new WaitingRequsetDto(userEntity, userSubjectRequestDto.getSubjectId());//dto로 바꾸고
+        WaitingSubjectEntity waitingSubjectEntity = new WaitingSubjectEntity();//엔티티 생성
         waitingSubjectEntity.update(waitingRequsetDto);//대기열 저장
         waitingSubjectRepositroy.save(waitingSubjectEntity);
 
@@ -38,11 +42,12 @@ public class WaitingSubjectService {
     public WaitingResponseDto waitingToSubject(int subjectId){
         ArrayList<WaitingSubjectEntity> entityList = waitingSubjectRepositroy.finByWaitOfSubjectId(subjectId);
         WaitingSubjectEntity entity = entityList.get(0);
-        entityList.remove(0);//지우고
-        entityList.stream().sorted();//정렬시키기
-
         WaitingResponseDto waitingResponsDto = new WaitingResponseDto(entity);
         //엔티티 맨 앞에 삭제
+        waitingSubjectRepositroy.delete(entity);
+       /* entityList.remove(0);*///지우고
+        /*entityList.stream().sorted();//정렬시키기*/
+
         return waitingResponsDto;
     }
 

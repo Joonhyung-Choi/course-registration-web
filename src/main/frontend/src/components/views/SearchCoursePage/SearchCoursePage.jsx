@@ -63,17 +63,11 @@ function SearchCoursePage(props) {
     axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
   }, []);
 
-  // filtering
-  const [filteringList, setFilteringList] = useState(courseListG);
-  const getFilteringList = (filteringList) => {
-    setFilteringList(filteringList);
-  };
-
   return (
     <Wrapper>
       <SizingBox>
-        <SearchCourseFilter getFilteringList={getFilteringList} />
-        <SearchCourseList filteringList={filteringList} />
+        <SearchCourseFilter  />
+        <SearchCourseList />
       </SizingBox>
     </Wrapper>
   );

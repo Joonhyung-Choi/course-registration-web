@@ -3,10 +3,10 @@ import styled from "styled-components";
 import axios from "axios";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdAssignmentTurnedIn } from "react-icons/md";
-import {useRecoilState} from "recoil";
-import {currentErrorState} from "../../recoil/currentStates";
+import { useRecoilState } from "recoil";
+import { currentErrorState } from "../../../recoil/currentStates";
 
-function SignUpPage(props) {
+function AddUserPage(props) {
   const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
 
   const axiosConfig = {
@@ -19,14 +19,12 @@ function SignUpPage(props) {
     setUserName("");
     setUserId("");
     setUserPw("");
-    setUserPw2("");
-    props.getToggleSignUp(false);
+    props.getToggleAddUser(false);
   };
   // input 변경값 감지
   const [userName, setUserName] = useState("");
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
-  const [userPw2, setUserPw2] = useState("");
   // input 변경값 감지
   const handleInputName = (e) => {
     setUserName(e.target.value);
@@ -36,9 +34,6 @@ function SignUpPage(props) {
   };
   const handleInputPw = (e) => {
     setUserPw(e.target.value);
-  };
-  const handleInputPw2 = (e) => {
-    setUserPw2(e.target.value);
   };
   // LoginBtn Click Event
   const onClickSignUp = async () => {
@@ -59,19 +54,7 @@ function SignUpPage(props) {
       setTimeout(function () {
         setCurrentErrorG(["비밀번호를 입력하세요.", false]);
       }, 2000);
-      document.getElementById("signup_Pw").focus();
-    }else if (userPw2 === "") {
-      setCurrentErrorG(["2차 비밀번호를 입력하세요.", true]);
-      setTimeout(function () {
-        setCurrentErrorG(["2차 비밀번호를 입력하세요.", false]);
-      }, 2000);
-      document.getElementById("signup_pw2").focus();
-    } else if (userPw !== userPw2) {
-      setCurrentErrorG(["2차 비밀번호가 일치하지 않습니다.", true]);
-      setTimeout(function () {
-        setCurrentErrorG(["2차 비밀번호가 일치하지 않습니다.", false]);
-      }, 2000);
-      document.getElementById("signup_pw2").focus();
+      document.getElementById("signup_pw").focus();
     } else {
       //0->실패 1->성공 2->ID중복
       await axios
@@ -93,8 +76,7 @@ function SignUpPage(props) {
           setUserName("");
           setUserId("");
           setUserPw("");
-          setUserPw2("");
-          props.getToggleSignUp(false);
+          props.getToggleAddUser(false);
         })
         .catch(function (error) {
           console.log("SignUp(Name, Id, Pw) Post Error");
@@ -108,7 +90,7 @@ function SignUpPage(props) {
 
   return (
     <Wrapper
-      style={props.toggleSignUp ? { display: "flex" } : { display: "none" }}
+      style={props.toggleAddUser ? { display: "flex" } : { display: "none" }}
     >
       <InnerWrap>
         <BtnClose onClick={onClickClose}>
@@ -147,23 +129,13 @@ function SignUpPage(props) {
         <DivUserPw>
           <PUserPw>비밀번호</PUserPw>
           <InputUserPw
-            id="signup_Pw"
+            id="signup_pw"
             type="password"
             value={userPw}
             onChange={handleInputPw}
             placeholder="Password"
           />
         </DivUserPw>
-        <DivUserPw2>
-          <PUserPw2>2차 비밀번호</PUserPw2>
-          <InputUserPw2
-              id="signup_pw2"
-              type="password"
-              value={userPw2}
-              onChange={handleInputPw2}
-              placeholder="Password"
-          />
-        </DivUserPw2>
         <DivSignUp onClick={onClickSignUp}>
           <BtnSignUp>회원가입</BtnSignUp>
           <IconSignUp />
@@ -173,7 +145,7 @@ function SignUpPage(props) {
   );
 }
 
-export default SignUpPage;
+export default AddUserPage;
 
 const Wrapper = styled.div`
   position: absolute;
@@ -295,30 +267,6 @@ const PUserPw = styled.p`
   font-size: 14px;
 `;
 const InputUserPw = styled.input`
-  width: 240px;
-  height: 40px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 15px;
-  padding: 12px;
-  padding-left: 16px;
-  margin-left: 5px;
-`;
-const DivUserPw2 = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: auto;
-  height: auto;
-  margin: 0 auto;
-  margin-bottom: 40px;
-`;
-const PUserPw2 = styled.p`
-  padding: 0px;
-  margin: 0px;
-  margin-bottom: 10px;
-  color: #313131;
-  font-size: 14px;
-`;
-const InputUserPw2 = styled.input`
   width: 240px;
   height: 40px;
   border: 1px solid rgba(0, 0, 0, 0.2);

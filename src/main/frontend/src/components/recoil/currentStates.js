@@ -5,11 +5,15 @@ export const currentPageState = atom({
   default: "",
 });
 
+export const currentErrorState = atom({
+  key: "currentError",
+  default: ["", false],
+});
+
 export const registerSwitchState = atom({
   key: "registerSwitch",
   default: true,
 });
-
 export const myRegisterSwitchState = atom({
   key: "myRegisterSwitch",
   default: true,
@@ -18,9 +22,4 @@ export const myRegisterSwitchState = atom({
 export const serverTimeState = atom({
   key: "serverTime",
   default: "",
-});
-
-export const currentErrorState = atom({
-  key: "currentError",
-  default: ["", false],
 });

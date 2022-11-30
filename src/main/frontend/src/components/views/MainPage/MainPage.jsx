@@ -10,20 +10,6 @@ import RegisterPage from "../RegisterPage/RegisterPage";
 import MyRegisterPage from "../MyRegisterPage/MyRegisterPage";
 
 function MainPage() {
-  // 새로고침 막기
-  const preventClose = (e) => {
-    e.preventDefault();
-    e.returnValue = "";
-  };
-  useEffect(() => {
-    (() => {
-      window.addEventListener("beforeunload", preventClose);
-    })();
-    return () => {
-      window.removeEventListener("beforeunload", preventClose);
-    };
-  }, []);
-
   // sidebar 크기 조절
   const [xPosition, setXPosition] = useState(-350);
   const getXPosition = (xPosition) => {

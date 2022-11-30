@@ -1,27 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { userRegisterState } from "../../recoil/userDataStates";
+import { registerFilteringState, userRegisterState } from "../../recoil/userDataStates";
 import RegisterItem from "./RegisterItem";
 
-function RegisterList(props) {
-  const filteringList = props.filteringList;
+function RegisterList() {
   const userRG = useRecoilValue(userRegisterState);
+  const filteringRG = useRecoilValue(registerFilteringState);
 
-  let tempF = filteringList.map((item) => item.subjectId);
-  let tempU = userRG.map((item) => item.subjectId);
-  let courseListT = tempF.filter((item) => !tempU.includes(item));
+  // filteringRG와 userRG 겹치는 item 제거
+  // tempR의 subject_time 변경
+  const [tempR, setTempR] = useState(filteringRG.filter(item => !(userRG.map((item) => item.subjectId).includes(item.subjectId))));
   useEffect(() => {
-    tempF = filteringList.map((item) => item.subjectId);
-    tempU = userRG.map((item) => item.subjectId);
-    courseListT = tempF.filter((item) => !tempU.includes(item));
-  }, [filteringList, userRG]);
-
-  const courseList = filteringList.filter((item) => {
-    if (courseListT.includes(item.subjectId)) {
-      return item;
-    }
-  });
+    setTempR(filteringRG.filter(item => !(userRG.map((item) => item.subjectId).includes(item.subjectId))));
+  }, [filteringRG, userRG]);
 
   return (
     <Wrapper>
@@ -49,7 +41,7 @@ function RegisterList(props) {
                     <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
           {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
-        {courseList.map((item, idx) => {
+        {tempR.map((item, idx) => {
           return <RegisterItem item={item} idx={idx} />;
         })}
       </Table>

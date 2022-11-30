@@ -10,7 +10,7 @@ import {
   userInfoState,
   courseListState,
   userPrevRegisterState,
-  userRegisterState,
+  userRegisterState, prevRegisterFilteringState,
 } from "../../recoil/userDataStates";
 import styled from "styled-components";
 import PrevRegisterFilter from "./PrevRegisterFilter";
@@ -30,6 +30,7 @@ function PrevRegisterPage() {
   const [courseListG, setCourseListG] = useRecoilState(courseListState);
   const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
   const [userRG, setUserRG] = useRecoilState(userRegisterState);
+  const [filteringPRG, setFilteringPRG] = useRecoilState(prevRegisterFilteringState);
   useEffect(() => {
     if (location.pathname === "/mayo-main/prev-register") {
       setCurrentPageG("prev-register");
@@ -62,29 +63,20 @@ function PrevRegisterPage() {
     });
     axios.get("/api/courseListGet").then((res) => {
       setCourseListG(res.data.content);
+      setFilteringPRG(res.data.content);
     });
     axios.get("/api/prevGet").then((res) => {
       setUserPRG(res.data);
     });
     axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
-     // 잠깐 테스트용
-     axios.get("/api/adminSubjectGet").then((res) => {
-       console.log(res.data);
-     });
   }, []);
-
-  // filtering
-  const [filteringList, setFilteringList] = useState(courseListG);
-  const getFilteringList = (filteringList) => {
-    setFilteringList(filteringList);
-  };
 
   return (
     <Wrapper>
       <SizingBox>
         <PrevRegisterBox>
-          <PrevRegisterFilter getFilteringList={getFilteringList} />
-          <PrevRegisterList filteringList={filteringList} />
+          <PrevRegisterFilter />
+          <PrevRegisterList />
         </PrevRegisterBox>
         <MyPrevRegisterBox>
           <Hr />
