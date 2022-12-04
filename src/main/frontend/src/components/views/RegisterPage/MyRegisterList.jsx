@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import {
   userInfoState,
   courseListState,
   userRegisterState,
+  waitingRegisterState,
 } from "../../recoil/userDataStates";
+import styled from "styled-components";
 import MyRegisterItem from "./MyRegisterItem";
 
 function MyRegisterList() {
   const userInfoG = useRecoilValue(userInfoState);
   const courseListG = useRecoilValue(courseListState);
   const userRG = useRecoilValue(userRegisterState);
+  const waitingRG = useRecoilValue(waitingRegisterState);
 
   const [tempMR, setTempMR] = useState(
     userRG.map((item) => {
       return {
         ...item,
-          register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].register_count,
+        register_count: courseListG.filter(
+          (i) => i.subjectId === item.subjectId
+        )[0].register_count,
       };
     })
   );
@@ -26,11 +30,13 @@ function MyRegisterList() {
       userRG.map((item) => {
         return {
           ...item,
-            register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].register_count,
+          register_count: courseListG.filter(
+            (i) => i.subjectId === item.subjectId
+          )[0].register_count,
         };
       })
     );
-  }, [userRG, courseListG]);
+  }, [courseListG, userRG, waitingRG]);
 
   return (
     <Wrapper>

@@ -1,34 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import styled from "styled-components";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { currentPageState } from "../../recoil/currentStates";
-import {
-  courseListState,
-  userInfoState,
-  userPrevRegisterState,
-  userRegisterState,
-} from "../../recoil/userDataStates";
+import { userInfoState } from "../../recoil/userDataStates";
+import styled from "styled-components";
 
 function StyledMenuButton(props) {
   const navigate = useNavigate();
-
   const currentPageG = useRecoilValue(currentPageState);
   const userInfoG = useRecoilValue(userInfoState);
-  const [courseListG, setCourseListG] = useRecoilState(courseListState);
-  const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
-  const [userRG, setUserRG] = useRecoilState(userRegisterState);
 
   const onClick = async () => {
-    await axios.get("/api/courseListGet").then((res) => {
-      setCourseListG(res.data.content);
-    });
-    await axios.get("/api/prevGet").then((res) => {
-      setUserPRG(res.data);
-    });
-    await axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
-    // register axios
     switch (props.clickTo) {
       case "search-course":
         navigate(`/mayo-main/${props.clickTo}`);

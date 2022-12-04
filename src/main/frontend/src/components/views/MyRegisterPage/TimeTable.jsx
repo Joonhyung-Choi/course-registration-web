@@ -1,13 +1,10 @@
-// 시간표 컴포넌트
-import React, { useState } from "react";
-import styled from "styled-components";
+import React from "react";
 import { useRecoilValue } from "recoil";
 import { userRegisterState } from "../../recoil/userDataStates";
+import styled from "styled-components";
 import TimeTableClass from "./TimeTableClass";
 
-// ===== 시간표 컴포넌트 =====
-
-function TimeTable(props) {
+function TimeTable() {
   const registeredClass = useRecoilValue(userRegisterState);
 
   return (

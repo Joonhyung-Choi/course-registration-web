@@ -21,19 +21,19 @@ export const userRegisterState = atom({
 });
 
 export const waitingRegisterState = atom({
-  key:"waitingRegister",
+  key: "waitingRegister",
   default: [],
 });
 
 export const courseListFilteringState = atom({
-  key:"courseListFiltering",
-  default: courseListState,
+  key: "courseListFiltering",
+  default: [],
 });
 export const prevRegisterFilteringState = atom({
   key: "prevRegisterFiltering",
-  default: courseListState,
+  default: [],
 });
 export const registerFilteringState = atom({
   key: "registerFiltering",
-  default: courseListState,
+  default: [],
 });

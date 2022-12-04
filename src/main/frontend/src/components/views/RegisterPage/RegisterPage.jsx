@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import {
-  currentPageState,
-  serverTimeState,
   currentErrorState,
+  currentPageState,
   registerSwitchState,
   myRegisterSwitchState,
+  serverTimeState,
 } from "../../recoil/currentStates";
-import {
-  userInfoState,
-  userRegisterState,
-  waitingRegisterState,
-} from "../../recoil/userDataStates";
+import { userInfoState } from "../../recoil/userDataStates";
+import axios from "axios";
 import styled from "styled-components";
 import RegisterFilter from "./RegisterFilter";
 import RegisterSwitch from "./RegisterSwitch";
@@ -20,22 +17,18 @@ import PrevRegisterList from "./PrevRegisterList";
 import RegisterList from "./RegisterList";
 import MyRegisterList from "./MyRegisterList";
 import WaitingRegisterList from "./WaitingRegisterList";
-import axios from "axios";
 
 function RegisterPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const setCurrentPageG = useSetRecoilState(currentPageState);
+  const setCurrentErrorG = useSetRecoilState(currentErrorState);
+  const setUserInfoG = useSetRecoilState(userInfoState);
+  const setServerTimeG = useSetRecoilState(serverTimeState);
   const registerSwitchG = useRecoilValue(registerSwitchState);
   const [myRegisterSwitchG, setMyRegisterSwitchG] = useRecoilState(
     myRegisterSwitchState
   );
-  // current page
-  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
-  const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
-  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
-  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
-  const [userRG, setUserRG] = useRecoilState(userRegisterState);
-  const [waitingRG, setWaitingRG] = useRecoilState(waitingRegisterState);
   useEffect(() => {
     if (location.pathname === "/mayo-main/register") {
       setCurrentPageG("register");
@@ -52,7 +45,7 @@ function RegisterPage() {
           }, 2000);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         navigate("/");
         setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
         setTimeout(function () {
@@ -66,12 +59,8 @@ function RegisterPage() {
         Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
       setServerTimeG(second);
     });
-    axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
-    axios.get("/api/getWaitingList").then((res) => {
-      console.log("getW",res.data);
-      setWaitingRG(res.data);
-    });
   }, []);
+
   return (
     <Wrapper>
       <SizingBox>
@@ -92,11 +81,26 @@ function RegisterPage() {
             onClick={() => {
               setMyRegisterSwitchG(false);
             }}
+            style={
+              myRegisterSwitchG
+                ? { background: "rgb(129, 138, 146)" }
+                : { background: "rgb(147, 155, 163)" }
+            }
           >
             대기열
           </TagBtn>
           <TagBtn
-            style={{ transform: "translate(-78px, 0)" }}
+            style={
+              myRegisterSwitchG
+                ? {
+                    transform: "translate(-78px, 0)",
+                    background: "rgb(147, 155, 163)",
+                  }
+                : {
+                    transform: "translate(-78px, 0)",
+                    background: "rgb(129, 138, 146)",
+                  }
+            }
             onClick={() => {
               setMyRegisterSwitchG(true);
             }}
@@ -138,8 +142,8 @@ const TagBtn = styled.button`
   display: flex;
   position: absolute;
   background: rgb(129, 138, 146);
-  top: 0px;
-  right: 10px;
+  top: 19px;
+  right: 20px;
   width: 80px;
   height: 24px;
   justify-content: center;
@@ -149,11 +153,12 @@ const TagBtn = styled.button`
   border: 2px solid rgb(147 155 163);
   color: #fff;
   font-size: 12px;
-  padding-top: 2px;
+  padding-top: 3px;
   cursor: pointer;
 `;
 const MyRegisterBox = styled.div`
   display: flex;
+  flex-direction: column;
   position: relative;
   width: 100%;
   height: 50%;

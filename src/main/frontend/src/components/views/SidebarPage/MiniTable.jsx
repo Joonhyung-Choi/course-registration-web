@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { userRegisterState } from "../../recoil/userDataStates";
 import TimeTableClass from "./MiniTableClass";
 
-// ===== 시간표 컴포넌트 =====
-
-function MiniTable(props) {
+function MiniTable() {
   const registeredClass = useRecoilValue(userRegisterState);
 
   return (

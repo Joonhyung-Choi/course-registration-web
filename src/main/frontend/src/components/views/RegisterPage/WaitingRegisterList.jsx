@@ -1,40 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import {
   userInfoState,
   courseListState,
   userRegisterState,
+  waitingRegisterState,
 } from "../../recoil/userDataStates";
-import MyRegisterItem from "./MyRegisterItem";
+import axios from "axios";
+import WaitingRegisterItem from "./WaitingRegisterItem";
 
 function WaitingRegisterList() {
   const userInfoG = useRecoilValue(userInfoState);
   const courseListG = useRecoilValue(courseListState);
   const userRG = useRecoilValue(userRegisterState);
+  const [waitingRG, setWaitingRG] = useRecoilState(waitingRegisterState);
 
-  const [tempMR, setTempMR] = useState(
-    userRG.map((item) => {
-      return {
-        ...item,
-        register_count: courseListG.filter(
-          (i) => i.subjectId === item.subjectId
-        )[0].register_count,
-      };
-    })
-  );
   useEffect(() => {
-    setTempMR(
-      userRG.map((item) => {
-        return {
-          ...item,
-          register_count: courseListG.filter(
-            (i) => i.subjectId === item.subjectId
-          )[0].register_count,
-        };
-      })
-    );
-  }, [userRG, courseListG]);
+    axios.get("/api/getWaitingList").then((res) => {
+      console.log(res.data);
+      setWaitingRG(res.data);
+    });
+  }, [courseListG, userRG]);
 
   return (
     <Wrapper>
@@ -55,12 +42,13 @@ function WaitingRegisterList() {
           <Th name="score">학점</Th>
           <Th name="max_count">정원</Th>
           <Th name="register_count">수강신청인원</Th>
+          <Th name="waitNum">대기열</Th>
           <Th name="subject_time">수업시간</Th>
           <Th name="professor">담당교수</Th>
-          <Th style={{ borderTopRightRadius: "15px" }}>수강취소</Th>
+          <Th style={{ borderTopRightRadius: "15px" }}>대기취소</Th>
         </Tr>
-        {tempMR.map((item, idx) => {
-          return <MyRegisterItem item={item} idx={idx} />;
+        {waitingRG.map((item, idx) => {
+          return <WaitingRegisterItem item={item} idx={idx} />;
         })}
       </Table>
     </Wrapper>

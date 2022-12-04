@@ -1,6 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilState } from "recoil";
 import {
   userInfoState,
   courseListState,
@@ -9,16 +8,16 @@ import {
 } from "../../recoil/userDataStates";
 import { currentErrorState } from "../../recoil/currentStates";
 import axios from "axios";
+import styled from "styled-components";
 
 function MyRegisterItem(props) {
-  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
-  const [courseListG, setCourseListG] = useRecoilState(courseListState);
-  const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
+  const setCurrentErrorG = useSetRecoilState(currentErrorState);
+  const setUserInfoG = useSetRecoilState(userInfoState);
+  const setCourseListG = useSetRecoilState(courseListState);
+  const setUserPRG = useSetRecoilState(userPrevRegisterState);
   const [userRG, setUserRG] = useRecoilState(userRegisterState);
-  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
 
   let prevBtnValue = {};
-
   const prevRegisterButtonClicked = async () => {
     prevBtnValue = props.item;
     let time = [];
@@ -54,7 +53,7 @@ function MyRegisterItem(props) {
         })
         .then((res) => setUserInfoG(res.data))
         .catch(function (error) {
-            console.log(prevBtnValue);
+          console.log(prevBtnValue);
           console.log("PrevBtn Error");
           console.log(error);
           setCurrentErrorG([error.response.data.errorMessage, true]);
@@ -85,6 +84,10 @@ function MyRegisterItem(props) {
         {((props.item.register_count / props.item.max_count) * 100).toFixed(2)}
         %)
       </Td>
+      <Td name={props.item.waitingCount}>
+        {props.item.waitingCount - props.item.register_count}/
+        {props.item.max_count + 2}
+      </Td>
       <Td name={props.item.subject_time}>{props.item.subject_time}</Td>
       <Td name={props.item.professor}>{props.item.professor}</Td>
       <Td>
@@ -94,13 +97,6 @@ function MyRegisterItem(props) {
           onClick={prevRegisterButtonClicked}
         />
       </Td>
-      {/* <Td name={props.item.courseSortation}></Td>
-            <Td name={props.item.courseClassification}></Td>
-            <Td name={props.item.courseDistribution}></Td>
-            <Td name={props.item.coursePreRequest}></Td>
-            <Td name={props.item.courseTheory}></Td>
-            <Td name={props.item.coursePractice}></Td>
-            <Td name={props.item.courseNote}></Td> */}
     </Tr>
   );
 }

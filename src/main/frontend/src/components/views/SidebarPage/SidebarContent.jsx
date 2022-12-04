@@ -1,19 +1,19 @@
 import React from "react";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue, useRecoilState } from "recoil";
-import {currentPageState} from "../../recoil/currentStates";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { currentPageState } from "../../recoil/currentStates";
 import { userInfoState } from "../../recoil/userDataStates";
 import axios from "axios";
+import styled from "styled-components";
 import { BiLogOut } from "react-icons/bi";
 import { BsPersonFill } from "react-icons/bs";
 import { HiDocumentText } from "react-icons/hi";
 import MiniTable from "./MiniTable";
 
 function SidebarContent(props) {
-  const userInfoG = useRecoilValue(userInfoState);
-  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
   const navigate = useNavigate();
+  const setCurrentPageG = useSetRecoilState(currentPageState);
+  const userInfoG = useRecoilValue(userInfoState);
 
   const onClickLogout = () => {
     axios.post("/api/logout").then((res) => {
@@ -151,7 +151,6 @@ const MiniScheduleInfo = styled.div`
   width: 100%;
   height: 30%;
 `;
-// logout
 const LogoutDiv = styled.div`
   display: flex;
   flex-direction: row;

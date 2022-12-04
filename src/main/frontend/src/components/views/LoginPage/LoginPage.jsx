@@ -4,35 +4,35 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SignUpPage from "./SignUpPage";
 import FindIdPwPage from "./FindIdPwPage";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { userInfoState } from "../../recoil/userDataStates";
-import {currentErrorState, currentPageState} from "../../recoil/currentStates";
+import {
+  currentErrorState,
+  currentPageState,
+} from "../../recoil/currentStates";
+import { currentAdminPageState } from "../../recoil/adminDataStates";
 import { BiLogIn } from "react-icons/bi";
 
 function LoginPage() {
   const navigate = useNavigate();
 
-  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
-  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
-  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
-
+  const setUserInfoG = useSetRecoilState(userInfoState);
+  const setCurrentPageG = useSetRecoilState(currentPageState);
+  const setCurrentErrorG = useSetRecoilState(currentErrorState);
+  const setCurrentAdminPageG = useSetRecoilState(currentAdminPageState);
   useEffect(() => {
-    axios
-      .post("/api/cookieGet")
-      .then((res) => {
-        setUserInfoG(res.data);
-        if (res.data.userRole !== "ADMIN") {
-          navigate("/mayo-main");
-        } else {
-          navigate("/mayo-admin");
-        }
-      })
-      .catch((error) => {});
+    axios.post("/api/cookieGet").then((res) => {
+      setUserInfoG(res.data);
+      if (res.data.userRole !== "ADMIN") {
+        navigate("/mayo-main");
+      } else {
+        navigate("/mayo-admin");
+      }
+    });
   }, []);
 
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
-
   const [toggleSignUp, setToggleSignUp] = useState(false);
   const getToggleSignUp = (toggleSignUp) => {
     setToggleSignUp(toggleSignUp);
@@ -42,27 +42,23 @@ function LoginPage() {
     setToggleFind(toggleFind);
   };
 
-  // input 변경값 감지
   const handleInputId = (e) => {
     setUserId(e.target.value);
   };
   const handleInputPw = (e) => {
     setUserPw(e.target.value);
   };
-  // Open Toggle Event
   const onClickOpenSignUp = () => {
     setToggleSignUp(true);
   };
   const onClickOpenFind = () => {
     setToggleFind(true);
   };
-  // Input Enter Event
   const onEnterPress = async (e) => {
     if (e.key == "Enter") {
       await onClickLogin();
     }
   };
-  // LoginBtn Click Event
   const onClickLogin = async () => {
     if (userId === "") {
       setCurrentErrorG(["아이디를 입력하세요.", true]);
@@ -86,6 +82,7 @@ function LoginPage() {
           setUserInfoG(res.data);
           console.log("login");
           setCurrentPageG("");
+          setCurrentAdminPageG("");
           if (res.data.userRole !== "ADMIN") {
             navigate("/mayo-main");
           } else {
@@ -110,7 +107,6 @@ function LoginPage() {
       />
       <Form>
         <IdPwDiv>
-          {/* 가로폭 길이 심하게 줄이면 서로 어긋나면서 뒤틀리는 문제 해결하기 */}
           <InputID
             id="login_id"
             type="text"
@@ -193,7 +189,6 @@ const Form = styled.div`
 const IdPwDiv = styled.div`
   display: flex;
   flex-direction: column;
-  // width: 30%;
   width: 100%;
   height: 9vh;
   justify-content: center;
@@ -206,8 +201,6 @@ const IdPwDiv = styled.div`
 const PWButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
-  // width: 13%;
-  // height: auto;
   width: 100%;
   height: 50%;
   justify-content: center;

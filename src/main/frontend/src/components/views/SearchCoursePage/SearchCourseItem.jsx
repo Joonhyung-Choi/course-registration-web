@@ -14,13 +14,6 @@ function SearchCourseItem(props) {
       <Td name={props.item.max_count}>{props.item.max_count}</Td>
       <Td name={props.item.subject_time}>{props.item.subject_time}</Td>
       <Td name={props.item.professor}>{props.item.professor}</Td>
-      {/* <Td name={props.item.courseSortation}></Td>
-            <Td name={props.item.courseClassification}></Td>
-            <Td name={props.item.courseDistribution}></Td>
-            <Td name={props.item.coursePreRequest}></Td>
-            <Td name={props.item.courseTheory}></Td>
-            <Td name={props.item.coursePractice}></Td>
-            <Td name={props.item.courseNote}></Td> */}
     </Tr>
   );
 }

@@ -4,16 +4,13 @@ import { useRecoilValue } from "recoil";
 import {
   userPrevRegisterState,
   prevRegisterFilteringState,
-  courseListState,
 } from "../../recoil/userDataStates";
 import PrevRegisterItem from "./PrevRegisterItem";
 
 function PrevRegisterList() {
-  const courseListG = useRecoilValue(courseListState);
   const userPRG = useRecoilValue(userPrevRegisterState);
   const filteringPRG = useRecoilValue(prevRegisterFilteringState);
 
-  // filteringPRG와 userPRG 겹치는 item 제거
   const [tempPR, setTempPR] = useState(
     filteringPRG.filter(
       (item) => !userPRG.map((item) => item.subjectId).includes(item.subjectId)

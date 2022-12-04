@@ -1,32 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import {
+  currentErrorState,
   currentPageState,
   serverTimeState,
-  currentErrorState,
 } from "../../recoil/currentStates";
-import {
-  userInfoState,
-  courseListState,
-  userRegisterState,
-} from "../../recoil/userDataStates";
+import { userInfoState } from "../../recoil/userDataStates";
+import axios from "axios";
 import styled from "styled-components";
 import SearchCourseList from "./SearchCourseList";
 import SearchCourseFilter from "./SearchCourseFilter";
-import axios from "axios";
 
-function SearchCoursePage(props) {
+function SearchCoursePage() {
   const navigate = useNavigate();
   const location = useLocation();
-
-  // current states
-  const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
-  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
-  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
-  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
-  const [courseListG, setCourseListG] = useRecoilState(courseListState);
-  const [userRG, setUserRG] = useRecoilState(userRegisterState);
+  const setCurrentPageG = useSetRecoilState(currentPageState);
+  const setCurrentErrorG = useSetRecoilState(currentErrorState);
+  const setUserInfoG = useSetRecoilState(userInfoState);
+  const setServerTimeG = useSetRecoilState(serverTimeState);
   useEffect(() => {
     if (location.pathname === "/mayo-main/search-course") {
       setCurrentPageG("search-course");
@@ -43,7 +35,7 @@ function SearchCoursePage(props) {
           }, 2000);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         navigate("/");
         setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
         setTimeout(function () {
@@ -57,16 +49,12 @@ function SearchCoursePage(props) {
         Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
       setServerTimeG(second);
     });
-    axios.get("/api/courseListGet").then((res) => {
-      setCourseListG(res.data.content);
-    });
-    axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
   }, []);
 
   return (
     <Wrapper>
       <SizingBox>
-        <SearchCourseFilter  />
+        <SearchCourseFilter />
         <SearchCourseList />
       </SizingBox>
     </Wrapper>

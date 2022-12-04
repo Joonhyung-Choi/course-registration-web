@@ -1,20 +1,19 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import { useSetRecoilState } from "recoil";
+import { currentErrorState } from "../../recoil/currentStates";
 import axios from "axios";
+import styled from "styled-components";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdAssignmentTurnedIn } from "react-icons/md";
-import {useRecoilState} from "recoil";
-import {currentErrorState} from "../../recoil/currentStates";
 
 function SignUpPage(props) {
-  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
-
+  const setCurrentErrorG = useSetRecoilState(currentErrorState);
   const axiosConfig = {
     headers: {
       "Content-Type": "application/json",
     },
   };
-  // Close Toggle Event
+
   const onClickClose = () => {
     setUserName("");
     setUserId("");
@@ -22,12 +21,12 @@ function SignUpPage(props) {
     setUserPw2("");
     props.getToggleSignUp(false);
   };
-  // input 변경값 감지
+
   const [userName, setUserName] = useState("");
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
   const [userPw2, setUserPw2] = useState("");
-  // input 변경값 감지
+
   const handleInputName = (e) => {
     setUserName(e.target.value);
   };
@@ -40,7 +39,6 @@ function SignUpPage(props) {
   const handleInputPw2 = (e) => {
     setUserPw2(e.target.value);
   };
-  // LoginBtn Click Event
   const onClickSignUp = async () => {
     if (userName === "") {
       setCurrentErrorG(["이름을 입력하세요.", true]);
@@ -60,7 +58,7 @@ function SignUpPage(props) {
         setCurrentErrorG(["비밀번호를 입력하세요.", false]);
       }, 2000);
       document.getElementById("signup_Pw").focus();
-    }else if (userPw2 === "") {
+    } else if (userPw2 === "") {
       setCurrentErrorG(["2차 비밀번호를 입력하세요.", true]);
       setTimeout(function () {
         setCurrentErrorG(["2차 비밀번호를 입력하세요.", false]);
@@ -73,7 +71,6 @@ function SignUpPage(props) {
       }, 2000);
       document.getElementById("signup_pw2").focus();
     } else {
-      //0->실패 1->성공 2->ID중복
       await axios
         .post(
           "/api/signup",
@@ -157,11 +154,11 @@ function SignUpPage(props) {
         <DivUserPw2>
           <PUserPw2>2차 비밀번호</PUserPw2>
           <InputUserPw2
-              id="signup_pw2"
-              type="password"
-              value={userPw2}
-              onChange={handleInputPw2}
-              placeholder="Password"
+            id="signup_pw2"
+            type="password"
+            value={userPw2}
+            onChange={handleInputPw2}
+            placeholder="Password"
           />
         </DivUserPw2>
         <DivSignUp onClick={onClickSignUp}>

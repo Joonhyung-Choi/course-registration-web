@@ -1,14 +1,12 @@
-// 각 수강 과목 별 컴포넌트
 import React from "react";
 import styled from "styled-components";
 
 function MyCourseItem(props) {
-  // 숫자 앞에 0 붙이는 함수 (ex. 1 => 001 )
-  function addZeroes(n) {
-    if (parseInt(n / 10) === 0) return "00" + n;
-    else if (parseInt(n / 100) === 0) return "0" + n;
-    else return "" + n;
-  }
+  // function addZeroes(n) {
+  //   if (parseInt(n / 10) === 0) return "00" + n;
+  //   else if (parseInt(n / 100) === 0) return "0" + n;
+  //   else return "" + n;
+  // }
   return (
     <Tr>
       <Td name={props.idx}>{props.idx + 1}</Td>
@@ -22,13 +20,6 @@ function MyCourseItem(props) {
       <Td name={props.item.register_count}>{props.item.register_count}</Td>
       <Td name={props.item.subject_time}>{props.item.subject_time}</Td>
       <Td name={props.item.professor}>{props.item.professor}</Td>
-      {/* <Td name={props.item.courseSortation}></Td>
-                <Td name={props.item.courseClassification}></Td>
-                <Td name={props.item.courseDistribution}></Td>
-                <Td name={props.item.coursePreRequest}></Td>
-                <Td name={props.item.courseTheory}></Td>
-                <Td name={props.item.coursePractice}></Td>
-                <Td name={props.item.courseNote}></Td> */}
     </Tr>
   );
 }

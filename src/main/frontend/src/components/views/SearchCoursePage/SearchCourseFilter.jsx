@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { courseListState, courseListFilteringState} from "../../recoil/userDataStates";
+import {
+  courseListState,
+  courseListFilteringState,
+} from "../../recoil/userDataStates";
+import styled from "styled-components";
 import { BsCaretRightFill } from "react-icons/bs";
 
 function SearchCourseFilter() {
   let dum = 1;
-  const courseListG = useRecoilValue(courseListState); // Initial Data List
-  const [filteringCourseListG, setFilteringCourseListG] = useRecoilState(courseListFilteringState);
+  const courseListG = useRecoilValue(courseListState);
+  const [filteringCourseListG, setFilteringCourseListG] = useRecoilState(
+    courseListFilteringState
+  );
 
   const [isSelMajor, setIsSelMajor] = useState(true);
   const [subjectTypeValue, setSubjectTypeValue] = useState("");
@@ -187,8 +192,7 @@ function SearchCourseFilter() {
                     if (String(item.subjectId) === subjectIdInput) {
                       return item.subject_name;
                     }
-                  })
-                }
+                  })}
               </OutputSubjectName>
             </DivSubjectName>
           </>

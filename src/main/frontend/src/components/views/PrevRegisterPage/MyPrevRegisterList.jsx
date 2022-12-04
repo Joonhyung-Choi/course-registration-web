@@ -8,16 +8,18 @@ import {
 } from "../../recoil/userDataStates";
 import MyPrevRegisterItem from "./MyPrevRegisterItem";
 
-function MyPrevRegisterList(props) {
-  const courseListG = useRecoilValue(courseListState);
+function MyPrevRegisterList() {
   const userInfoG = useRecoilValue(userInfoState);
+  const courseListG = useRecoilValue(courseListState);
   const userPRG = useRecoilValue(userPrevRegisterState);
 
   const [tempMPR, setTempMPR] = useState(
     userPRG.map((item) => {
       return {
         ...item,
-        register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].prev_register_count,
+        register_count: courseListG.filter(
+          (i) => i.subjectId === item.subjectId
+        )[0].prev_register_count,
       };
     })
   );
@@ -26,7 +28,9 @@ function MyPrevRegisterList(props) {
       userPRG.map((item) => {
         return {
           ...item,
-          register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].prev_register_count,
+          register_count: courseListG.filter(
+            (i) => i.subjectId === item.subjectId
+          )[0].prev_register_count,
         };
       })
     );
@@ -54,13 +58,6 @@ function MyPrevRegisterList(props) {
           <Th name="subject_time">수업시간</Th>
           <Th name="professor">담당교수</Th>
           <Th style={{ borderTopRightRadius: "15px" }}>수강취소</Th>
-          {/*<Th name="courseSortation">수업구분</Th>
-                    <Th name="coursePreRequest">예비신청(비율)</Th>--------------------
-                    <Th name="courseTheory">이론</Th>
-                    <Th name="coursePractice">실습</Th>
-                    <Th name="courseArea">영역</Th>
-                    <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
-          {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
         {tempMPR.map((item, idx) => {
           return <MyPrevRegisterItem item={item} idx={idx} />;

@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { userInfoState, userRegisterState } from "../../recoil/userDataStates";
+import { useSetRecoilState } from "recoil";
 import {
   currentErrorState,
   currentPageState,
   serverTimeState,
 } from "../../recoil/currentStates";
+import { userInfoState } from "../../recoil/userDataStates";
+import axios from "axios";
+import Notices from "./Notices.json";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 import "swiper/css";
@@ -15,18 +17,14 @@ import "swiper/css/pagination";
 import "./Swiper.css";
 import styled from "styled-components";
 import { HiChevronRight, HiChevronLeft } from "react-icons/hi";
-import axios from "axios";
 
-function NoticePage(props) {
+function NoticePage() {
   const navigate = useNavigate();
   const location = useLocation();
-
-  // current page
-  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
-  const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
-  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
-  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
-  const [userRG, setUserRG] = useRecoilState(userRegisterState);
+  const setCurrentPageG = useSetRecoilState(currentPageState);
+  const setCurrentErrorG = useSetRecoilState(currentErrorState);
+  const setUserInfoG = useSetRecoilState(userInfoState);
+  const setServerTimeG = useSetRecoilState(serverTimeState);
   useEffect(() => {
     if (location.pathname === "/mayo-main/") {
       setCurrentPageG("");
@@ -43,7 +41,7 @@ function NoticePage(props) {
           }, 2000);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         navigate("/");
         setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
         setTimeout(function () {
@@ -57,37 +55,7 @@ function NoticePage(props) {
         Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
       setServerTimeG(second);
     });
-    axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
   }, []);
-
-  const Notices = [
-    {
-      index: 0,
-      src: "/assets/img/notice1.jpg",
-    },
-    {
-      index: 1,
-      src: "/assets/img/notice2.jpg",
-    },
-    {
-      index: 2,
-      src: "/assets/img/notice1.jpg",
-    },
-
-    {
-      index: 3,
-      src: "/assets/img/notice2.jpg",
-    },
-
-    {
-      index: 4,
-      src: "/assets/img/notice1.jpg",
-    },
-    {
-      index: 5,
-      src: "/assets/img/notice2.jpg",
-    },
-  ];
 
   SwiperCore.use([Navigation, Pagination]);
 

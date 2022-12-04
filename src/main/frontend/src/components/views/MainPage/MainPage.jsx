@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import { useSetRecoilState, useRecoilState } from "recoil";
+import {
+  courseListFilteringState,
+  courseListState,
+  prevRegisterFilteringState,
+  registerFilteringState,
+  userPrevRegisterState,
+  userRegisterState,
+  waitingRegisterState,
+} from "../../recoil/userDataStates";
+import axios from "axios";
 import styled from "styled-components";
 import MenuButton from "../Menubar/MenuButton";
 import SidebarPage from "../SidebarPage/SidebarPage";
@@ -10,6 +21,42 @@ import RegisterPage from "../RegisterPage/RegisterPage";
 import MyRegisterPage from "../MyRegisterPage/MyRegisterPage";
 
 function MainPage() {
+  const setCourseListG = useSetRecoilState(courseListState);
+  const setUserPRG = useSetRecoilState(userPrevRegisterState);
+  const setUserRG = useSetRecoilState(userRegisterState);
+  const setWaitingRG = useSetRecoilState(waitingRegisterState);
+  const [filterCourseListG, setFilterCourseListG] = useRecoilState(
+    courseListFilteringState
+  );
+  const [filterPRG, setFilterPRG] = useRecoilState(prevRegisterFilteringState);
+  const [filterRG, setFilterRG] = useRecoilState(registerFilteringState);
+  const preventClose = (e) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
+  useEffect(() => {
+    (() => {
+      window.addEventListener("beforeunload", preventClose);
+    })();
+
+    return () => {
+      window.removeEventListener("beforeunload", preventClose);
+    };
+  }, []);
+  useEffect(() => {
+    axios.get("/api/courseListGet").then((res) => {
+      setCourseListG(res.data.content);
+      filterCourseListG === [] && setFilterCourseListG(res.data.content);
+      filterPRG === [] && setFilterPRG(res.data.content);
+      filterRG === [] && setFilterRG(res.data.content);
+    });
+    axios.get("/api/prevGet").then((res) => {
+      setUserPRG(res.data);
+    });
+    axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
+    axios.get("/api/getWaitingList").then((res) => setWaitingRG(res.data));
+  }, []);
+
   // sidebar 크기 조절
   const [xPosition, setXPosition] = useState(-350);
   const getXPosition = (xPosition) => {

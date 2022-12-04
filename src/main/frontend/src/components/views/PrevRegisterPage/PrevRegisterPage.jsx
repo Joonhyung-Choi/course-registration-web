@@ -1,36 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
+  currentErrorState,
   currentPageState,
   serverTimeState,
-  currentErrorState,
 } from "../../recoil/currentStates";
-import {
-  userInfoState,
-  courseListState,
-  userPrevRegisterState,
-  userRegisterState, prevRegisterFilteringState,
-} from "../../recoil/userDataStates";
+import { userInfoState } from "../../recoil/userDataStates";
+import axios from "axios";
 import styled from "styled-components";
 import PrevRegisterFilter from "./PrevRegisterFilter";
 import PrevRegisterList from "./PrevRegisterList";
 import MyPrevRegisterList from "./MyPrevRegisterList";
-import axios from "axios";
 
 function PrevRegisterPage() {
   const navigate = useNavigate();
   const location = useLocation();
-
-  // current page
-  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
-  const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
-  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
-  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
-  const [courseListG, setCourseListG] = useRecoilState(courseListState);
-  const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
-  const [userRG, setUserRG] = useRecoilState(userRegisterState);
-  const [filteringPRG, setFilteringPRG] = useRecoilState(prevRegisterFilteringState);
+  const setCurrentPageG = useSetRecoilState(currentPageState);
+  const setCurrentErrorG = useSetRecoilState(currentErrorState);
+  const setUserInfoG = useSetRecoilState(userInfoState);
+  const setServerTimeG = useSetRecoilState(serverTimeState);
   useEffect(() => {
     if (location.pathname === "/mayo-main/prev-register") {
       setCurrentPageG("prev-register");
@@ -47,7 +36,7 @@ function PrevRegisterPage() {
           }, 2000);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         navigate("/");
         setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
         setTimeout(function () {
@@ -61,14 +50,6 @@ function PrevRegisterPage() {
         Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
       setServerTimeG(second);
     });
-    axios.get("/api/courseListGet").then((res) => {
-      setCourseListG(res.data.content);
-      setFilteringPRG(res.data.content);
-    });
-    axios.get("/api/prevGet").then((res) => {
-      setUserPRG(res.data);
-    });
-    axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
   }, []);
 
   return (
@@ -109,6 +90,8 @@ const Hr = styled.div`
   margin: 10px;
 `;
 const MyPrevRegisterBox = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 50%;
   overflow: auto;

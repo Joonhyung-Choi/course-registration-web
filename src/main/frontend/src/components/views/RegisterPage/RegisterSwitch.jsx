@@ -1,9 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { registerSwitchState } from "../../recoil/currentStates";
+import styled from "styled-components";
 
-export default function RegisterSwitch(props) {
+export default function RegisterSwitch() {
   const [registerSwitchG, setRegisterSwitchG] =
     useRecoilState(registerSwitchState);
 
@@ -32,6 +32,7 @@ export default function RegisterSwitch(props) {
     </Wrapper>
   );
 }
+
 const Wrapper = styled.div`
   display: flex;
   position: absolute;

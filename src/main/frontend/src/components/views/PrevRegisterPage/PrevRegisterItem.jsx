@@ -1,6 +1,5 @@
-import React, {useEffect} from "react";
-import styled from "styled-components";
-import { useRecoilState } from "recoil";
+import React, { useEffect } from "react";
+import { useSetRecoilState, useRecoilState } from "recoil";
 import {
   userInfoState,
   courseListState,
@@ -8,16 +7,15 @@ import {
 } from "../../recoil/userDataStates";
 import { currentErrorState } from "../../recoil/currentStates";
 import axios from "axios";
+import styled from "styled-components";
 
 function PrevRegisterItem(props) {
-  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
+  const setUserInfoG = useSetRecoilState(userInfoState);
   const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
-  const [courseListG, setCourseListG] = useRecoilState(courseListState);
-  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
+  const setCourseListG = useRecoilState(courseListState);
+  const setCurrentErrorG = useRecoilState(currentErrorState);
 
-  useEffect(()=>{
-
-  },[userPRG]);
+  useEffect(() => {}, [userPRG]);
 
   let prevBtnValue = {};
 
@@ -64,7 +62,10 @@ function PrevRegisterItem(props) {
       <Td name={props.item.max_count}>{props.item.max_count}</Td>
       <Td name={props.item.prev_register_count}>
         {props.item.prev_register_count}&nbsp;(
-        {((props.item.prev_register_count / props.item.max_count) * 100).toFixed(2)}
+        {(
+          (props.item.prev_register_count / props.item.max_count) *
+          100
+        ).toFixed(2)}
         %)
       </Td>
       <Td name={props.item.subject_time}>{props.item.subject_time}</Td>
@@ -76,13 +77,6 @@ function PrevRegisterItem(props) {
           onClick={registerButtonClicked}
         />
       </Td>
-      {/* <Td name={props.item.courseSortation}></Td>
-            <Td name={props.item.courseClassification}></Td>
-            <Td name={props.item.courseDistribution}></Td>
-            <Td name={props.item.coursePreRequest}></Td>
-            <Td name={props.item.courseTheory}></Td>
-            <Td name={props.item.coursePractice}></Td>
-            <Td name={props.item.courseNote}></Td> */}
     </Tr>
   );
 }

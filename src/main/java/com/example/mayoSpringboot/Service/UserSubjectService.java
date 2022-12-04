@@ -1,7 +1,7 @@
 package com.example.mayoSpringboot.service;
 
 import com.example.mayoSpringboot.dto.ArticleDto;
-import com.example.mayoSpringboot.dto.subjcet.WaitingResponseDto;
+import com.example.mayoSpringboot.dto.waiting.WaitingResponseDto;
 import com.example.mayoSpringboot.dto.user.UserRequestDto;
 import com.example.mayoSpringboot.dto.subjcet.UserSubjectRequestDto;
 import com.example.mayoSpringboot.dto.subjcet.UserSubjectResponseDto;
@@ -11,7 +11,6 @@ import com.example.mayoSpringboot.entity.subjectEntity.UserSubjectEntity;
 import com.example.mayoSpringboot.enumcustom.UserRole;
 import com.example.mayoSpringboot.error.ErrorCode;
 import com.example.mayoSpringboot.error.exception.ForbiddenException;
-import com.example.mayoSpringboot.error.exception.NotFoundException;
 import com.example.mayoSpringboot.error.exception.UnAuthorizedException;
 import com.example.mayoSpringboot.repository.ArticleRepository;
 import com.example.mayoSpringboot.repository.UserRepository;
@@ -21,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +37,7 @@ public class UserSubjectService {
     public UserRequestDto subjectAdd(String userName, UserSubjectRequestDto userSubjectRequestDto){
         UserEntity userEntity = userRepository.findByUserName(userName);
         UserRequestDto userRequestDto = new UserRequestDto(userEntity);
+        userSubjectRequestDto.setUserEntity(userEntity);
         if(!userEntity.getUserRole().equals(UserRole.USER)){
             throw new ForbiddenException(ErrorCode.FORBIDDEN_EXCEPTION, "유저계정으로 로그인하세요.");
         }
@@ -55,7 +54,7 @@ public class UserSubjectService {
             articleDto.setWaitingCount(articleDto.getWaitingCount()+1);
             article.update(articleDto);
             articleRepository.save(article);
-            return waitingSubjectService.subjectToWaiting(userRequestDto, userSubjectRequestDto);
+            return waitingSubjectService.subjectToWaiting(userRequestDto,userEntity, userSubjectRequestDto, article.getWaitingCount() - article.getMax_count());
         }else{
             throw new ForbiddenException(IN_EXCEEDED_COUNT,"E00031");
         }
@@ -67,7 +66,6 @@ public class UserSubjectService {
         userRequestDto.setUserScore(userRequestDto.getUserScore()-userSubjectRequestDto.getScore());
         userRepository.save(userRequestDto.toEntity());
 
-        userSubjectRequestDto.setUserEntity(userEntity);
         UserSubjectEntity userSubjectEntity = new UserSubjectEntity();
         userSubjectEntity.update(userSubjectRequestDto);
         userSubjectRepository.save(userSubjectEntity);

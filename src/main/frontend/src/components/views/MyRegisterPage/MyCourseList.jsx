@@ -1,11 +1,10 @@
-// 수강내역 리스트 컴포넌트
 import React from "react";
-import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { userRegisterState } from "../../recoil/userDataStates";
+import styled from "styled-components";
 import MyCourseItem from "./MyCourseItem.jsx";
 
-function MyCourseList(props) {
+function MyCourseList() {
   const registeredClass = useRecoilValue(userRegisterState);
 
   return (
@@ -27,13 +26,6 @@ function MyCourseList(props) {
           <Th name="professor" style={{ borderTopRightRadius: "15px" }}>
             담당교수
           </Th>
-          {/*<Th name="courseSortation">수업구분</Th>
-                    <Th name="coursePreRequest">예비신청(비율)</Th>--------------------
-                    <Th name="courseTheory">이론</Th>
-                    <Th name="coursePractice">실습</Th>
-                    <Th name="courseArea">영역</Th>
-                    <Th name="courseNote" style={{borderTopRightRadius:'15px'}}>비고</Th> */}
-          {/* <Th name="courseDistribution">분반</Th> */}
         </Tr>
         {registeredClass.map((item, idx) => {
           return <MyCourseItem item={item} idx={idx} />;

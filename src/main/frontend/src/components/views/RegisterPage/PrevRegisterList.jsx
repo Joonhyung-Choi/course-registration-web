@@ -1,44 +1,69 @@
-import React, {useEffect, useState} from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import {
   courseListState,
   userPrevRegisterState,
   userRegisterState,
+  waitingRegisterState,
 } from "../../recoil/userDataStates";
+import styled from "styled-components";
 import PrevRegisterItem from "./PrevRegisterItem";
 
-function PrevRegisterList(props) {
+function PrevRegisterList() {
   const courseListG = useRecoilValue(courseListState);
   const userPRG = useRecoilValue(userPrevRegisterState);
   const userRG = useRecoilValue(userRegisterState);
+  const waitingRG = useRecoilValue(waitingRegisterState);
 
-  // userPRG 와 userRG 겹치는 item 제거
-  // tempPR의 register_count 변경
-  const [tempPR, setTempPR] = useState(userPRG.filter(
-    (item) => !userRG.map((item) => item.subjectId).includes(item.subjectId)
-  ));
+  const [tempPR, setTempPR] = useState(
+    userPRG
+      .filter(
+        (item) => !userRG.map((item) => item.subjectId).includes(item.subjectId)
+      )
+      .filter(
+        (item) =>
+          !waitingRG.map((item) => item.subjectId).includes(item.subjectId)
+      )
+  );
   const [tempPR_t, setTempPR_t] = useState(
+    tempPR.map((item) => {
+      return {
+        ...item,
+        register_count: courseListG.filter(
+          (i) => i.subjectId === item.subjectId
+        )[0].register_count,
+        waitingCount: courseListG.filter(
+          (i) => i.subjectId === item.subjectId
+        )[0].waitingCount,
+      };
+    })
+  );
+  useEffect(() => {
+    setTempPR(
+      userPRG
+        .filter(
+          (item) =>
+            !userRG.map((item) => item.subjectId).includes(item.subjectId)
+        )
+        .filter(
+          (item) =>
+            !waitingRG.map((item) => item.subjectId).includes(item.subjectId)
+        )
+    );
+    setTempPR_t(
       tempPR.map((item) => {
         return {
           ...item,
-          register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].register_count,
+          register_count: courseListG.filter(
+            (i) => i.subjectId === item.subjectId
+          )[0].register_count,
+          waitingCount: courseListG.filter(
+            (i) => i.subjectId === item.subjectId
+          )[0].waitingCount,
         };
       })
-  );
-  useEffect(() => {
-    setTempPR(userPRG.filter(
-      (item) => !userRG.map((item) => item.subjectId).includes(item.subjectId)
-    ));
-    setTempPR_t(
-        tempPR.map((item) => {
-          return {
-            ...item,
-            register_count: courseListG.filter(i=>i.subjectId===item.subjectId)[0].register_count,
-          };
-        })
     );
-  }, [userPRG, userRG, courseListG]);
+  }, [courseListG, userPRG, userRG, waitingRG]);
 
   return (
     <Wrapper>
@@ -55,6 +80,7 @@ function PrevRegisterList(props) {
           <Th name="score">학점</Th>
           <Th name="max_count">정원</Th>
           <Th name="register_count">수강신청인원</Th>
+          <Th name="allWait">대기열</Th>
           <Th name="subject_time">수업시간</Th>
           <Th name="professor">담당교수</Th>
           <Th style={{ borderTopRightRadius: "15px" }}>수강신청</Th>

@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { courseListState, prevRegisterFilteringState } from "../../recoil/userDataStates";
+import {
+  courseListState,
+  prevRegisterFilteringState,
+} from "../../recoil/userDataStates";
+import styled from "styled-components";
 import { BsCaretRightFill } from "react-icons/bs";
 
 function PrevRegisterFilter() {
   let dum = 1;
-  const courseListG = useRecoilValue(courseListState); // Initial Data List
-  const [filteringPRG, setFilteringPRG] = useRecoilState(prevRegisterFilteringState);
+  const courseListG = useRecoilValue(courseListState);
+  const [filteringPRG, setFilteringPRG] = useRecoilState(
+    prevRegisterFilteringState
+  );
 
   const [isSelMajor, setIsSelMajor] = useState(true);
   const [subjectTypeValue, setSubjectTypeValue] = useState("");
@@ -63,9 +68,9 @@ function PrevRegisterFilter() {
               }
             }
           }
-        }));
-    }
-    else {
+        })
+      );
+    } else {
       if (subjectIdInput.length === 5) {
         setFilteringPRG(
           courseListG.filter((item) => {
@@ -79,7 +84,6 @@ function PrevRegisterFilter() {
         setFilteringPRG(courseListG);
       }
     }
-
   }, [courseListG]);
 
   // categorySel Event
@@ -239,8 +243,7 @@ function PrevRegisterFilter() {
                     if (String(item.subjectId) === subjectIdInput) {
                       return item.subject_name;
                     }
-                  })
-                }
+                  })}
               </OutputSubjectName>
             </DivSubjectName>
           </>

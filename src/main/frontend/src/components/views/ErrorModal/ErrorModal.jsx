@@ -4,7 +4,7 @@ import { currentErrorState } from "../../recoil/currentStates";
 import styled from "styled-components";
 import { FaBell } from "react-icons/fa";
 
-export default function ErrorModal(props) {
+export default function ErrorModal() {
   const currentErrorG = useRecoilValue(currentErrorState);
 
   return (

@@ -1,8 +1,8 @@
 import React from "react";
+import { useRecoilValue } from "recoil";
+import { courseListFilteringState } from "../../recoil/userDataStates";
 import styled from "styled-components";
 import SearchCourseItem from "./SearchCourseItem";
-import {useRecoilValue} from "recoil";
-import {courseListFilteringState} from "../../recoil/userDataStates";
 
 function SearchCourseList() {
   const filteringCourseListG = useRecoilValue(courseListFilteringState);

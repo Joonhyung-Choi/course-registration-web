@@ -1,29 +1,24 @@
 import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { userInfoState, userRegisterState } from "../../recoil/userDataStates";
+import { useSetRecoilState } from "recoil";
 import {
   currentErrorState,
   currentPageState,
   serverTimeState,
 } from "../../recoil/currentStates";
+import { userInfoState } from "../../recoil/userDataStates";
+import axios from "axios";
 import styled from "styled-components";
 import TimeTable from "./TimeTable";
 import MyCourseList from "./MyCourseList";
-import axios from "axios";
 
-function MyRegisterPage(props) {
+function MyRegisterPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  // 예비수강신청 목록 연동시켜놓은 상태, 나중에 수강신청 목록으로 바꿀 예정
-  // const register = classInfo; // 하드코딩 데이터 테스트용
-
-  // current page
-  const [currentPageG, setCurrentPageG] = useRecoilState(currentPageState);
-  const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
-  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
-  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
-  const [userRG, setUserRG] = useRecoilState(userRegisterState);
+  const setCurrentPageG = useSetRecoilState(currentPageState);
+  const setCurrentErrorG = useSetRecoilState(currentErrorState);
+  const setUserInfoG = useSetRecoilState(userInfoState);
+  const setServerTimeG = useSetRecoilState(serverTimeState);
   useEffect(() => {
     if (location.pathname === "/mayo-main/my-register") {
       setCurrentPageG("my-register");
@@ -40,7 +35,7 @@ function MyRegisterPage(props) {
           }, 2000);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         navigate("/");
         setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
         setTimeout(function () {
@@ -54,7 +49,6 @@ function MyRegisterPage(props) {
         Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
       setServerTimeG(second);
     });
-    axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
   }, []);
 
   return (
@@ -106,10 +100,3 @@ const TimeTableBox = styled.div`
   width: 100%;
   height: 75%;
 `;
-// const DivisionLine = styled.div`
-//   width: 90vw;
-//   height: 10px;
-//   margin: 20px auto;
-//   background-color: #BBBBBB;
-//   border-radius: 5px;
-// `

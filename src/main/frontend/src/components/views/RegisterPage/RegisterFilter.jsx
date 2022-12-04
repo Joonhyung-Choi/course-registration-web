@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { courseListState, registerFilteringState } from "../../recoil/userDataStates";
+import {
+  courseListState,
+  registerFilteringState,
+} from "../../recoil/userDataStates";
+import styled from "styled-components";
 import { BsCaretRightFill } from "react-icons/bs";
 
 function RegisterFilter() {
   let dum = 1;
-  const courseListG = useRecoilValue(courseListState); // Initial Data List
+  const courseListG = useRecoilValue(courseListState);
   const [filteringRG, setFilteringRG] = useRecoilState(registerFilteringState);
 
   const [isSelMajor, setIsSelMajor] = useState(true);
@@ -63,9 +66,9 @@ function RegisterFilter() {
               }
             }
           }
-        }));
-    }
-    else {
+        })
+      );
+    } else {
       if (subjectIdInput.length === 5) {
         setFilteringRG(
           courseListG.filter((item) => {
@@ -79,9 +82,7 @@ function RegisterFilter() {
         setFilteringRG(courseListG);
       }
     }
-
   }, [courseListG]);
-
 
   // categorySel Event
   const onClickCategory = (e) => {
@@ -240,8 +241,7 @@ function RegisterFilter() {
                     if (String(item.subjectId) === subjectIdInput) {
                       return item.subject_name;
                     }
-                  })
-                }
+                  })}
               </OutputSubjectName>
             </DivSubjectName>
           </>

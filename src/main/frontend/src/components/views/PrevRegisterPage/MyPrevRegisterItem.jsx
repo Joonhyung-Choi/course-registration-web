@@ -1,6 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import {
   userInfoState,
   courseListState,
@@ -8,12 +7,13 @@ import {
 } from "../../recoil/userDataStates";
 import { currentErrorState } from "../../recoil/currentStates";
 import axios from "axios";
+import styled from "styled-components";
 
 function MyPrevRegisterItem(props) {
-  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
-  const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
-  const [courseListG, setCourseListG] = useRecoilState(courseListState);
-  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
+  const setUserInfoG = useSetRecoilState(userInfoState);
+  const setUserPRG = useSetRecoilState(userPrevRegisterState);
+  const setCourseListG = useSetRecoilState(courseListState);
+  const setCurrentErrorG = useSetRecoilState(currentErrorState);
 
   let myPrevBtnValue = {};
 
@@ -47,10 +47,7 @@ function MyPrevRegisterItem(props) {
       <Td name={props.item.max_count}>{props.item.max_count}</Td>
       <Td name={props.item.register_count}>
         {props.item.register_count}&nbsp;(
-        {(
-          (props.item.register_count / props.item.max_count) *
-          100
-        ).toFixed(2)}
+        {((props.item.register_count / props.item.max_count) * 100).toFixed(2)}
         %)
       </Td>
       <Td name={props.item.subject_time}>{props.item.subject_time}</Td>
@@ -62,13 +59,6 @@ function MyPrevRegisterItem(props) {
           onClick={registerButtonClicked}
         />
       </Td>
-      {/* <Td name={props.item.courseSortation}></Td>
-            <Td name={props.item.courseClassification}></Td>
-            <Td name={props.item.courseDistribution}></Td>
-            <Td name={props.item.coursePreRequest}></Td>
-            <Td name={props.item.courseTheory}></Td>
-            <Td name={props.item.coursePractice}></Td>
-            <Td name={props.item.courseNote}></Td> */}
     </Tr>
   );
 }

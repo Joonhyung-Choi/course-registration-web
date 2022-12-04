@@ -8,12 +8,11 @@ import StyledHomeButton from "./StyledHomeButton";
 function MenuButton(props) {
   const serverTimeG = useRecoilValue(serverTimeState);
 
-
   function fillZero(width, time) {
     const str = time + "";
     return str.length >= width
       ? str
-      : new Array(width - str.length + 1).join("0") + str; //남는 길이만큼 0으로 채움
+      : new Array(width - str.length + 1).join("0") + str;
   }
 
   return (
