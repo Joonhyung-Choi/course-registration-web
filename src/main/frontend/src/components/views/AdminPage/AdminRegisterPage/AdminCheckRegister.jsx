@@ -8,10 +8,11 @@ function AdminCheckRegister(props) {
   })
 
   let checkRegisterButtonState = "";
+
   function checkRegisterButtonClicked() {
     checkRegisterButtonState = userList2;
     console.log(checkRegisterButtonState);
-    // 여기에 과목 수정 axios 추가
+    alert(userList2);
   }
   return (
     <CheckRegisterButton onClick={checkRegisterButtonClicked}>

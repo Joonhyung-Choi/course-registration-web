@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { currentAdminPageState } from "../../../recoil/adminDataStates";
 import styled from "styled-components";
+import axios from "axios";
 
 function AdminControlPage() {
   const location = useLocation();
@@ -16,38 +17,72 @@ function AdminControlPage() {
 
   const [openDateState, setOpenDateState] = useState("");
   const [openTimeState, setOpenTimeState] = useState("");
-
   const [closeDateState, setCloseDateState] = useState("");
   const [closeTimeState, setCloseTimeState] = useState("");
+
+  const [prevOpenDateState, setPrevOpenDateState] = useState("");
+  const [prevOpenTimeState, setPrevOpenTimeState] = useState("");
+  const [prevCloseDateState, setPrevCloseDateState] = useState("");
+  const [prevCloseTimeState, setPrevCloseTimeState] = useState("");
+
 
   const onChangeOpenDate = (e) => {
     setOpenDateState(e.target.value);
     console.log(e.target.value);
-    console.log(typeof e.target.value)
   };
   const onChangeOpenTime = (e) => {
     setOpenTimeState(e.target.value);
     console.log(e.target.value);
-    console.log(typeof e.target.value)
   };
 
   const onChangeCloseDate = (e) => {
     setCloseDateState(e.target.value);
     console.log(e.target.value);
-    console.log(typeof e.target.value)
   };
   const onChangeCloseTime = (e) => {
     setCloseTimeState(e.target.value);
     console.log(e.target.value);
-    console.log(typeof e.target.value )
   };
 
-  function onClickConfirmButton() {
-    console.log(openDateState);
-    console.log(openTimeState);
-    console.log(closeDateState);
-    console.log(closeTimeState);
-    // 여기에 서버시간 설정 axios 추가
+  const onChangePrevOpenDate = (e) => {
+    setPrevOpenDateState(e.target.value);
+    console.log(e.target.value);
+  };
+  const onChangePrevOpenTime = (e) => {
+    setPrevOpenTimeState(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const onChangePrevCloseDate = (e) => {
+    setPrevCloseDateState(e.target.value);
+    console.log(e.target.value);
+  };
+  const onChangePrevCloseTime = (e) => {
+    setPrevCloseTimeState(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const onClickConfirmButton = async () => {
+    const prevStartDate = prevOpenDateState;
+    const prevStartTime = prevOpenTimeState;
+    const prevEndDate = prevCloseDateState;
+    const prevEndTime = prevCloseTimeState;
+
+    const startDate = openDateState;
+    const startTime = openTimeState;
+    const endDate = closeDateState;
+    const endTime = closeTimeState;
+    if(prevStartDate === "" || prevStartTime === "" || prevEndDate === "" || prevEndTime ===""){
+      alert("예비수강신청의 여닫는 날짜 혹은 시간이 제대로 설정되지 않았습니다.")
+    }
+    else if(startDate === "" ||startTime === "" || endDate === "" || endTime ===""){
+      alert("수강신청의 여닫는 날짜 혹은 시간이 제대로 설정되지 않았습니다.")
+    }
+    else{
+      await axios.post("/api/postAssignTime", {prevStartDate,prevStartTime, prevEndDate, prevEndTime ,startDate, startTime, endDate, endTime}).then((res) => {console.log(res)});
+      await axios.get("/api/getAssignTime",).then((res) => {console.log(res)});
+    }
+
   }
 
   return (
@@ -55,16 +90,15 @@ function AdminControlPage() {
       <PRDiv>
         <PRTitle>예비수강신청</PRTitle>
         <P>여는시간</P>
-        <Input type={"date"} onChange={onChangeOpenDate}></Input>
+        <Input type={"date"} onChange={onChangePrevOpenDate}></Input>
         <Input
           type={"time"}
-          onChange={onChangeOpenTime}
+          onChange={onChangePrevOpenTime}
           style={{ marginBottom: "20px" }}
         ></Input>
         <P>닫는시간</P>
-        <Input type={"date"} onChange={onChangeCloseDate}></Input>
-        <Input type={"time"} onChange={onChangeCloseTime}></Input>
-        <Button onClick={onClickConfirmButton}>확인</Button>
+        <Input type={"date"} onChange={onChangePrevCloseDate}></Input>
+        <Input type={"time"} onChange={onChangePrevCloseTime}></Input>
       </PRDiv>
       <RDiv>
         <PRTitle>수강신청</PRTitle>
@@ -78,8 +112,8 @@ function AdminControlPage() {
         <P>닫는시간</P>
         <Input type={"date"} onChange={onChangeCloseDate}></Input>
         <Input type={"time"} onChange={onChangeCloseTime}></Input>
-        <Button onClick={onClickConfirmButton}>확인</Button>
       </RDiv>
+      <Button onClick={onClickConfirmButton}>확인</Button>
     </Wrapper>
   );
 }
@@ -144,9 +178,16 @@ const Input = styled.input`
   }
 `;
 const Button = styled.button`
-  font-size: 13px;
+  position: absolute;
+  bottom : 15%;
+  margin: auto;
+  display: box;
+  width: 200px;
+  height: 100px;
+  font-size: 20px;
   margin-top: 20px;
   border: 1px solid #111;
+  border-radius: 20px;
   padding: 5px;
   border-radius: 4px;
   cursor: pointer;

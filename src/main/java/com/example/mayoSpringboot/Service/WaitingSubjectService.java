@@ -38,7 +38,7 @@ public class WaitingSubjectService {
         WaitingSubjectEntity waitingSubjectEntity = new WaitingSubjectEntity();
         waitingSubjectEntity.update(waitingRequsetDto);
 
-        List<WaitingSubjectEntity> entityList = waitingSubjectRepositroy.finByWaitOfSubjectId(userSubjectRequestDto.getSubjectId());// null이면 어떡함
+        List<WaitingSubjectEntity> entityList = waitingSubjectRepositroy.finByWaitOfSubjectId(userSubjectRequestDto.getSubjectId());
         //대기자가 있으면 new 대기자를 리스트의 사이즈 번호+1로 allWait를 주고 and waitNum+1도 사이즈로 줌
         WaitUpdate waitUpdate = new WaitUpdate(entityList.size()+1,entityList.size()+1);//+1은 대기열을 0부터 표현하지 않기위해
         waitingSubjectEntity.adjust(waitUpdate);

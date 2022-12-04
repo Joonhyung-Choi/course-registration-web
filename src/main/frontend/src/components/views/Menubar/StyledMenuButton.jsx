@@ -1,36 +1,224 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { currentPageState } from "../../recoil/currentStates";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  currentPageState,
+  currentErrorState,
+} from "../../recoil/currentStates";
 import { userInfoState } from "../../recoil/userDataStates";
+import { serverTimeState } from "../../recoil/currentStates";
+
 import styled from "styled-components";
+import axios from "axios";
 
 function StyledMenuButton(props) {
   const navigate = useNavigate();
   const currentPageG = useRecoilValue(currentPageState);
   const userInfoG = useRecoilValue(userInfoState);
+  const serverTimeG = useRecoilValue(serverTimeState);
+  const setCurrentErrorG = useSetRecoilState(currentErrorState);
 
   const onClick = async () => {
+    let prevRegisterStartTime;
+    let prevRegisterEndTime;
+    let registerEndTime;
+    let registerStartTime;
+
+    let prevStartDate = "";
+    let prevStartTime = "";
+    let prevEndDate = "";
+    let prevEndTime = "";
+    let startDate = "";
+    let startTime = "";
+    let endDate = "";
+    let endTime = "";
+
+    let today = new Date();
+    let year = today.getFullYear(); // 년도
+    let month = today.getMonth() + 1; // 월
+    let date = today.getDate(); // 날짜
+
+    await axios.get("/api/getAssignTime").then((res) => {
+      console.log(res.data);
+      prevStartDate = res.data[0].prevStartDate.split("-");
+      prevStartTime = res.data[0].prevStartTime.split(":");
+      prevEndDate = res.data[0].prevEndDate.split("-");
+      prevEndTime = res.data[0].prevEndTime.split(":");
+      startDate = res.data[0].startDate.split("-");
+      startTime = res.data[0].startTime.split(":");
+      endDate = res.data[0].endDate.split("-");
+      endTime = res.data[0].endTime.split(":");
+      console.log(prevStartDate, prevStartTime, prevEndDate, prevEndTime);
+      console.log(year, month, date);
+
+      prevRegisterStartTime =
+        parseInt(prevStartTime[0]) * 3600 + parseInt(prevStartTime[1]) * 60;
+      prevRegisterEndTime =
+        parseInt(prevEndTime[0]) * 3600 + parseInt(prevEndTime[1]) * 60;
+      registerStartTime =
+        parseInt(startTime[0]) * 3600 + parseInt(startTime[1]) * 60;
+      registerEndTime = parseInt(endTime[0]) * 3600 + parseInt(endTime[1]) * 60;
+
+      console.log(prevRegisterStartTime);
+      console.log(prevRegisterEndTime);
+      console.log(registerStartTime);
+      console.log(registerEndTime);
+      console.log(serverTimeG);
+    });
+
+    function overPrevRegisterStartTime() {
+      if (parseInt(prevStartDate[0]) < year) {
+        return true;
+      } else if (parseInt(prevStartDate[0]) === year) {
+        if (parseInt(prevStartDate[1]) < month) {
+          return true;
+        } else if (parseInt(prevStartDate[1]) === month) {
+          if (parseInt(prevStartDate[2]) < date) {
+            return true;
+          } else if (parseInt(prevStartDate[2]) === date) {
+            if (prevRegisterStartTime <= serverTimeG) {
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+
+    function lessPrevRegisterEndTime() {
+      if (parseInt(prevEndDate[0]) > year) {
+        return true;
+      } else if (parseInt(prevEndDate[0]) === year) {
+        if (parseInt(prevEndDate[1]) > month) {
+          return true;
+        } else if (parseInt(prevEndDate[1]) === month) {
+          if (parseInt(prevEndDate[2]) > date) {
+            return true;
+          } else if (parseInt(prevEndDate[2]) === date) {
+            if (prevRegisterEndTime >= serverTimeG) {
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+
+    function overRegisterStartTime() {
+      if (parseInt(startDate[0]) < year) {
+        return true;
+      } else if (parseInt(startDate[0]) === year) {
+        if (parseInt(startDate[1]) < month) {
+          return true;
+        } else if (parseInt(startDate[1]) === month) {
+          if (parseInt(startDate[2]) < date) {
+            return true;
+          } else if (parseInt(startDate[2]) === date) {
+            if (registerStartTime <= serverTimeG) {
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+
+    function lessRegisterEndTime() {
+      if (parseInt(endDate[0]) > year) {
+        return true;
+      } else if (parseInt(endDate[0]) === year) {
+        if (parseInt(endDate[1]) > month) {
+          return true;
+        } else if (parseInt(endDate[1]) === month) {
+          if (parseInt(endDate[2]) > date) {
+            return true;
+          } else if (parseInt(endDate[2]) === date) {
+            if (registerEndTime >= serverTimeG) {
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+
     switch (props.clickTo) {
       case "search-course":
         navigate(`/mayo-main/${props.clickTo}`);
         break;
       case "prev-register":
-        if (userInfoG.userRole === "USER") {
-          navigate(`/mayo-main/${props.clickTo}`);
-          break;
+        if (overPrevRegisterStartTime() && lessPrevRegisterEndTime()) {
+          console.log(overRegisterStartTime());
+          console.log(lessPrevRegisterEndTime());
+
+          if (userInfoG.userRole === "USER") {
+            navigate(`/mayo-main/${props.clickTo}`);
+            break;
+          } else {
+            navigate("/");
+            setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
+            setTimeout(function () {
+              setCurrentErrorG(["인가되지 않은 접근입니다.", false]);
+            }, 2000);
+            break;
+          }
         } else {
           navigate("/");
-          break;
+          setCurrentErrorG(["예비수강신청 날짜가 아닙니다.", true]);
+          setTimeout(function () {
+            setCurrentErrorG(["예비수강신청 날짜가 아닙니다.", false]);
+          }, 2000);
         }
+
       case "register":
-        if (userInfoG.userRole === "USER") {
-          navigate(`/mayo-main/${props.clickTo}`);
-          break;
+        if (overRegisterStartTime() && lessRegisterEndTime()) {
+          if (userInfoG.userRole === "USER") {
+            navigate(`/mayo-main/${props.clickTo}`);
+            break;
+          } else {
+            navigate("/");
+            setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
+            setTimeout(function () {
+              setCurrentErrorG(["인가되지 않은 접근입니다.", false]);
+            }, 2000);
+            break;
+          }
         } else {
           navigate("/");
-          break;
+          setCurrentErrorG(["수강신청 날짜가 아닙니다.", true]);
+          setTimeout(function () {
+            setCurrentErrorG(["수강신청 날짜가 아닙니다.", false]);
+          }, 2000);
         }
+
       case "my-register":
         if (userInfoG.userRole === "USER") {
           navigate(`/mayo-main/${props.clickTo}`);

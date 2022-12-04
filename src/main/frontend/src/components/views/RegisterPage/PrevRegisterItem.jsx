@@ -6,7 +6,10 @@ import {
   userPrevRegisterState,
   userRegisterState,
 } from "../../recoil/userDataStates";
-import { currentErrorState } from "../../recoil/currentStates";
+import {
+  currentErrorState,
+  myRegisterSwitchState,
+} from "../../recoil/currentStates";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -16,6 +19,7 @@ function MyRegisterItem(props) {
   const setCourseListG = useSetRecoilState(courseListState);
   const setUserPRG = useSetRecoilState(userPrevRegisterState);
   const [userRG, setUserRG] = useRecoilState(userRegisterState);
+  const setMyRegisterSwitchG = useSetRecoilState(myRegisterSwitchState);
 
   let prevBtnValue = {};
   const prevRegisterButtonClicked = async () => {
@@ -51,7 +55,16 @@ function MyRegisterItem(props) {
           subject_time: prevBtnValue.subject_time,
           professor: prevBtnValue.professor,
         })
-        .then((res) => setUserInfoG(res.data))
+        .then((res) => {
+          setUserInfoG(res.data);
+          if (prevBtnValue.register_count === prevBtnValue.max_count) {
+            setCurrentErrorG(["대기신청 되었습니다.", true]);
+            setTimeout(function () {
+              setCurrentErrorG(["대기신청 되었습니다.", false]);
+            }, 2000);
+          }
+          setMyRegisterSwitchG(false);
+        })
         .catch(function (error) {
           console.log(prevBtnValue);
           console.log("PrevBtn Error");
@@ -86,7 +99,7 @@ function MyRegisterItem(props) {
       </Td>
       <Td name={props.item.waitingCount}>
         {props.item.waitingCount - props.item.register_count}/
-        {props.item.max_count + 2}
+        {Math.round(props.item.max_count * 0.5)}
       </Td>
       <Td name={props.item.subject_time}>{props.item.subject_time}</Td>
       <Td name={props.item.professor}>{props.item.professor}</Td>

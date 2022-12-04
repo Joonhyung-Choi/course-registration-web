@@ -23,6 +23,12 @@ public class TimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
+    private String prevStartDate;
+    private String prevStartTime;
+    private String prevEndDate;
+    private String prevEndTime;
+    private String startDate;
+    private String endDate;
     private String startTime;
     private String endTime;
 }

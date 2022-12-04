@@ -18,7 +18,6 @@ function WaitingRegisterList() {
 
   useEffect(() => {
     axios.get("/api/getWaitingList").then((res) => {
-      console.log(res.data);
       setWaitingRG(res.data);
     });
   }, [courseListG, userRG]);

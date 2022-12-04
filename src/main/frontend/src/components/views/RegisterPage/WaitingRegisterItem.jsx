@@ -56,7 +56,7 @@ function WaitingRegisterItem(props) {
         %)
       </Td>
       <Td name={props.item.waitNum}>
-        {props.item.waitNum}/{props.item.max_count + 2}
+        {props.item.waitNum}/{Math.round(props.item.max_count * 0.5)}
       </Td>
       <Td name={props.item.subject_time}>{props.item.subject_time}</Td>
       <Td name={props.item.professor}>{props.item.professor}</Td>
