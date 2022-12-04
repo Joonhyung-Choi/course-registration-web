@@ -1,6 +1,5 @@
 package com.example.mayoSpringboot.repository;
 
-import com.example.mayoSpringboot.entity.UserEntity;
 import com.example.mayoSpringboot.entity.subjectEntity.WaitingSubjectEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,3 +18,4 @@ public interface WaitingSubjectRepositroy extends JpaRepository<WaitingSubjectEn
     @Query("SELECT w FROM WaitingSubjectEntity w JOIN FETCH w.userEntity WHERE w.subjectId =:subjectId")
     public ArrayList<WaitingSubjectEntity> finByWaitOfSubjectId(@Param("subjectId")int subjectId);
 }
+

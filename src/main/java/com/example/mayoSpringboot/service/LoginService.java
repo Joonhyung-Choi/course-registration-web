@@ -46,6 +46,7 @@ public class LoginService {
         userRequestDto.setUserPw(encodedPassEncoder);
 
         userRequestDto.setUserRole(UserRole.USER);
+        userRequestDto.setUserPrevScore(23);
         userRequestDto.setUserScore(18);
         UserEntity userEntity = userRequestDto.toEntity();
         userRepository.save(userEntity);

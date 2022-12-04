@@ -17,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.example.mayoSpringboot.error.ErrorCode.ACCESS_DENIED_EXCEPTION;
+import static com.example.mayoSpringboot.error.ErrorCode.WRONG_ID_PW_EXCEPTION;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,10 +31,10 @@ public class LoginController {
                         HttpServletResponse response){
         UserEntity userEntity = userRepository.findByUserId(loginRequsetDto.getUserId());
         if (userEntity == null) {
-            throw new UnAuthorizedException(ACCESS_DENIED_EXCEPTION,"E0002");
+            throw new UnAuthorizedException(WRONG_ID_PW_EXCEPTION,"E0011");
         }
         if ( !passwordEncoder.matches(loginRequsetDto.getUserPw(),userEntity.getUserPw()) ) {
-            throw new RuntimeException("비밃번호가 맞지 않습니다.");
+            throw new UnAuthorizedException(WRONG_ID_PW_EXCEPTION,"E0011");
         }
         UserResponseDto userResponseDto = new UserResponseDto(userEntity);
 

@@ -23,7 +23,7 @@ public class UserSubjectController {
 
 
     @PostMapping("/api/subjectPost")
-    public UserRequestDto subjectAdd(@CookieValue(value = "userName",required = false)String userName,
+    public UserRequestDto prevAdd(@CookieValue(value = "userName",required = false)String userName,
                                   @RequestBody UserSubjectRequestDto userSubjectRequestDto){
         log.info("SubjectPost");
         if (userName == null){throw new UnAuthorizedException(ACCESS_DENIED_EXCEPTION,"E0001");}
@@ -33,7 +33,7 @@ public class UserSubjectController {
     }
 
     @GetMapping("/api/subjectGet")
-    public List<UserSubjectResponseDto> subjectRead(@CookieValue(value = "userName") String userName){
+    public List<UserSubjectResponseDto> prevRead(@CookieValue(value = "userName") String userName){
         if (userName == null){throw new UnAuthorizedException(ACCESS_DENIED_EXCEPTION,"E0001");}
         log.info("SubjectGet");
         String user = LoginService.sessionBox.get(userName);
@@ -42,7 +42,7 @@ public class UserSubjectController {
     }
 
     @PostMapping("/api/subjectDelete")
-    public UserRequestDto subjectDelete(@CookieValue(value = "userName",required = false)String userName, @RequestBody DeleteDto deleteDto){
+    public UserRequestDto prevDelete(@CookieValue(value = "userName",required = false)String userName, @RequestBody DeleteDto deleteDto){
         if (userName == null){throw new UnAuthorizedException(ACCESS_DENIED_EXCEPTION,"E0001");}
         log.info("SubjectDelete");
         String user = LoginService.sessionBox.get(userName);

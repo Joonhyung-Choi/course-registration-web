@@ -15,4 +15,5 @@ public interface UserPrevSubjectRepository extends JpaRepository<UserPreSubjectE
 
     @Query("SELECT u FROM UserPreSubjectEntity u JOIN FETCH u.userEntity WHERE u.userEntity.userName =:userName")
     public List<UserPreSubjectEntity> findAllByUserPrevSubject(@Param("userName")String userName);
+
 }

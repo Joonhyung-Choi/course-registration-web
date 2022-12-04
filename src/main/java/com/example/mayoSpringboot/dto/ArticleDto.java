@@ -22,6 +22,8 @@ public class ArticleDto {
     private int register_count;
     private String subject_time;
     private String professor;
+    private int waitingCount;
+    private int allWait;
 
     public ArticleDto(Article article){
         this.major = article.getMajor();
@@ -35,6 +37,8 @@ public class ArticleDto {
         this.register_count = article.getRegister_count();
         this.subject_time = article.getSubject_time();
         this.professor = article.getProfessor();
+        this.waitingCount = article.getWaitingCount();
+        this.allWait = article.getAllWait();
     }
 
 }

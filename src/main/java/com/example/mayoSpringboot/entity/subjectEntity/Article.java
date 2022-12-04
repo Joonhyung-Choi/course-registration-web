@@ -42,6 +42,10 @@ public class Article {
     private String subject_time; // 수업 시간
     @Column
     private String professor; // 담당교수
+    @Column
+    private int waitingCount;
+    @Column
+    private int allWait;
 
     public void update(ArticleDto articleDto){
         this.major = articleDto.getMajor();
@@ -55,5 +59,7 @@ public class Article {
         this.register_count = articleDto.getRegister_count();
         this.subject_time = articleDto.getSubject_time();
         this.professor = articleDto.getProfessor();
+        this.waitingCount = articleDto.getWaitingCount();
+        this.allWait = articleDto.getAllWait();
     }
 }

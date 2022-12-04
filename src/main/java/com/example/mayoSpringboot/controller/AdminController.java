@@ -1,5 +1,6 @@
 package com.example.mayoSpringboot.controller;
 
+import com.example.mayoSpringboot.entity.subjectEntity.Article;
 import com.example.mayoSpringboot.service.AdminService;
 import com.example.mayoSpringboot.dto.ArticleDto;
 import com.example.mayoSpringboot.dto.user.UserResponseDto;
@@ -27,7 +28,7 @@ public class AdminController {
     }
 
     @GetMapping("/api/adminSubjectGet")
-    public List<ArticleDto> getAllArticle(@CookieValue(value="userName", required = false)
+    public List<Article> getAllArticle(@CookieValue(value="userName", required = false)
                                               String userName){
         String user = LoginService.sessionBox.get(userName);
         return adminService.getAllSubject(user);
