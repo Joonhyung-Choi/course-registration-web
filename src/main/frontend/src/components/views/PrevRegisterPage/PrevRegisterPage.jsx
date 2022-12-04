@@ -1,7 +1,74 @@
-import React from "react";
-import {useLocation} from "react-router-dom";
-
+import React, { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  currentErrorState,
+  currentPageState,
+  serverTimeState,
+} from "../../recoil/currentStates";
+import { userInfoState } from "../../recoil/userDataStates";
+import axios from "axios";
 import styled from "styled-components";
+import PrevRegisterFilter from "./PrevRegisterFilter";
+import PrevRegisterList from "./PrevRegisterList";
+import MyPrevRegisterList from "./MyPrevRegisterList";
+
+function PrevRegisterPage() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const setCurrentPageG = useSetRecoilState(currentPageState);
+  const setCurrentErrorG = useSetRecoilState(currentErrorState);
+  const setUserInfoG = useSetRecoilState(userInfoState);
+  const setServerTimeG = useSetRecoilState(serverTimeState);
+  useEffect(() => {
+    if (location.pathname === "/mayo-main/prev-register") {
+      setCurrentPageG("prev-register");
+    }
+    axios
+      .post("/api/cookieGet")
+      .then((res) => {
+        setUserInfoG(res.data);
+        if (res.data.userRole !== "USER") {
+          navigate("/");
+          setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
+          setTimeout(function () {
+            setCurrentErrorG(["인가되지 않은 접근입니다.", false]);
+          }, 2000);
+        }
+      })
+      .catch(() => {
+        navigate("/");
+        setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
+        setTimeout(function () {
+          setCurrentErrorG(["인가되지 않은 접근입니다.", false]);
+        }, 2000);
+      });
+    axios.get("/api/time").then((res) => {
+      let time = res.data.split(":");
+      time[2] = time[2].split(".")[0];
+      const second =
+        Number(time[2]) + Number(time[1]) * 60 + Number(time[0]) * 3600;
+      setServerTimeG(second);
+    });
+  }, []);
+
+  return (
+    <Wrapper>
+      <SizingBox>
+        <PrevRegisterBox>
+          <PrevRegisterFilter />
+          <PrevRegisterList />
+        </PrevRegisterBox>
+        <MyPrevRegisterBox>
+          <Hr />
+          <MyPrevRegisterList />
+        </MyPrevRegisterBox>
+      </SizingBox>
+    </Wrapper>
+  );
+}
+
+export default PrevRegisterPage;
 
 const Wrapper = styled.div`
   display: flex;
@@ -9,30 +76,23 @@ const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
 `;
-
 const SizingBox = styled.div`
-  width: 90%;
-  height: 90%;
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
+  width: 95%;
+  height: 95%;
 `;
-
-function PrevRegisterPage(props) {
-    const location = useLocation();
-    const courseList = location.state.courseList;
-
-  return (
-    <Wrapper>
-      <SizingBox>
-        <div>나는 예비수강신청 페이지야~</div>
-      </SizingBox>
-    </Wrapper>
-  );
-}
-
-export default PrevRegisterPage;
+const PrevRegisterBox = styled.div`
+  width: 100%;
+  height: 50%;
+  overflow: auto;
+`;
+const Hr = styled.div`
+  margin: 10px;
+`;
+const MyPrevRegisterBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 50%;
+  overflow: auto;
+`;

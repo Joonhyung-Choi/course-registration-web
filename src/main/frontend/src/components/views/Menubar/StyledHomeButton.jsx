@@ -1,8 +1,33 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
-import { HiHome } from "react-icons/hi";
+import { useRecoilValue } from "recoil";
+import { currentPageState } from "../../recoil/currentStates";
 import styled from "styled-components";
+import { HiHome } from "react-icons/hi";
+
+function StyledHomeButton(props) {
+  const navigate = useNavigate();
+  const currentPageG = useRecoilValue(currentPageState);
+
+  const onClick = () => {
+    navigate(`/mayo-main/${props.clickTo}`);
+  };
+
+  return (
+    <Button
+      onClick={onClick}
+      style={
+        props.clickTo === currentPageG
+          ? { background: "#fff" }
+          : { background: "#fff7d8" }
+      }
+    >
+      <ImgHome />
+    </Button>
+  );
+}
+
+export default StyledHomeButton;
 
 const Button = styled.button`
   height: 91%;
@@ -13,7 +38,7 @@ const Button = styled.button`
   border: 0px;
   border-radius: 10px 10px 0px 0px;
   margin: 0px;
-  padding: 3px 5px;
+  padding: 4px 5px 3px;
   box-shadow: 3px -3px 15px -10px gray;
   cursor: pointer;
   &:hover {
@@ -24,38 +49,7 @@ const Button = styled.button`
   }
 `;
 const ImgHome = styled(HiHome)`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   color: #313131;
 `;
-
-function StyledHomeButton(props) {
-  const navigate = useNavigate();
-
-  const courseList = props.courseList;
-  const userData = props.userData;
-
-  const onClick = () => {
-    props.getCurrentBtn(props.id);
-    console.log(props.id);
-    console.log(props.currentBtn);
-    navigate(`/mayo-main/${props.clickTo}`, {
-      state: { userData, courseList },
-    });
-  };
-
-  return (
-    <Button
-      onClick={onClick}
-      style={
-        props.id === props.currentBtn
-          ? { zIndex: `${props.zIndex}`, background: "#fff" }
-          : { zIndex: `${props.zIndex}`, background: "#fff0b3" }
-      }
-    >
-      <ImgHome />
-    </Button>
-  );
-}
-
-export default StyledHomeButton;

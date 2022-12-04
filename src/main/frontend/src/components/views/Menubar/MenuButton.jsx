@@ -1,16 +1,61 @@
-import React, { useState } from "react";
-
+import React from "react";
+import { useRecoilValue } from "recoil";
+import { serverTimeState } from "../../recoil/currentStates";
 import styled from "styled-components";
-
 import StyledMenuButton from "./StyledMenuButton";
 import StyledHomeButton from "./StyledHomeButton";
+
+function MenuButton(props) {
+  const serverTimeG = useRecoilValue(serverTimeState);
+
+  function fillZero(width, time) {
+    const str = time + "";
+    return str.length >= width
+      ? str
+      : new Array(width - str.length + 1).join("0") + str;
+  }
+
+  return (
+    <Wrapper>
+      <Menubar style={{ width: `calc(100vw + ${props.xPosition}px)` }}>
+        <StyledHomeButton id="home" buttonName="홈" zIndex="50" clickTo="" />
+        <StyledMenuButton
+          buttonName="교과목조회"
+          zIndex="40"
+          clickTo="search-course"
+        />
+        <StyledMenuButton
+          buttonName="예비수강신청"
+          zIndex="30"
+          clickTo="prev-register"
+        />
+        <StyledMenuButton
+          buttonName="수강신청"
+          zIndex="20"
+          clickTo="register"
+        />
+        <StyledMenuButton
+          buttonName="수강내역조회"
+          zIndex="10"
+          clickTo="my-register"
+        />
+        <ServerTime>
+          {fillZero(2, parseInt(serverTimeG / 3600))} :{" "}
+          {fillZero(2, parseInt((serverTimeG % 3600) / 60))} :{" "}
+          {fillZero(2, (serverTimeG % 3600) % 60)}
+        </ServerTime>
+      </Menubar>
+    </Wrapper>
+  );
+}
+
+export default MenuButton;
 
 const Wrapper = styled.div`
   width: 100vw;
   height: 3.5vh;
   background-color: #f6f6f6;
 `;
-
 const Menubar = styled.div`
   display: flex;
   position: relative;
@@ -24,72 +69,11 @@ const Menubar = styled.div`
   z-index: 9;
   transition: 0.4s ease;
 `;
-
-function MenuButton(props) {
-  const courseList = props.courseList;
-  const userData = props.userData;
-
-  const [currentBtn, setCurrentBtn] = useState("home");
-  const getCurrentBtn = (currentBtn) => {
-    setCurrentBtn(currentBtn);
-  };
-
-  return (
-    <Wrapper>
-      <Menubar style={{ width: `calc(100vw + ${props.xPosition}px)` }}>
-        <StyledHomeButton
-          id="home"
-          buttonName="홈"
-          zIndex="50"
-          clickTo=""
-          courseList={courseList}
-          userData={userData}
-          getCurrentBtn={getCurrentBtn}
-          currentBtn={currentBtn}
-        />
-        <StyledMenuButton
-          id="searchCourse"
-          buttonName="교과목조회"
-          zIndex="40"
-          clickTo="search-course"
-          courseList={courseList}
-          userData={userData}
-          getCurrentBtn={getCurrentBtn}
-          currentBtn={currentBtn}
-        />
-        <StyledMenuButton
-          id="prevRegister"
-          buttonName="예비수강신청"
-          zIndex="30"
-          clickTo="prev-register"
-          courseList={courseList}
-          userData={userData}
-          getCurrentBtn={getCurrentBtn}
-          currentBtn={currentBtn}
-        />
-        <StyledMenuButton
-          id="register"
-          buttonName="수강신청"
-          zIndex="20"
-          clickTo="register"
-          courseList={courseList}
-          userData={userData}
-          getCurrentBtn={getCurrentBtn}
-          currentBtn={currentBtn}
-        />
-        <StyledMenuButton
-          id="myRegister"
-          buttonName="수강내역조회"
-          zIndex="10"
-          clickTo="my-register"
-          courseList={courseList}
-          userData={userData}
-          getCurrentBtn={getCurrentBtn}
-          currentBtn={currentBtn}
-        />
-      </Menubar>
-    </Wrapper>
-  );
-}
-
-export default MenuButton;
+const ServerTime = styled.div`
+  display: flex;
+  position: absolute;
+  font-size: 13px;
+  color: #888888;
+  bottom: 0px;
+  right: 5px;
+`;
