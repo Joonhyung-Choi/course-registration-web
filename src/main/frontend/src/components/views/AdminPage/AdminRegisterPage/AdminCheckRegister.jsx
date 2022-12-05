@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 function AdminCheckRegister(props) {
   const userList = props.user;
-  const userList2 = userList.map(item => {
+  const userList2 = userList.map((item) => {
     return `${item.userEntity.userName}(${item.userEntity.userId})`;
-  })
+  });
 
   let checkRegisterButtonState = "";
 
@@ -16,7 +16,7 @@ function AdminCheckRegister(props) {
   }
   return (
     <CheckRegisterButton onClick={checkRegisterButtonClicked}>
-      수강확인
+      인원확인
     </CheckRegisterButton>
   );
 }
@@ -24,10 +24,10 @@ function AdminCheckRegister(props) {
 const CheckRegisterButton = styled.button`
   display: flex;
   font-size: 11px;
-  padding:2.2px;
+  padding: 2.2px;
   border: 1px solid #111;
   border-radius: 4px;
-  margin:auto;
+  margin: auto;
 `;
 
 export default AdminCheckRegister;

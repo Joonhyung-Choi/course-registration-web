@@ -39,7 +39,7 @@ function WaitingRegisterItem(props) {
       .get("/api/courseListGet")
       .then((res) => setCourseListG(res.data.content));
   };
-  
+
   return (
     <Tr>
       <Td name={props.idx}>{props.idx + 1}</Td>

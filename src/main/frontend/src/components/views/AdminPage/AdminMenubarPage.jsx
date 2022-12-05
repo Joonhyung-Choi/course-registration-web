@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { serverTimeState } from "../../recoil/currentStates";
@@ -73,7 +73,7 @@ function AdminMenubarPage() {
               수강신청현황
             </MenuButton>
           </MenubarLi>
-          <MenubarLi_ currentPageG={currentPageG}>
+          <MenubarLi2 currentPageG={currentPageG}>
             <MenuButton
               currentPageG={currentPageG}
               value={"admin-control"}
@@ -81,7 +81,7 @@ function AdminMenubarPage() {
             >
               서버관리
             </MenuButton>
-          </MenubarLi_>
+          </MenubarLi2>
         </MenubarUl>
       </MenubarNav>
       <ServerTime>
@@ -115,7 +115,7 @@ const MenubarUl = styled.ul`
   justify-content: center;
   align-items: center;
 `;
-const MenubarLi_ = styled.li`
+const MenubarLi2 = styled.li`
   display: flex;
   position: relative;
   list-style: none;

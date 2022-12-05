@@ -18,19 +18,19 @@ function TimeTableClass(props) {
   }
   function getBgColor(subjectId) {
     const colorList = [
-      '#ffb0b0',
-      '#ffff80',
-      '#b0ffb0',
-      '#b0ffff',
-      '#ffb0ff',
-      '#b0b0ff',
-      '#ffd0b0',
-      '#d0b0ff',
-      '#b0d0ff',
-      '#ffb0d0',
-      '#d0ffb0',
-      '#b0ffd0'
-    ]
+      "#ffb0b0",
+      "#ffff80",
+      "#b0ffb0",
+      "#b0ffff",
+      "#ffb0ff",
+      "#b0b0ff",
+      "#ffd0b0",
+      "#d0b0ff",
+      "#b0d0ff",
+      "#ffb0d0",
+      "#d0ffb0",
+      "#b0ffd0",
+    ];
     return colorList[subjectId % colorList.length];
   }
 

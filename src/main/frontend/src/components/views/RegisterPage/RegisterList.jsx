@@ -33,7 +33,6 @@ function RegisterList() {
           (item) => !waitingRG.map((i) => i.subjectId).includes(item.subjectId)
         )
     );
-    console.log(tempR);
   }, [filteringRG, userRG, waitingRG]);
 
   return (

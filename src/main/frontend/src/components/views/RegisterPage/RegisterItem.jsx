@@ -71,6 +71,10 @@ function RegisterItem(props) {
           setTimeout(function () {
             setCurrentErrorG([error.response.data.errorMessage, false]);
           }, 2000);
+          axios
+            .get("/api/courseListGet")
+            .then((res) => setCourseListG(res.data.content));
+          axios.get("/api/prevGet").then((res) => setUserPRG(res.data));
         });
       await axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
       await axios

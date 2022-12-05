@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { currentAdminPageState } from "../../../recoil/adminDataStates";
 import styled from "styled-components";
 import axios from "axios";
 
 function AdminControlPage() {
   const location = useLocation();
-  const [currentPageG, setCurrentPageG] = useRecoilState(currentAdminPageState);
+  const setCurrentPageG = useSetRecoilState(currentAdminPageState);
 
   useEffect(() => {
     if (location.pathname === "/mayo-admin/admin-control") {
@@ -24,7 +24,6 @@ function AdminControlPage() {
   const [prevOpenTimeState, setPrevOpenTimeState] = useState("");
   const [prevCloseDateState, setPrevCloseDateState] = useState("");
   const [prevCloseTimeState, setPrevCloseTimeState] = useState("");
-
 
   const onChangeOpenDate = (e) => {
     setOpenDateState(e.target.value);
@@ -72,18 +71,41 @@ function AdminControlPage() {
     const startTime = openTimeState;
     const endDate = closeDateState;
     const endTime = closeTimeState;
-    if(prevStartDate === "" || prevStartTime === "" || prevEndDate === "" || prevEndTime ===""){
-      alert("예비수강신청의 여닫는 날짜 혹은 시간이 제대로 설정되지 않았습니다.")
+    if (
+      prevStartDate === "" ||
+      prevStartTime === "" ||
+      prevEndDate === "" ||
+      prevEndTime === ""
+    ) {
+      alert(
+        "예비수강신청의 여닫는 날짜 혹은 시간이 제대로 설정되지 않았습니다."
+      );
+    } else if (
+      startDate === "" ||
+      startTime === "" ||
+      endDate === "" ||
+      endTime === ""
+    ) {
+      alert("수강신청의 여닫는 날짜 혹은 시간이 제대로 설정되지 않았습니다.");
+    } else {
+      await axios
+        .post("/api/postAssignTime", {
+          prevStartDate,
+          prevStartTime,
+          prevEndDate,
+          prevEndTime,
+          startDate,
+          startTime,
+          endDate,
+          endTime,
+        })
+        .then();
+      await axios.get("/api/getAssignTime").then((res) => {
+        console.log(res);
+      });
+      alert("서버관리의 값이 정상적으로 저장되었습니다.");
     }
-    else if(startDate === "" ||startTime === "" || endDate === "" || endTime ===""){
-      alert("수강신청의 여닫는 날짜 혹은 시간이 제대로 설정되지 않았습니다.")
-    }
-    else{
-      await axios.post("/api/postAssignTime", {prevStartDate,prevStartTime, prevEndDate, prevEndTime ,startDate, startTime, endDate, endTime}).then((res) => {console.log(res)});
-      await axios.get("/api/getAssignTime",).then((res) => {console.log(res)});
-    }
-
-  }
+  };
 
   return (
     <Wrapper>
@@ -124,17 +146,17 @@ const Wrapper = styled.div`
   flex-direction: row;
   width: 100%;
   height: calc(100% - 45px);
-  padding: 20px 20px;
+  padding: 20px;
   border-bottom: 1px solid black;
   box-sizing: border-box;
-  justify-content: space-around;
+  justify-content: center;
 `;
 const PRDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-left: 80px;
+  padding-right: 40px;
 `;
 const PRTitle = styled.p`
   display: flex;
@@ -148,13 +170,7 @@ const RDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-right: 80px;
-`;
-const RTitle = styled.p`
-  display: flex;
-  font-size: 18px;
-  margin-bottom: 30px;
-  border-bottom: 1px solid #fff;
+  padding-left: 40px;
 `;
 const P = styled.p`
   font-size: 14px;
@@ -179,16 +195,25 @@ const Input = styled.input`
 `;
 const Button = styled.button`
   position: absolute;
-  bottom : 15%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% + 210px));
   margin: auto;
   display: box;
-  width: 200px;
-  height: 100px;
-  font-size: 20px;
+  width: 110px;
+  height: 60px;
+  font-size: 16px;
   margin-top: 20px;
   border: 1px solid #111;
-  border-radius: 20px;
+  background-color: #eee;
   padding: 5px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  &:hover {
+    background-color: #fff;
+  }
+  &:active {
+    background-color: #fff;
+    box-shadow: inset 3px 3px 1px 1px #999;
+  }
 `;

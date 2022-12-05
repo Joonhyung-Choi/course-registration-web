@@ -8,7 +8,7 @@ import MainPage from "./components/views/MainPage/MainPage";
 //import ManagePage from "./components/views/ManagePage/ManagePage";
 import AdminPage from "./components/views/AdminPage/AdminPage";
 import NotFoundPage from "./components/views/NotFoundPage/NotFoundPage";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { serverTimeState } from "./components/recoil/currentStates";
 import axios from "axios";
 import ReactModal from "react-modal";
@@ -16,7 +16,7 @@ ReactModal.setAppElement("#root");
 
 function App() {
   // server time
-  const [serverTimeG, setServerTimeG] = useRecoilState(serverTimeState);
+  const setServerTimeG = useSetRecoilState(serverTimeState);
   useEffect(() => {
     axios.get("/api/time").then((res) => {
       let time = res.data.split(":");

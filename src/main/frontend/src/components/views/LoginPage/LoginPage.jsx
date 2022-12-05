@@ -55,7 +55,7 @@ function LoginPage() {
     setToggleFind(true);
   };
   const onEnterPress = async (e) => {
-    if (e.key == "Enter") {
+    if (e.key === "Enter") {
       await onClickLogin();
     }
   };

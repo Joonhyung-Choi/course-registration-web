@@ -66,13 +66,16 @@ function MyRegisterItem(props) {
           setMyRegisterSwitchG(false);
         })
         .catch(function (error) {
-          console.log(prevBtnValue);
           console.log("PrevBtn Error");
           console.log(error);
           setCurrentErrorG([error.response.data.errorMessage, true]);
           setTimeout(function () {
             setCurrentErrorG([error.response.data.errorMessage, false]);
           }, 2000);
+          axios
+            .get("/api/courseListGet")
+            .then((res) => setCourseListG(res.data.content));
+          axios.get("/api/prevGet").then((res) => setUserPRG(res.data));
         });
       await axios.get("/api/subjectGet").then((res) => setUserRG(res.data));
       await axios

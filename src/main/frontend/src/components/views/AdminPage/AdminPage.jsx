@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import AdminMenubarPage from "./AdminMenubarPage";
 import AdminCheckUserPage from "./AdminUserPage/AdminCheckUserPage";
@@ -7,7 +7,7 @@ import AdminCheckRegisterPage from "./AdminRegisterPage/AdminCheckRegisterPage";
 import AdminControlPage from "./AdminControlPage/AdminControlPage";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { currentErrorState } from "../../recoil/currentStates";
 import {
   userDataState,
@@ -19,11 +19,11 @@ import { userInfoState } from "../../recoil/userDataStates";
 
 function AdminPage() {
   const navigate = useNavigate();
-  const [userInfoG, setUserInfoG] = useRecoilState(userInfoState);
-  const [currentErrorG, setCurrentErrorG] = useRecoilState(currentErrorState);
-  const [userDataG, setUserDataG] = useRecoilState(userDataState);
-  const [subjectDataG, setSubjcetDataG] = useRecoilState(subjectDataState);
-  const [registerDataG, setRegisterDataG] = useRecoilState(registerDataState);
+  const setUserInfoG = useSetRecoilState(userInfoState);
+  const setCurrentErrorG = useSetRecoilState(currentErrorState);
+  const setUserDataG = useSetRecoilState(userDataState);
+  const setSubjcetDataG = useSetRecoilState(subjectDataState);
+  const setRegisterDataG = useSetRecoilState(registerDataState);
 
   useEffect(() => {
     axios
@@ -38,7 +38,7 @@ function AdminPage() {
           }, 2000);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         navigate("/");
         setCurrentErrorG(["인가되지 않은 접근입니다.", true]);
         setTimeout(function () {
@@ -50,25 +50,22 @@ function AdminPage() {
       .get("/api/adminUserGet")
       .then((res) => {
         setUserDataG(res.data);
-        console.log(res.data);
       })
-      .catch(function (error) {});
+      .catch(function () {});
 
     axios
       .get("/api/adminSubjectGet")
       .then((res) => {
         setSubjcetDataG(res.data);
-        console.log(res.data);
       })
-      .catch(function (error) {});
+      .catch(function () {});
 
     axios
       .get("/api/adminUserSubjectGet")
       .then((res) => {
         setRegisterDataG(res.data);
-        console.log(res.data);
       })
-      .catch(function (error) {});
+      .catch(function () {});
   }, []);
 
   return (
