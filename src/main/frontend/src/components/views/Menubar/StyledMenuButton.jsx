@@ -34,12 +34,11 @@ function StyledMenuButton(props) {
     let endTime = "";
 
     let today = new Date();
-    let year = today.getFullYear(); // 년도
-    let month = today.getMonth() + 1; // 월
-    let date = today.getDate(); // 날짜
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let date = today.getDate();
 
     await axios.get("/api/getAssignTime").then((res) => {
-      console.log(res.data);
       prevStartDate = res.data[0].prevStartDate.split("-");
       prevStartTime = res.data[0].prevStartTime.split(":");
       prevEndDate = res.data[0].prevEndDate.split("-");
@@ -48,8 +47,6 @@ function StyledMenuButton(props) {
       startTime = res.data[0].startTime.split(":");
       endDate = res.data[0].endDate.split("-");
       endTime = res.data[0].endTime.split(":");
-      console.log(prevStartDate, prevStartTime, prevEndDate, prevEndTime);
-      console.log(year, month, date);
 
       prevRegisterStartTime =
         parseInt(prevStartTime[0]) * 3600 + parseInt(prevStartTime[1]) * 60;
@@ -58,12 +55,6 @@ function StyledMenuButton(props) {
       registerStartTime =
         parseInt(startTime[0]) * 3600 + parseInt(startTime[1]) * 60;
       registerEndTime = parseInt(endTime[0]) * 3600 + parseInt(endTime[1]) * 60;
-
-      console.log(prevRegisterStartTime);
-      console.log(prevRegisterEndTime);
-      console.log(registerStartTime);
-      console.log(registerEndTime);
-      console.log(serverTimeG);
     });
 
     function overPrevRegisterStartTime() {
@@ -176,9 +167,6 @@ function StyledMenuButton(props) {
         break;
       case "prev-register":
         if (overPrevRegisterStartTime() && lessPrevRegisterEndTime()) {
-          console.log(overRegisterStartTime());
-          console.log(lessPrevRegisterEndTime());
-
           if (userInfoG.userRole === "USER") {
             navigate(`/mayo-main/${props.clickTo}`);
             break;
@@ -196,6 +184,7 @@ function StyledMenuButton(props) {
           setTimeout(function () {
             setCurrentErrorG(["예비수강신청 날짜가 아닙니다.", false]);
           }, 2000);
+          break;
         }
 
       case "register":
@@ -217,6 +206,7 @@ function StyledMenuButton(props) {
           setTimeout(function () {
             setCurrentErrorG(["수강신청 날짜가 아닙니다.", false]);
           }, 2000);
+          break;
         }
 
       case "my-register":
@@ -227,6 +217,8 @@ function StyledMenuButton(props) {
           navigate("/");
           break;
         }
+      default:
+        break;
     }
   };
 

@@ -13,7 +13,7 @@ export default function ErrorModal() {
       style={{
         overlay: {
           position: "absolute",
-          inset:"auto auto 0px 0px",
+          inset: "auto auto 0px 0px",
           zIndex: "89",
           width: "0",
           height: "0",
@@ -21,7 +21,7 @@ export default function ErrorModal() {
         content: {
           position: "absolute",
           zIndex: "90",
-          inset:"auto auto 25px 10px",
+          inset: "auto auto 25px 10px",
           width: "260px",
           height: "30px",
           margin: "0",
@@ -31,8 +31,9 @@ export default function ErrorModal() {
           boxShadow: "grey 2px 2px 7px -1px",
           border: "none",
           fontSize: "14px",
-          color: "#fff",transform: `${
-              currentErrorG[1] ? "translate(0px,0px)" : "translate(-310px,0)"
+          color: "#fff",
+          transform: `${
+            currentErrorG[1] ? "translate(0px,0px)" : "translate(-310px,0)"
           }`,
 
           transition: "0.7s ease",

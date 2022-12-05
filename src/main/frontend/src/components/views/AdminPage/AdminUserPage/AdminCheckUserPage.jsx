@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import AdminAddUserPage from "./AdminAddUserPage";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
   currentAdminPageState,
   userDataState,
 } from "../../../recoil/adminDataStates";
-import axios from "axios";
 
 function AdminCheckUserPage() {
   const location = useLocation();
-  const [currentPageG, setCurrentPageG] = useRecoilState(currentAdminPageState);
-  const [userDataG, setUserDataG] = useRecoilState(userDataState);
+  const setCurrentPageG = useSetRecoilState(currentAdminPageState);
+  const userDataG = useRecoilValue(userDataState);
 
   useEffect(() => {
     if (location.pathname === "/mayo-admin/") {
@@ -20,22 +18,9 @@ function AdminCheckUserPage() {
     }
   });
 
-  // toggle AdminAddUserPage
-  const [toggleAddUser, setToggleAddUser] = useState(false);
-  const getToggleAddUser = (toggleAddUser) => {
-    setToggleAddUser(toggleAddUser);
-  };
-  const onClickOpenAddUser = () => {
-    setToggleAddUser(true);
-  };
-
   return (
     <Wrapper>
       <InnerWrapper>
-        {/* <AdminAddUserPage
-          toggleAddUser={toggleAddUser}
-          getToggleAddUser={getToggleAddUser}
-        /> */}
         <Table>
           <tr>
             <TH style={{ borderTopLeftRadius: "6px" }}>이름</TH>
@@ -44,13 +29,6 @@ function AdminCheckUserPage() {
             <TH>신청학점</TH>
             <TH style={{ borderTopRightRadius: "6px" }}>최대학점</TH>
           </tr>
-          {/* <tr>
-            <TD_H colSpan={5} style={{ padding: "4px 0px" }}>
-              <SignInButton onClick={onClickOpenAddUser}>
-                유저 추가
-              </SignInButton>
-            </TD_H>
-          </tr> */}
           {userDataG.map((item) => (
             <tr>
               <TD>{item.userName}</TD>
@@ -108,17 +86,6 @@ const TH = styled.th`
   font-size: 13px;
   background-color: #555;
 `;
-const TD_H = styled.td`
-  position: sticky;
-  top: 30px;
-  text-align: center;
-  border: 0px;
-  padding: 8px 0;
-  margin: 0px;
-  font-size: 12px;
-  border-bottom: 1px solid #111;
-  background-color: #222;
-`;
 const TD = styled.td`
   text-align: center;
   border: 0px;
@@ -135,22 +102,4 @@ const Table = styled.table`
   border-style: none;
   align-items: center;
   text-align: center;
-`;
-
-const SignInButton = styled.button`
-  margin: auto;
-  display: block;
-  width: 230px;
-  height: 23px;
-  background-color: white;
-  border: 2px solid #2b3a55;
-  color: #2b3a55;
-  border-radius: 7px;
-  font-size: 14px;
-  transition: 0.3s;
-  :hover {
-    cursor: pointer;
-    background-color: #2b3a55;
-    color: white;
-  }
 `;

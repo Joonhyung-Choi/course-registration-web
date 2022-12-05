@@ -1,21 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
   currentAdminPageState,
   subjectDataState,
 } from "../../../recoil/adminDataStates";
-import AdminDeleteCourse from "./AdminDeleteCourse";
-import AdminModifyCourse from "./AdminModifyCourse";
-import AdminAddCoursePage from "./AdminAddCoursePage";
 
 function AdminCourseListPage() {
   const location = useLocation();
-  const [currentPageG, setCurrentPageG] = useRecoilState(currentAdminPageState);
-  const [subjectDataG, setSubjectDataG] = useRecoilState(subjectDataState);
+  const setCurrentPageG = useSetRecoilState(currentAdminPageState);
+  const subjectDataG = useRecoilValue(subjectDataState);
 
   useEffect(() => {
     if (location.pathname === "/mayo-admin/admin-course") {
@@ -25,7 +21,6 @@ function AdminCourseListPage() {
 
   return (
     <Wrapper>
-      {/* </AdminAddCoursePage> */}
       <InnerWrapper>
         <Table>
           <tr>
@@ -40,14 +35,7 @@ function AdminCourseListPage() {
             <TH>예비수강신청인원</TH>
             <TH>수업시간</TH>
             <TH style={{ borderTopRightRadius: "6px" }}>담당교수</TH>
-            {/* <TH >과목 수정</TH>
-            <TH style={{ borderTopRightRadius: "6px" }}>과목삭제</TH> */}
           </tr>
-          {/* <tr>
-            <TD_H colSpan={13} style={{ padding: "4px 0px" }}>
-              <AddCourseButton>과목 추가</AddCourseButton>
-            </TD_H>
-          </tr> */}
           {subjectDataG.map((item) => (
             <tr>
               <TD>{item.major}</TD>
@@ -61,12 +49,6 @@ function AdminCourseListPage() {
               <TD>{item.prev_register_count}</TD>
               <TD>{item.subject_time}</TD>
               <TD>{item.professor}</TD>
-              {/* <TD style={{ padding: "5.2px 0" }}>
-                <AdminModifyCourse item={item} />
-              </TD>
-              <TD style={{ padding: "5.2px 0" }}>
-                <AdminDeleteCourse item={item} />
-              </TD> */}
             </tr>
           ))}
         </Table>
@@ -118,17 +100,6 @@ const TH = styled.th`
   font-size: 13px;
   background-color: #555;
 `;
-const TD_H = styled.td`
-  position: sticky;
-  top: 30px;
-  text-align: center;
-  border: 0px;
-  padding: 8px 0;
-  margin: 0px;
-  font-size: 12px;
-  border-bottom: 1px solid #111;
-  background-color: #222;
-`;
 const TD = styled.td`
   text-align: center;
   border: 0px;
@@ -145,22 +116,4 @@ const Table = styled.table`
   border-style: none;
   align-items: center;
   text-align: center;
-`;
-
-const AddCourseButton = styled.button`
-  margin: auto;
-  display: block;
-  width: 230px;
-  height: 23px;
-  background-color: white;
-  border: 2px solid #2b3a55;
-  color: #2b3a55;
-  border-radius: 7px;
-  font-size: 14px;
-  transition: 0.3s;
-  :hover {
-    cursor: pointer;
-    background-color: #2b3a55;
-    color: white;
-  }
 `;
