@@ -50,7 +50,7 @@ public class UserSubjectService {
             articleDto.setWaitingCount(article.getWaitingCount()+1);
             article.update(articleDto);
             articleRepository.save(article);
-        }else if(article.getMax_count() <= article.getRegister_count() && article.getWaitingCount() <= (article.getMax_count()+ Math.round(article.getMax_count()*0.5 ))){ //2명 가능
+        }else if(article.getMax_count() <= article.getRegister_count() && article.getWaitingCount() < (article.getMax_count()+ Math.round(article.getMax_count()*0.5 ))){ //2명 가능
             articleDto.setWaitingCount(articleDto.getWaitingCount()+1);
             article.update(articleDto);
             articleRepository.save(article);

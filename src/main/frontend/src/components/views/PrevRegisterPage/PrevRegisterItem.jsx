@@ -12,8 +12,8 @@ import styled from "styled-components";
 function PrevRegisterItem(props) {
   const setUserInfoG = useSetRecoilState(userInfoState);
   const [userPRG, setUserPRG] = useRecoilState(userPrevRegisterState);
-  const setCourseListG = useRecoilState(courseListState);
-  const setCurrentErrorG = useRecoilState(currentErrorState);
+  const setCourseListG = useSetRecoilState(courseListState);
+  const setCurrentErrorG = useSetRecoilState(currentErrorState);
 
   useEffect(() => {}, [userPRG]);
 
@@ -47,7 +47,7 @@ function PrevRegisterItem(props) {
     await axios.get("/api/prevGet").then((res) => setUserPRG(res.data));
     await axios
       .get("/api/courseListGet")
-      .then((res) => setCourseListG(res.data.content));
+      .then((res) => {setCourseListG(res.data.content);})
   };
 
   return (

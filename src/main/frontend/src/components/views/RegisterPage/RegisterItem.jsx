@@ -61,8 +61,10 @@ function RegisterItem(props) {
             setTimeout(function () {
               setCurrentErrorG(["대기신청 되었습니다.", false]);
             }, 2000);
+              setMyRegisterSwitchG(false);
+          } else if(registerBtnValue.register_count < registerBtnValue.max_count){
+              setMyRegisterSwitchG(true);
           }
-          setMyRegisterSwitchG(false);
         })
         .catch(function (error) {
           console.log("RegisterBtn Error");
