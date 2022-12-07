@@ -9,7 +9,6 @@ import com.example.mayoSpringboot.error.exception.UnAuthorizedException;
 import com.example.mayoSpringboot.repository.UserRepository;
 import com.example.mayoSpringboot.service.LoginService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +20,6 @@ import static com.example.mayoSpringboot.error.ErrorCode.WRONG_ID_PW_EXCEPTION;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 public class LoginController {
     private final LoginService loginService;
     private final UserRepository userRepository;
@@ -65,9 +63,6 @@ public class LoginController {
         //0인 쿠키 날리기
         response.addCookie(cookie);
 
-        //세션 로그아웃 login(HttpServletRequest request)
-        /*HttpSession session = request.getSession(false);
-        if(session != null){session.invalidate();} // 세션 날리기*/
         return "로그아웃완료";
     }
     @PostMapping("/api/cookieGet")

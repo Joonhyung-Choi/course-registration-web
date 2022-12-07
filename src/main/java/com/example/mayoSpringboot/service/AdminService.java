@@ -1,6 +1,5 @@
 package com.example.mayoSpringboot.service;
 
-import com.example.mayoSpringboot.dto.ArticleDto;
 import com.example.mayoSpringboot.dto.user.UserResponseDto;
 import com.example.mayoSpringboot.dto.subjcet.UserSubjectResponseDto;
 import com.example.mayoSpringboot.entity.UserEntity;

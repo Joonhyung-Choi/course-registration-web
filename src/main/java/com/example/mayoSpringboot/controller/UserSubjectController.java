@@ -17,15 +17,13 @@ import static com.example.mayoSpringboot.error.ErrorCode.ACCESS_DENIED_EXCEPTION
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 public class UserSubjectController {
     private final UserSubjectService userSubjectService;
 
 
     @PostMapping("/api/subjectPost")
-    public UserRequestDto prevAdd(@CookieValue(value = "userName",required = false)String userName,
+    public UserRequestDto subjectAdd(@CookieValue(value = "userName",required = false)String userName,
                                   @RequestBody UserSubjectRequestDto userSubjectRequestDto){
-        log.info("SubjectPost");
         if (userName == null){throw new UnAuthorizedException(ACCESS_DENIED_EXCEPTION,"E0001");}
         String user =  LoginService.sessionBox.get(userName);
 
@@ -33,18 +31,16 @@ public class UserSubjectController {
     }
 
     @GetMapping("/api/subjectGet")
-    public List<UserSubjectResponseDto> prevRead(@CookieValue(value = "userName") String userName){
+    public List<UserSubjectResponseDto> subjectRead(@CookieValue(value = "userName") String userName){
         if (userName == null){throw new UnAuthorizedException(ACCESS_DENIED_EXCEPTION,"E0001");}
-        log.info("SubjectGet");
         String user = LoginService.sessionBox.get(userName);
 
         return userSubjectService.subjectRead(user);
     }
 
     @PostMapping("/api/subjectDelete")
-    public UserRequestDto prevDelete(@CookieValue(value = "userName",required = false)String userName, @RequestBody DeleteDto deleteDto){
+    public UserRequestDto subjectDelete(@CookieValue(value = "userName",required = false)String userName, @RequestBody DeleteDto deleteDto){
         if (userName == null){throw new UnAuthorizedException(ACCESS_DENIED_EXCEPTION,"E0001");}
-        log.info("SubjectDelete");
         String user = LoginService.sessionBox.get(userName);
         return userSubjectService.subjectDelete(user,deleteDto.getSubjectId());
     }

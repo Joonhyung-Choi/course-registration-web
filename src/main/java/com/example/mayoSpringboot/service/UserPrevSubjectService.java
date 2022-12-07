@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 import static com.example.mayoSpringboot.error.ErrorCode.*;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class UserPrevSubjectService {
     private final UserRepository userRepository;

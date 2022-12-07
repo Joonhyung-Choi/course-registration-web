@@ -20,7 +20,6 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class LoginService {
     private final UserRepository userRepository;
@@ -32,7 +31,6 @@ public class LoginService {
         String session = UUID.randomUUID().toString();
         sessionBox.put(session, userResponseDto.getUserName());
         Cookie cookie = new Cookie("userName", session);
-        log.info(String.valueOf(cookie));
         cookie.setMaxAge(30 * 60);
         response.addCookie(cookie);
 
