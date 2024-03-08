@@ -26,7 +26,7 @@ function AdminCheckUserPage() {
             <TH style={{ borderTopLeftRadius: "6px" }}>이름</TH>
             <TH>ID</TH>
             <TH>유저구분</TH>
-            <TH>신청학점</TH>
+            <TH>신청가능학점</TH>
             <TH style={{ borderTopRightRadius: "6px" }}>최대학점</TH>
           </tr>
           {userDataG.map((item) => (

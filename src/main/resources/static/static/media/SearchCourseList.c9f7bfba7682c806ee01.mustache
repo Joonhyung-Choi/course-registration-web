@@ -1,0 +1,96 @@
+import React,{} from 'react';
+import styled from 'styled-components';
+
+import SearchCourseItem from './SearchCourseItem.mastache';
+
+const Wrapper = styled.div`
+    width: 100%;
+    height:100%;
+    overflow:auto;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+    overflow-y: auto;
+    overflow-x: visible;
+    &::-webkit-scrollbar{
+        width: 10px;
+        height: 5px;
+        boder-radius: 10px;
+    }
+    &::-webkit-scrollbar-track{
+        background:rgba(255,255,255,0,0);
+    }
+    &::-webkit-scrollbar-thumb{
+        background:rgba(0,0,0,0.2);
+        background-clip:padding-box;
+        border: 2px solid transparent;
+        border-radius: 100px;
+    }
+    &::-webkit-scrollbar-thumb:hover{
+        background:rgba(0,0,0,0.3);
+        background-clip:padding-box;
+        border: 1.5px solid transparent;
+        border-radius: 100px;
+    }
+`;
+
+const Table = styled.table`
+    width:100%;
+    background-color: white;
+    margin:0px;
+    padding:0px;
+    border-spacing:0px;
+    border-style:none;
+`;
+
+const Tr = styled.tr`
+    width:100%;
+`;
+
+const Th = styled.th`
+    padding: 7px;
+    padding-bottom:5px;
+    margin:0px;
+    font-size: 0.85rem;
+    background-color: #FFCC1D;
+    color: #ffffff;
+    border:0px;
+    position: sticky;
+	top: 0;
+`;
+
+function SearchCourseList(props){
+
+    return (
+        <Wrapper>
+            <Table>
+                <Tr>
+                    <th>번호</th>
+                    <th>분류</th>
+                    <th>학년</th>
+                    <th>과목이름</th>
+                    <th>과목코드</th>
+                    <th>이수구분</th>
+                    <th>학점</th>
+                    <th>담당교수</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#articleList}}
+                    <tr>
+                        <th>{{id}}</th>
+                        <th>{{department}}</th>
+                        <th>{{grade}}</th>
+                        <th>{{subject_name}}</th>
+                        <th>{{subject_id}}</th>
+                        <th>{{divison}}</th>
+                        <th>{{grades}}</th>
+                        <th>{{professor}}</th>
+                    </tr>
+                {{/articleList}}
+            </Table>
+        </Wrapper>
+    );
+}
+
+export default SearchCourseList;

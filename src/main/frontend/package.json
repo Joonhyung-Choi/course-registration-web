@@ -56,5 +56,4 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.11.1"
   },
-  "proxy": "http://www.mayouniversity.shop:3333"
-}
+  "proxy": "http://localhost:3333"

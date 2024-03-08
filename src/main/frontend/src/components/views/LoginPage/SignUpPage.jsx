@@ -152,7 +152,7 @@ function SignUpPage(props) {
           />
         </DivUserPw>
         <DivUserPw2>
-          <PUserPw2>2차 비밀번호</PUserPw2>
+          <PUserPw2>비밀번호 확인</PUserPw2>
           <InputUserPw2
             id="signup_pw2"
             type="password"
